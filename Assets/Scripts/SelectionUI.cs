@@ -9,7 +9,7 @@ public class SelectionUI : MonoBehaviour {
 
 	bool isSelecting = false;
 	Vector3 mousePosition1;
-	List<GameObject> selectedUnits = new List<GameObject> ();
+	List<Unit> selectedUnits = new List<Unit> ();
 	// public SelectionDisplay selectionDisplay;
 	static Texture2D _whiteTexture;
 	public static Texture2D WhiteTexture
@@ -72,6 +72,17 @@ public class SelectionUI : MonoBehaviour {
 		return bounds;
 	}
 
+	private void pointSelect(){
+		if (Input.GetMouseButtonDown (1) && selectedUnits.Count > 0) {
+			Vector3 mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			mousePos.z=0;
+			foreach (Unit unit in selectedUnits){
+				unit.setGoal(mousePos);
+			}
+			selectedUnits.Clear();
+		}
+	}
+
 
 	void Update()
 	{
@@ -88,15 +99,16 @@ public class SelectionUI : MonoBehaviour {
 			//Do something here if a unit is selected
 			//selectionDisplay.onSelectedUnits (selectedUnits);
 		}
+		pointSelect();
 	}
 
 	// private void setUnitsAsDeselected
 
 	private void setUnitsAsSelected(){
-		selectedUnits = new List<GameObject> ();
+		selectedUnits = new List<Unit> ();
 		foreach (Unit curUnit in GameObject.FindObjectsOfType<Unit>()) {
 			if (IsWithinSelectionBounds (curUnit.gameObject)) {
-				selectedUnits.Add (curUnit.gameObject);
+				selectedUnits.Add (curUnit);
 				curUnit.onSelected();
 			}
 		}

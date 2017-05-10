@@ -6,6 +6,15 @@ public class Unit : MonoBehaviour {
 
 	public Sprite haloSprite;
 	GameObject selectionHaloObj;
+	Vector3 goal;
+
+	void Start(){
+		goal=transform.position;
+	}
+
+	void Update(){
+		moveToGoal();
+	}
 
 	public void onSelected(){
 		//Only allow to be selected once
@@ -26,5 +35,13 @@ public class Unit : MonoBehaviour {
 			Debug.Log (gameObject.transform.GetChild (0).name);
 		}
 	
+	}
+
+	public void setGoal(Vector3 loc){
+		goal=loc;
+	}
+
+	public void moveToGoal(){
+        transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime);
 	}
 }
