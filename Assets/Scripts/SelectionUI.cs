@@ -9,7 +9,8 @@ public class SelectionUI : MonoBehaviour {
 
 	bool isSelecting = false;
 	Vector3 mousePosition1;
-	List<Unit> selectedUnits = new List<Unit> ();
+	public List<Unit> selectedUnits = new List<Unit> ();
+	GameObject ghost=null;
 	// public SelectionDisplay selectionDisplay;
 	static Texture2D _whiteTexture;
 	public static Texture2D WhiteTexture
@@ -99,7 +100,26 @@ public class SelectionUI : MonoBehaviour {
 			//Do something here if a unit is selected
 			//selectionDisplay.onSelectedUnits (selectedUnits);
 		}
-		pointSelect();
+		if (selectedUnits.Count!=0){
+			pointSelect();
+			ghostShowMovement();
+		}
+	}
+
+	private void ghostShowMovement(){
+		if (selectedUnits.Count==1){
+			Vector3 mousePosition = Input.mousePosition;
+            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+            if (ghost==null){
+            	GameObject selectedUnit=selectedUnits[0].gameObject;
+            	ghost=Object.Instantiate(selectedUnit,selectedUnit.transform.position, Quaternion.identity);
+            	ghost.GetComponent<Unit>().destroySelf();
+            	Color ghostColor=ghost.GetComponent<SpriteRenderer>().color;
+            	ghostColor.a=.1f;
+            	ghost.GetComponent<SpriteRenderer>().color=ghostColor;
+            }
+            ghost.transform.position = Vector2.Lerp(ghost.transform.position, mousePosition, 1);
+		}
 	}
 
 	// private void setUnitsAsDeselected

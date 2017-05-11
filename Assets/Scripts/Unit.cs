@@ -7,13 +7,38 @@ public class Unit : MonoBehaviour {
 	public Sprite haloSprite;
 	GameObject selectionHaloObj;
 	Vector3 goal;
+	public int maxActionPoints=100;
+	private int actionPoints;
 
 	void Start(){
 		goal=transform.position;
+		actionPoints=maxActionPoints;
 	}
 
 	void Update(){
 		moveToGoal();
+	}
+
+	public void removeActionPoints(int amount){
+		int toSet=Mathf.Max(actionPoints-amount,0);
+		actionPoints=toSet;
+	}
+
+	public void destroySelf(){
+		removeHalo();
+		//Destroy(this);
+	}
+
+	public void removeHalo(){
+		if (selectionHaloObj==null){
+			Debug.Log("Halo already null");
+		}
+		Debug.Log("Removing Halo("+selectionHaloObj.name+") from "+gameObject.name);
+		UnityEngine.Object.Destroy(selectionHaloObj);
+	}
+
+	public void resetActionPoints(){
+		actionPoints=maxActionPoints;
 	}
 
 	public void onSelected(){
