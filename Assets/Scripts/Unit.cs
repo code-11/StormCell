@@ -5,7 +5,7 @@ using UnityEngine;
 public class Unit : MonoBehaviour {
 
 	public Sprite haloSprite;
-	GameObject selectionHaloObj;
+	public GameObject selectionHaloObj;
 	Vector3 goal;
 	public int maxActionPoints=100;
 	private int actionPoints;

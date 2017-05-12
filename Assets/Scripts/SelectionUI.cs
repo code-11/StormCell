@@ -113,7 +113,8 @@ public class SelectionUI : MonoBehaviour {
             if (ghost==null){
             	GameObject selectedUnit=selectedUnits[0].gameObject;
             	ghost=Object.Instantiate(selectedUnit,selectedUnit.transform.position, Quaternion.identity);
-            	ghost.GetComponent<Unit>().destroySelf();
+            	Destroy(ghost.transform.GetChild(0).gameObject);
+            	Destroy(ghost.GetComponent<Unit>());
             	Color ghostColor=ghost.GetComponent<SpriteRenderer>().color;
             	ghostColor.a=.1f;
             	ghost.GetComponent<SpriteRenderer>().color=ghostColor;
