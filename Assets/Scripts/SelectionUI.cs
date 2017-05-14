@@ -11,6 +11,8 @@ public class SelectionUI : MonoBehaviour {
 	Vector3 mousePosition1;
 	public List<Unit> selectedUnits = new List<Unit> ();
 	GameObject ghost=null;
+	LineRenderer lineRenderer=null;
+	Material lineRendererMaterial=null;
 	// public SelectionDisplay selectionDisplay;
 	static Texture2D _whiteTexture;
 	public static Texture2D WhiteTexture
@@ -26,6 +28,10 @@ public class SelectionUI : MonoBehaviour {
 
 			return _whiteTexture;
 		}
+	}
+
+	void Start(){
+		lineRendererMaterial=new Material (Shader.Find ("Sprites/Default"));
 	}
 
 	public static void DrawScreenRect( Rect rect, Color color )
@@ -111,6 +117,7 @@ public class SelectionUI : MonoBehaviour {
 
 	private void removeGhost(){
 		Destroy(ghost);
+		Destroy(lineRenderer);
 	}
 
 	private void ghostShowMovement(){
@@ -129,7 +136,17 @@ public class SelectionUI : MonoBehaviour {
             	ghostColor.a=.1f;
             	ghost.GetComponent<SpriteRenderer>().color=ghostColor;
             }
-            ghost.transform.position = Vector2.Lerp(ghost.transform.position, mousePosition, 1);
+            if (lineRenderer==null){
+            	lineRenderer= ghost.AddComponent<LineRenderer>();
+            	lineRenderer.material = lineRendererMaterial;
+            	lineRenderer.material.color=Color.white;
+            	lineRenderer.startWidth=0.05F;
+            	lineRenderer.endWidth=0.05F;
+		 		lineRenderer.numPositions=2;
+            }
+            lineRenderer.SetPosition(0,selectedUnits[0].gameObject.transform.position);
+            lineRenderer.SetPosition(1,mousePosition);
+            ghost.transform.position = Vector2.Lerp(ghost.transform.position, mousePosition, 2);
 		}
 	}
 
