@@ -9,6 +9,8 @@ public class Unit : MonoBehaviour {
 	Vector3 goal;
 	public int maxActionPoints=100;
 	private int actionPoints;
+	private bool moving=false;
+	private bool selected=false;
 
 	void Start(){
 		goal=transform.position;
@@ -24,26 +26,14 @@ public class Unit : MonoBehaviour {
 		actionPoints=toSet;
 	}
 
-	public void destroySelf(){
-		removeHalo();
-		//Destroy(this);
-	}
-
-	public void removeHalo(){
-		if (selectionHaloObj==null){
-			Debug.Log("Halo already null");
-		}
-		Debug.Log("Removing Halo("+selectionHaloObj.name+") from "+gameObject.name);
-		UnityEngine.Object.Destroy(selectionHaloObj);
-	}
-
 	public void resetActionPoints(){
 		actionPoints=maxActionPoints;
 	}
 
 	public void onSelected(){
+		selected=true;
 		//Only allow to be selected once
-		if (transform.childCount == 0) {
+		if (selectionHaloObj == null) {
 			selectionHaloObj = new GameObject (); 
 			//Center on parent
 			selectionHaloObj.name = "Selection Halo";
@@ -55,11 +45,13 @@ public class Unit : MonoBehaviour {
 			haloRenderer.sprite = haloSprite;
 			haloRenderer.color = Color.green;
 			haloRenderer.sortingOrder=1;
-		} else {
-			Debug.Log (gameObject.name + " already has a halo");
-			Debug.Log (gameObject.transform.GetChild (0).name);
 		}
-	
+	}
+
+	public void onDeselected(){
+		selected=false;
+		Destroy(selectionHaloObj);
+		selectionHaloObj=null;
 	}
 
 	public void setGoal(Vector3 loc){
@@ -68,5 +60,10 @@ public class Unit : MonoBehaviour {
 
 	public void moveToGoal(){
         transform.position = Vector3.MoveTowards(transform.position, goal, Time.deltaTime);
+        moving = (goal!=transform.position);
+	}
+
+	public bool isMoving(){
+		return moving;
 	}
 }

@@ -78,9 +78,10 @@ public class SelectionUI : MonoBehaviour {
 			Vector3 mousePos=Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			mousePos.z=0;
 			foreach (Unit unit in selectedUnits){
-				unit.setGoal(mousePos);
+				if (!unit.isMoving()){
+					unit.setGoal(mousePos);
+				}
 			}
-			selectedUnits.Clear();
 		}
 	}
 
@@ -96,6 +97,8 @@ public class SelectionUI : MonoBehaviour {
 		// If we let go of the left mouse button, end selection
 		if (Input.GetMouseButtonUp(0)) {
 			isSelecting = false;
+			removeGhost();
+			setUnitsAsDeselected();
 			setUnitsAsSelected ();
 			//Do something here if a unit is selected
 			//selectionDisplay.onSelectedUnits (selectedUnits);
@@ -106,6 +109,10 @@ public class SelectionUI : MonoBehaviour {
 		}
 	}
 
+	private void removeGhost(){
+		Destroy(ghost);
+	}
+
 	private void ghostShowMovement(){
 		if (selectedUnits.Count==1){
 			Vector3 mousePosition = Input.mousePosition;
@@ -113,7 +120,10 @@ public class SelectionUI : MonoBehaviour {
             if (ghost==null){
             	GameObject selectedUnit=selectedUnits[0].gameObject;
             	ghost=Object.Instantiate(selectedUnit,selectedUnit.transform.position, Quaternion.identity);
-            	Destroy(ghost.transform.GetChild(0).gameObject);
+            	//Remove the selection halo
+            	if (ghost.transform.childCount>0){
+            		Destroy(ghost.transform.GetChild(0).gameObject);
+            	}
             	Destroy(ghost.GetComponent<Unit>());
             	Color ghostColor=ghost.GetComponent<SpriteRenderer>().color;
             	ghostColor.a=.1f;
@@ -123,7 +133,11 @@ public class SelectionUI : MonoBehaviour {
 		}
 	}
 
-	// private void setUnitsAsDeselected
+	private void setUnitsAsDeselected(){
+		foreach(Unit curUnit in selectedUnits){
+			curUnit.onDeselected();
+		}
+	}
 
 	private void setUnitsAsSelected(){
 		selectedUnits = new List<Unit> ();
