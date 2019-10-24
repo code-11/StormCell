@@ -1,7 +1,4 @@
 import React from 'react';
-import Title from './Title';
-import AddTask from './AddTask';
-import Board from './Board';
 import './App.css';
 
 import {
@@ -11,23 +8,12 @@ import {
 } from "react-openlayers";
 
 const App = () => (
-    // <div>
-    //     <Title />
-    //     <AddTask />
-    //     <Board />
-    // </div>
     <Map view={{center: [0, 0], zoom: 2}}>
       <Layers>
         <layer.Tile/>
       </Layers>
-      <Controls attribution={false} zoom={true}>
+      <Controls attribution={false} zoom={false}>
         <control.Rotate />
-        <control.ScaleLine />
-        <control.FullScreen />
-        <control.OverviewMap />
-        <control.ZoomSlider />
-        <control.ZoomToExtent />
-        <control.Zoom />
       </Controls>
       <Interactions>
       </Interactions>
