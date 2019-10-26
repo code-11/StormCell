@@ -12,13 +12,40 @@ import Text from 'ol/style/Text';
 import Stroke from 'ol/style/Stroke';
 import Fill from 'ol/style/Fill';
 import countryData from "./countries";
-
+import Select from 'ol/interaction/Select';
 //4326 - LAT LON
 //3857 - X, Y
+
+function hash(str) {
+  var hash = 5381,
+      i    = str.length;
+
+  while(i) {
+    hash = (hash * 33) ^ str.charCodeAt(--i);
+  }
+
+  /* JavaScript does bitwise operations (like XOR, above) on 32-bit signed
+   * integers. Since we want the results to be always positive, convert the
+   * signed int to an unsigned by doing an unsigned bitshift. */
+  return hash >>> 0;
+}
+
+function hashTo(str,n){
+  return hash(str) % n;
+}
 
 class App extends Component {
   constructor(props) {
     super(props);
+
+    const COLORS=[
+      "rgb(137,140,255)",
+      "rgb(255,137,181)",
+      "rgb(255,220,137)",
+      "rgb(144,212,247)",
+      "rgb(245,162,111)",
+      "rgb(207,243,129)",
+      "rgb(177,195,209)"];
 
     this.state = { center: [0, 0], zoom: 1 };
 
@@ -27,22 +54,30 @@ class App extends Component {
     })
     countryLoader.addFeatures((new GeoJSON()).readFeatures(countryData));
 
-    const style = new Style({
+    const mapStyle = new Style({
           stroke: new Stroke({
               color: 'black',
               width: 1
           }),
           text: new Text(),
+          fill: new Fill({
+              color:"white",
+          }),
       });
 
     const countryLayer= new VectorLayer({
       source: countryLoader,
       style: function(feature, res){
-          const text = style.getText();
+          const text = mapStyle.getText();
           text.text_ = feature.get('name');
-          return style;
+          const fill = mapStyle.getFill();
+          // console.log(fill);
+          fill.setColor(COLORS[hashTo(feature.get("name"),COLORS.length)]);
+          return mapStyle;
       }
     });
+
+    const selectClick = new Select();
 
     this.olmap = new Map({
       target: 'map-container',
@@ -54,6 +89,11 @@ class App extends Component {
         zoom: 2,
         projection: 'EPSG:4326'
       })
+    });
+
+    this.olmap.on('click', (event)=> {
+      const selected=this.olmap.forEachFeatureAtPixel(event.pixel, function(feature,layer) { return feature; });
+      console.log(selected);
     });
   }
 
