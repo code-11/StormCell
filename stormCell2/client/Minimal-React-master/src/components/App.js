@@ -8,6 +8,7 @@ import TileLayer from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import View from 'ol/View';
 import Style from 'ol/style/Style';
+import Text from 'ol/style/Text';
 import Stroke from 'ol/style/Stroke';
 import Fill from 'ol/style/Fill';
 import countryData from "./countries";
@@ -31,25 +32,15 @@ class App extends Component {
               color: 'black',
               width: 1
           }),
-          // text: new Text({
-          //   font: '12px Calibri,sans-serif',
-          //   fill: new Fill({
-          //     color: '#000'
-          //   }),
-          //   stroke: new Stroke({
-          //     color: '#fff',
-          //     width: 3
-          //   })
-          // })
+          text: new Text(),
       });
 
     const countryLayer= new VectorLayer({
       source: countryLoader,
       style: function(feature, res){
-      // replace "Germany" with any country name you would like to display...
-          // const text=style.getText();
-          // text.setText(feature.get('name'));
-          return style
+          const text = style.getText();
+          text.text_ = feature.get('name');
+          return style;
       }
     });
 
@@ -64,7 +55,6 @@ class App extends Component {
         projection: 'EPSG:4326'
       })
     });
-    console.log(countryLayer);
   }
 
   updateMap() {
