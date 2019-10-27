@@ -12,6 +12,7 @@ import Text from 'ol/style/Text';
 import Stroke from 'ol/style/Stroke';
 import Fill from 'ol/style/Fill';
 import countryData from "./countries";
+import continentData from "./continents";
 import Select from 'ol/interaction/Select';
 //4326 - LAT LON
 //3857 - X, Y
@@ -34,20 +35,45 @@ function hashTo(str,n){
   return hash(str) % n;
 }
 
+function rgbToList(colorStr){
+  const rgbFrag=colorStr.replace(")","");
+  const rgbFrag2=rgbFrag.split("(")[1];
+  const rgb=rgbFrag2.split(",").map(x => parseInt(x));
+  return rgb;
+}
+
+function rgbToStr(rgb){
+  return "rgb("+rgb+")"; 
+}
+
+function bend(rgb,n){
+  const bentList=rgb.map(x=>x+n);
+  return bentList;
+  // return rgbToStr(bentList);
+}
+
+function validRgb(rgb){
+  return !(rgb.map(x=>x>255).length>0);
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
 
-    const COLORS=[
-      "rgb(137,140,255)",
-      "rgb(255,137,181)",
-      "rgb(255,220,137)",
-      "rgb(144,212,247)",
-      "rgb(245,162,111)",
-      "rgb(207,243,129)",
-      "rgb(177,195,209)"];
-
     this.state = { center: [0, 0], zoom: 1 };
+
+    this.storedColors={
+    };
+
+    this.usedColors={
+      "northamerica":[],
+      "southamerica":[],
+      "europe":[],
+      "africa":[],
+      "asia":[],
+      "oceania":[],
+      "antarctica":[]
+    }
 
     const countryLoader = new VectorSource({
       format: new GeoJSON({dataProjection: 'EPSG:4326'})
@@ -67,12 +93,14 @@ class App extends Component {
 
     const countryLayer= new VectorLayer({
       source: countryLoader,
-      style: function(feature, res){
+      style: (feature, res)=>{
           const text = mapStyle.getText();
-          text.text_ = feature.get('name');
+          const name = feature.get('name');
+          text.text_ = name;
           const fill = mapStyle.getFill();
           // console.log(fill);
-          fill.setColor(COLORS[hashTo(feature.get("name"),COLORS.length)]);
+          fill.setColor(this.determineColor(name));
+          // fill.setColor(COLORS[hashTo(feature.get("name"),COLORS.length)]);
           return mapStyle;
       }
     });
@@ -95,6 +123,44 @@ class App extends Component {
       const selected=this.olmap.forEachFeatureAtPixel(event.pixel, function(feature,layer) { return feature; });
       console.log(selected);
     });
+  }
+
+  determineColor(country){
+
+    const COLORS={
+      "northamerica":"rgb(137,140,255)",
+      "southamerica":"rgb(255,137,181)",
+      "europe":"rgb(255,220,137)",
+      "africa":"rgb(144,212,247)",
+      "asia":"rgb(245,162,111)",
+      "oceania":"rgb(207,243,129)",
+      "antarctica":"rgb(177,195,209)"};
+
+    const continents= Object.keys(continentData);
+    for(let i=0; i<continents.length; i+=1){
+      const continent = continents[i];
+      if (this.storedColors[country]!==undefined){
+        return rgbToStr(this.storedColors[country]);
+      }
+      if (continentData[continent][country] !== undefined){
+        let colorToUse=rgbToList(COLORS[continent]);
+        let bending=2;
+        while(this.usedColors[continent].includes(rgbToStr(colorToUse)) && validRgb(colorToUse)){
+          colorToUse=bend(colorToUse,bending);
+        }
+        if(!validRgb(colorToUse)){
+          colorToUse=rgbToList(COLORS[continent]);
+          bending=-2;
+          while(this.usedColors[continent].includes(rgbToStr(colorToUse))){
+            colorToUse=bend(colorToUse,bending);
+          }
+        }
+        this.usedColors[continent].push(rgbToStr(colorToUse));
+        this.storedColors[country]=colorToUse;
+        return rgbToStr(colorToUse);
+      }
+    }
+    return "rgb(255,255,255)";
   }
 
   updateMap() {
