@@ -82,12 +82,12 @@ class App extends Component {
 
     const mapStyle = new Style({
           stroke: new Stroke({
-              color: 'black',
+              color: 'white',
               width: 1
           }),
           text: new Text(),
           fill: new Fill({
-              color:"white",
+              color:"black",
           }),
       });
 
@@ -100,7 +100,13 @@ class App extends Component {
           const fill = mapStyle.getFill();
           // console.log(fill);
           fill.setColor(this.determineColor(name));
-          // fill.setColor(COLORS[hashTo(feature.get("name"),COLORS.length)]);
+
+          const stroke = mapStyle.getStroke();
+          if(name==="Antarctica"){
+            stroke.setColor("gray");
+          }else{
+            stroke.setColor("white");
+          }
           return mapStyle;
       }
     });
