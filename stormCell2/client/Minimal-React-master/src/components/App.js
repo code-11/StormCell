@@ -41,9 +41,13 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { center: [0, 0], zoom: 1 };
+    this.state = { 
+      center: [0, 0], 
+      zoom: 1,
+      selected: [], 
+    };
 
-    this.mapColorer = new MapColorer(countryData,continentData);
+    this.mapColorer = new MapColorer(countryData,continentData, this.state.selected);
 
     const countryLoader = new VectorSource({
       format: new GeoJSON({dataProjection: 'EPSG:4326'})
@@ -72,11 +76,8 @@ class App extends Component {
           fill.setColor(this.mapColorer.determineColor(name));
 
           const stroke = mapStyle.getStroke();
-          if(name==="Antarctica"){
-            stroke.setColor("gray");
-          }else{
-            stroke.setColor("white");
-          }
+          stroke.setColor(this.mapColorer.determineStroke(name));
+          
           return mapStyle;
       }
     });
@@ -95,9 +96,21 @@ class App extends Component {
       })
     });
 
+
+    this.olmap.on('contextmenu', (evt) => {
+      evt.preventDefault();
+      console.log(this.state.selected);
+    });
+
     this.olmap.on('click', (event)=> {
-      const selected=this.olmap.forEachFeatureAtPixel(event.pixel, function(feature,layer) { return feature; });
-      console.log(selected);
+      const selectedCountry=this.olmap.forEachFeatureAtPixel(event.pixel, function(feature,layer) { return feature; });
+      if (selectedCountry!==undefined){
+        const selectedList=this.state.selected;
+        const newSelectedVal=selectedCountry.values_.name;
+        selectedList[0]=newSelectedVal
+        this.setState({selected:selectedList});
+        selectedCountry.changed();
+      }
     });
   }
 

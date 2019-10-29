@@ -1,5 +1,5 @@
 export default class MapColorer{
-	constructor(countryData,continentData){
+	constructor(countryData,continentData, selectedRef){
 
 		this.storedColors={
 	    };
@@ -15,8 +15,8 @@ export default class MapColorer{
 	    }
 
 	    this.countryData=countryData;
-
 	    this.continentData=continentData;
+	    this.selectedRef=selectedRef;
 	}
 
 	rgbToList(colorStr){
@@ -40,7 +40,30 @@ export default class MapColorer{
 	  return !(rgb.map(x=>x>255).length>0);
 	}
 
+	determineStroke(country){
+		  if(country==="Antarctica"){
+		  	return "gray";
+		  }
+		  // else if(this.selectedRef.length>0 && country===this.selectedRef[0]){
+    //         return "rgb(255,0,0)";
+    //       }
+          else{
+            return "white";
+          }
+	}
+
 	determineColor(country){
+		const colorStr=this.determineColorCore(country);
+		if(this.selectedRef.length>0 && country===this.selectedRef[0]){
+			return "rgb(150,150,150)";
+		}else{
+			return colorStr;
+		}
+		return colorStr;
+	}
+
+	determineColorCore(country){
+
 		const COLORS={
 		  "northamerica":"rgb(137,140,255)",
 		  "southamerica":"rgb(255,137,181)",
@@ -71,6 +94,7 @@ export default class MapColorer{
 		    }
 		    this.usedColors[continent].push(this.rgbToStr(colorToUse));
 		    this.storedColors[country]=colorToUse;
+
 		    return this.rgbToStr(colorToUse);
 		  }
 		}
