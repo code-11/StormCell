@@ -11,6 +11,27 @@ For instance in the united states, you might have democrats and republicans. How
 In south vietnam, you could get viet cong, nationalists, buddhists, french remnants. 
 Representing actual splitting of countries might be harder. 
 
+Political Spectra (SPIRIT)
+	DEMOS: democraticness vs authoritarian
+	SPEED: radical vs progressives vs conservatives vs reactionaries
+	CLERIC: level of religiousness
+	MARKET: level of market involvement, free trade vs protectionism
+	PEACE: 	pacifism vs level of interventionism and if so, multilateralism vs unilateralism
+	TOLERANCE: level of tolerance
+	SELF: self expression vs conformatism or individualism vs collectivism
+
+Ideologies are simply labels, held by one main country, the proponent of that ideology. They fold in other countries according to individual relationships and similarity along spectra.
+
+Government types:
+	Communism
+	Socialism
+	Fascism
+	Democracy
+	Oligarchy
+	Kleptocracy
+	Theocracy
+
+
 Important historical events:
 1945
 February 4-11: Yalta conference
