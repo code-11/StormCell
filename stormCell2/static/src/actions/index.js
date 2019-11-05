@@ -1,24 +1,46 @@
-let nextTaskId = 0;
+// dispatch(requestPosts(subreddit))
 
-export const addTask = ({ text, executor }) => {
+const requestTime = () => {
     return {
-        type: 'ADD_TASK',
-        id: (nextTaskId++).toString(),
-        text,
-        executor
+        type:"ASK_TIME",
     };
 };
 
-export const removeTask = (id) => {
+const receiveTime = (time) => {
     return {
-        type: 'REMOVE_TASK',
-        id
+        type:"GET_TIME",
+        time: time
     };
 };
 
-export const changeTaskStatus = (id) => {
-    return {
-        type: 'CHANGE_TASK_STATUS',
-        id
-    };
+export const getTime = (dispatch) =>{
+    dispatch(requestTime);
+    return fetch("/time").then((time)=>{
+        dispatch(receiveTime(time));
+    });
 };
+
+// let nextTaskId = 0;
+
+// export const addTask = ({ text, executor }) => {
+//     return {
+//         type: 'ADD_TASK',
+//         id: (nextTaskId++).toString(),
+//         text,
+//         executor
+//     };
+// };
+
+// export const removeTask = (id) => {
+//     return {
+//         type: 'REMOVE_TASK',
+//         id
+//     };
+// };
+
+// export const changeTaskStatus = (id) => {
+//     return {
+//         type: 'CHANGE_TASK_STATUS',
+//         id
+//     };
+// };

@@ -11,6 +11,7 @@ class Clock(threading.Thread):
         threading.Thread.__init__(self)
 
 
+
     #Want 50 years in 2 hours
     YEAR_IN_SECONDS = 31536000
     GAME_DURATION = 50  # years
@@ -40,4 +41,4 @@ class Clock(threading.Thread):
             print('\b\b\b\b\b' + cur_time.strftime("%m/%d/%Y, %H:%M:%S"), end='')
             # print(time_passed)
             sys.stdout.flush()
-            time.sleep(.1)
+            time.sleep(0.1)

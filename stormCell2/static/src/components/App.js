@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'
 import 'ol/ol.css';
 import GeoJSON from 'ol/format/GeoJSON';
 import Map from 'ol/Map';
@@ -15,8 +16,18 @@ import countryData from "./countries";
 import continentData from "./continents";
 import Select from 'ol/interaction/Select';
 import MapColorer from "./MapColorer";
+import actions from '../actions';
+import { bindActionCreators } from 'redux';
 //4326 - LAT LON
 //3857 - X, Y
+
+function mapStateToProps(state) {
+  return { time: state.time };
+}
+
+function mapDispatchToProps(dispatch) {
+  // return { actions: bindActionCreators(actionCreators, dispatch) };
+}
 
 function hash(str) {
   var hash = 5381,
@@ -37,6 +48,11 @@ function hashTo(str,n){
 }
 
 
+// @connect((state) => {
+//   return {
+//     time: state.time
+//   };
+// })
 class App extends Component {
   constructor(props) {
     super(props);
@@ -105,11 +121,13 @@ class App extends Component {
     this.olmap.on('click', (event)=> {
       const selectedCountry=this.olmap.forEachFeatureAtPixel(event.pixel, function(feature,layer) { return feature; });
       if (selectedCountry!==undefined){
-        const selectedList=this.state.selected;
-        const newSelectedVal=selectedCountry.values_.name;
-        selectedList[0]=newSelectedVal
-        this.setState({selected:selectedList});
-        selectedCountry.changed();
+        this.props.dispatch(actions.getTime()).then(time=>{
+          const selectedList=this.state.selected;
+          const newSelectedVal=selectedCountry.values_.name;
+          selectedList[0]=newSelectedVal
+          this.setState({selected:selectedList});
+          selectedCountry.changed();
+        });
       }
     });
   }
@@ -149,5 +167,6 @@ class App extends Component {
     );
   }
 }
-
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(state => ({time: state.time}))(App);
+// export default App;

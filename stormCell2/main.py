@@ -1,5 +1,7 @@
 import os
 import clock
+import threading
+
 from flask import Flask, send_from_directory
 app = Flask(__name__, static_folder='static')
 
@@ -21,7 +23,8 @@ def root():
 
 
 if __name__ == '__main__':
-    # the_clock = clock.Clock()
-    # the_clock.run()
-    app.run()
+    the_clock = clock.Clock()
+    the_clock.start()
+    threading.Thread(target=app.run).start()
+    # app.run()
 
