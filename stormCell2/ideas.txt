@@ -11,7 +11,13 @@ For instance in the united states, you might have democrats and republicans. How
 In south vietnam, you could get viet cong, nationalists, buddhists, french remnants. 
 Representing actual splitting of countries might be harder. 
 
-Political Spectra (SPIRIT)
+Political advisors can be assigned to the UN, and other regional organizations. These organizations can make decisions similar to the world Congress in civ. 
+Before an upcoming vote, you may want to influence the other voters. One common tactic is providing them with gaurentees but not sure how to enforce that.
+Sometimes there could be crisises. If you're on the security counsel maybe you get an additional advisor. Crises would be a flurry of events in rapid succession. 
+They would be regional things which threaten to spill over, like Rwandan genocide.
+
+
+Political Spectra (SPIRIT)h
 	DEMOS: democraticness vs authoritarian
 	SPEED: radical vs progressives vs conservatives vs reactionaries
 	CLERIC: level of religiousness
