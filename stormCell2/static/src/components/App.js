@@ -16,17 +16,14 @@ import countryData from "./countries";
 import continentData from "./continents";
 import Select from 'ol/interaction/Select';
 import MapColorer from "./MapColorer";
-import actions from '../actions';
+import {getTime} from '../actions/index';
 import { bindActionCreators } from 'redux';
 //4326 - LAT LON
 //3857 - X, Y
 
 function mapStateToProps(state) {
-  return { time: state.time };
-}
-
-function mapDispatchToProps(dispatch) {
-  // return { actions: bindActionCreators(actionCreators, dispatch) };
+  return {}
+  // return { time: state.time };
 }
 
 function hash(str) {
@@ -121,7 +118,7 @@ class App extends Component {
     this.olmap.on('click', (event)=> {
       const selectedCountry=this.olmap.forEachFeatureAtPixel(event.pixel, function(feature,layer) { return feature; });
       if (selectedCountry!==undefined){
-        this.props.dispatch(actions.getTime()).then(time=>{
+        this.props.dispatch(getTime()).then(time=>{
           const selectedList=this.state.selected;
           const newSelectedVal=selectedCountry.values_.name;
           selectedList[0]=newSelectedVal
@@ -167,6 +164,6 @@ class App extends Component {
     );
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
 // export default connect(state => ({time: state.time}))(App);
 // export default App;

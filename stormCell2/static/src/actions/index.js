@@ -14,7 +14,7 @@ const receiveTime = (time) => {
 };
 
 export const getTime = (dispatch) =>{
-    dispatch(requestTime);
+    dispatch({type:"ASK_TIME"});
     return fetch("/time").then((time)=>{
         dispatch(receiveTime(time));
     });
