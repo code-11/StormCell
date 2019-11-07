@@ -13,12 +13,21 @@ const receiveTime = (time) => {
     };
 };
 
-export const getTime = (dispatch) =>{
-    dispatch({type:"ASK_TIME"});
-    return fetch("/time").then((time)=>{
-        dispatch(receiveTime(time));
-    });
+export const getTime = () =>{
+    return (dispatch) =>{
+        dispatch({type:"ASK_TIME"});
+        return fetch("/time")
+        .then((response)=>response.json())
+        .then((time)=>{
+            console.log(time);
+            dispatch(receiveTime(time));
+        });
+    };
 };
+
+// export const getTime = (dispatch, getState) => {
+//     return dispatch(sendGetTime);
+// }
 
 // let nextTaskId = 0;
 
