@@ -1,6 +1,6 @@
 const mainReducer = (state={}, action) => {
 	switch(action.type){
-		case "TIME":
+		case "GET_TIME":
 			return { ...state, time: action.time};
 	}
 }

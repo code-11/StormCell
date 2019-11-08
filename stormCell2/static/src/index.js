@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk'; 
+import Logger from 'redux-logger';
 // import tasks from './reducers';
 import mainReducer from './reducers';
 import App from './components/App';
@@ -15,7 +16,7 @@ const initialState={
 const store = createStore(
     mainReducer, // reducers
     initialState,
-    applyMiddleware(ReduxThunk)
+    applyMiddleware(ReduxThunk,Logger)
 );
 
 render(

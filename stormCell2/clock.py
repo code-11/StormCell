@@ -8,6 +8,7 @@ class Clock(threading.Thread):
     def __init__(self):
         self._start = None
         self.str_time = None
+        self.cur_game_time_dic = None
         threading.Thread.__init__(self)
 
 
@@ -35,6 +36,10 @@ class Clock(threading.Thread):
             game_time_passed = Clock.MULTIPLIER * time_passed
 
             cur_time = Clock.YEAR_ZERO + Clock.YEAR_OFFSET + datetime.timedelta(seconds=game_time_passed)
+            self.cur_game_time_dic = {"year": cur_time.year,
+                                      "month": cur_time.month,
+                                      "day": cur_time.day,
+                                      "hour": cur_time.hour}
 
             self.str_time = cur_time.strftime("%m/%d/%Y, %H:%M:%S")
 

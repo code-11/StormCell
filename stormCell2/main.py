@@ -1,13 +1,17 @@
 import os
 import clock
 import threading
+from flask import jsonify
 
 from flask import Flask, send_from_directory
 app = Flask(__name__, static_folder='static')
+the_clock = clock.Clock()
+
 
 @app.route("/time")
 def time():
-    return "649"
+    return jsonify(the_clock.cur_game_time_dic)
+
 
 @app.route("/favicon.ico")
 def favicon():
@@ -26,7 +30,6 @@ def root():
 
 
 if __name__ == '__main__':
-    the_clock = clock.Clock()
     the_clock.start()
     threading.Thread(target=app.run).start()
     # app.run()
