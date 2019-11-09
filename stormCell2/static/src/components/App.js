@@ -16,8 +16,9 @@ import countryData from "./countries";
 import continentData from "./continents";
 import Select from 'ol/interaction/Select';
 import MapColorer from "./MapColorer";
-import {getTime, pauseTime} from '../actions/index';
+import {getTime, pauseTime, startTime} from '../actions/index';
 import { bindActionCreators } from 'redux';
+import TimeControls from "./TimeControls";
 //4326 - LAT LON
 //3857 - X, Y
 
@@ -160,7 +161,7 @@ class App extends Component {
     this.updateMap(); // Update map on render?
     return (
       <div>
-        <input type="button" onClick={()=>this.props.dispatch(pauseTime())}> Pause </input>
+        <TimeControls/>
         <div id="map" style={{ width: "100%", height: "100vh" }}></div>
       </div>
     );

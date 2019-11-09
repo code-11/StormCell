@@ -10,13 +10,23 @@ the_clock = clock.Clock()
 
 @app.route("/pauseTime")
 def pause_time():
+    global the_clock
     new_clock = the_clock.clone()
+    the_clock.stop()
     the_clock = new_clock
+    return jsonify(True)
+
+
+@app.route("/startTime")
+def start_time():
+    global the_clock
+    the_clock.start()
+    return jsonify(True)
 
 
 @app.route("/time")
 def time():
-    return jsonify(the_clock.cur_game_time_dic)
+    return jsonify(the_clock.game_time_dic())
 
 
 @app.route("/favicon.ico")
@@ -36,7 +46,7 @@ def root():
 
 
 if __name__ == '__main__':
-    the_clock.start()
+    # the_clock.start()
     threading.Thread(target=app.run).start()
     # app.run()
 

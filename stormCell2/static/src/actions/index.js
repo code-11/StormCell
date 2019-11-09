@@ -30,12 +30,24 @@ export const pauseTime = () =>{
         dispatch({type:"PAUSING_TIME"});
         return fetch("/pauseTime")
         .then((response)=>response.json())
-        .then((success))=>{
+        .then((success)=>{
             console.log("Stopped server clock");
             dispatch({type:"PAUSED_TIME"});
-        }
-    }
-}
+        });
+    };
+};
+
+export const startTime = () =>{
+    return (dispatch) =>{
+        dispatch({type:"STARTING_TIME"});
+        return fetch("/startTime")
+        .then((response)=>response.json())
+        .then((success)=>{
+            console.log("Started server clock");
+            dispatch({type:"STARTED_TIME"});
+        });
+    };
+};
 
 // export const getTime = (dispatch, getState) => {
 //     return dispatch(sendGetTime);

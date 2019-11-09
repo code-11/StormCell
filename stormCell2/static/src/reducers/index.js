@@ -4,6 +4,8 @@ const mainReducer = (state={}, action) => {
 			return { ...state, time: action.time};
 		case "PAUSED_TIME":
 			return { ...state, timeRate: "PAUSED"};
+		case "STARTED_TIME":
+			return { ...state, timeRate: "PLAY"};
 	}
 }
 
