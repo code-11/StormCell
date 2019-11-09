@@ -11,6 +11,7 @@ import App from './components/App';
 
 const initialState={
 	time:"",
+	timeRate:"PLAY"
 }
 
 const store = createStore(

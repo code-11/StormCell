@@ -8,6 +8,12 @@ app = Flask(__name__, static_folder='static')
 the_clock = clock.Clock()
 
 
+@app.route("/pauseTime")
+def pause_time():
+    new_clock = the_clock.clone()
+    the_clock = new_clock
+
+
 @app.route("/time")
 def time():
     return jsonify(the_clock.cur_game_time_dic)

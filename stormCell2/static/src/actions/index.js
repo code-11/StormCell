@@ -25,6 +25,18 @@ export const getTime = () =>{
     };
 };
 
+export const pauseTime = () =>{
+    return (dispatch) =>{
+        dispatch({type:"PAUSING_TIME"});
+        return fetch("/pauseTime")
+        .then((response)=>response.json())
+        .then((success))=>{
+            console.log("Stopped server clock");
+            dispatch({type:"PAUSED_TIME"});
+        }
+    }
+}
+
 // export const getTime = (dispatch, getState) => {
 //     return dispatch(sendGetTime);
 // }
