@@ -2,6 +2,8 @@ import os
 import game
 import player
 import threading
+import countriesIO
+import propertyReader as PR
 from flask import jsonify
 
 from flask import Flask, send_from_directory
@@ -51,7 +53,15 @@ def root():
 
 
 if __name__ == '__main__':
-    # the_clock.start()
-    threading.Thread(target=app.run).start()
-    # app.run()
+    prop_reader = PR.PropertyReader()
+    countries_io = countriesIO.CountriesIO(prop_reader)
+
+    countries_io.init_properties()
+
+    countries_io.load()
+
+    print (countries_io.data)
+
+    # threading.Thread(target=app.run).start()
+
 
