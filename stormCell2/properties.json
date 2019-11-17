@@ -1,0 +1,5 @@
+{
+	"dataLocation":"./data/",
+	"countryLocation":"countries.json",
+	"continentMap":"continents.json"
+}

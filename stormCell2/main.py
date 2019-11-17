@@ -2,7 +2,9 @@ import os
 import game
 import player
 import threading
+import countries
 import countriesIO
+import continentIO
 import propertyReader as PR
 from flask import jsonify
 
@@ -55,12 +57,17 @@ def root():
 if __name__ == '__main__':
     prop_reader = PR.PropertyReader()
     countries_io = countriesIO.CountriesIO(prop_reader)
+    continent_io = continentIO.ContinentIO(prop_reader)
+
+    countries = countries.Countries()
 
     countries_io.init_properties()
+    continent_io.init_properties()
 
     countries_io.load()
+    continent_io.load()
 
-    print (countries_io.data)
+    countries.construct_countries(countries_io.get_country_name_list(), continent_io.data)
 
     # threading.Thread(target=app.run).start()
 
