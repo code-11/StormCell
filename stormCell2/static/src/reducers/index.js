@@ -6,6 +6,8 @@ const mainReducer = (state={}, action) => {
 			return { ...state, timeRate: "PAUSED"};
 		case "STARTED_TIME":
 			return { ...state, timeRate: "PLAY"};
+		case "RECEIVE_SHAPES":
+			return { ...state, countryShapes: action.shapes};
 	}
 }
 

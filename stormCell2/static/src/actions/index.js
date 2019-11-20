@@ -13,6 +13,24 @@ const receiveTime = (time) => {
     };
 };
 
+const receiveShapes = (shapes) =>{
+    return {
+        type:"RECEIVE_SHAPES",
+        shapes: shapes,
+    }
+}
+
+export const getCountryShapes = () =>{
+    return (dispatch) =>{
+        dispatch({type:"REQUEST_SHAPES"});
+        return fetch("/getCountryShapes")
+        .then((response)=>response.json())
+        .then((shapes)=>{
+            dispatch(receiveShapes(shapes));
+        });
+    };
+}
+
 export const getTime = () =>{
     return (dispatch) =>{
         dispatch({type:"ASK_TIME"});

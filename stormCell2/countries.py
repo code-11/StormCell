@@ -16,7 +16,6 @@ class Countries(object):
                 return continent
         return None
 
-
     def construct_country(self, name, continent_data):
 
         continent = self.find_continent_for_country(name, continent_data)

@@ -11,10 +11,40 @@ from flask import jsonify
 from flask import Flask, send_from_directory
 app = Flask(__name__, static_folder='static')
 
-main_player = player.Player("Brendan")
 
-the_game = game.Game()
-the_game.add_player(main_player)
+def start_game():
+    main_player = player.Player("Brendan")
+
+    a_game = game.Game()
+    a_game.add_player(main_player)
+    return a_game
+
+
+def load_data():
+    prop_reader = PR.PropertyReader()
+    countries_io = countriesIO.CountriesIO(prop_reader)
+    continent_io = continentIO.ContinentIO(prop_reader)
+
+    all_countries = countries.Countries()
+
+    countries_io.init_properties()
+    continent_io.init_properties()
+
+    countries_io.load()
+    continent_io.load()
+
+    all_countries.construct_countries(countries_io.get_country_name_list(), continent_io.data)
+    return countries_io.data
+
+
+the_game = start_game()
+shapes = load_data()
+
+
+@app.route("/getCountryShapes")
+def get_country_shapes():
+    global shapes
+    return jsonify(shapes)
 
 
 @app.route("/pauseTime")
@@ -55,20 +85,6 @@ def root():
 
 
 if __name__ == '__main__':
-    prop_reader = PR.PropertyReader()
-    countries_io = countriesIO.CountriesIO(prop_reader)
-    continent_io = continentIO.ContinentIO(prop_reader)
-
-    countries = countries.Countries()
-
-    countries_io.init_properties()
-    continent_io.init_properties()
-
-    countries_io.load()
-    continent_io.load()
-
-    countries.construct_countries(countries_io.get_country_name_list(), continent_io.data)
-
-    # threading.Thread(target=app.run).start()
+    threading.Thread(target=app.run).start()
 
 

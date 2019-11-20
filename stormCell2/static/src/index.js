@@ -11,7 +11,8 @@ import App from './components/App';
 
 const initialState={
 	time:"",
-	timeRate:"PLAY"
+	timeRate:"PLAY",
+	countryShapes:{},
 }
 
 const store = createStore(
