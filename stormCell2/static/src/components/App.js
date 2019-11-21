@@ -16,7 +16,7 @@ import countryData from "./countries";
 import continentData from "./continents";
 import Select from 'ol/interaction/Select';
 import MapColorer from "./MapColorer";
-import {getTime, pauseTime, startTime} from '../actions/index';
+import {getTime, pauseTime, startTime, getCountryShapes} from '../actions/index';
 import { bindActionCreators } from 'redux';
 import TimeControls from "./TimeControls";
 //4326 - LAT LON
@@ -143,6 +143,10 @@ class App extends Component {
       let center = this.olmap.getView().getCenter();
       let zoom = this.olmap.getView().getZoom();
       this.setState({ center, zoom });
+    });
+
+    this.props.dispatch(getCountryShapes()).then(shapes=>{
+      this.setState({shapes: shapes});
     });
   }
 

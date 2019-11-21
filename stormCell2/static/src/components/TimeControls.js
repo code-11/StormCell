@@ -11,7 +11,6 @@ class TimeContols extends Component {
     	return <div>
 					<button type="button" onClick={()=>this.props.dispatch(pauseTime())}> Pause </button>
 					<button type="button" onClick={()=>this.props.dispatch(startTime())}> Play </button>
-					<button type="button" onClick={()=>this.props.dispatch(getCountryShapes())}> Get Country Shapes </button>
 				</div>
     }
 }
