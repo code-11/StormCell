@@ -12,7 +12,7 @@ import Style from 'ol/style/Style';
 import Text from 'ol/style/Text';
 import Stroke from 'ol/style/Stroke';
 import Fill from 'ol/style/Fill';
-import countryData from "./countries";
+// import countryData from "./countries";
 import continentData from "./continents";
 import Select from 'ol/interaction/Select';
 import MapColorer from "./MapColorer";
@@ -55,18 +55,15 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
-      center: [0, 0], 
+    this.state = {
+      center: [0, 0],
       zoom: 1,
-      selected: [], 
+      selected: [],
     };
 
-    this.mapColorer = new MapColorer(countryData,continentData, this.state.selected);
-
-    const countryLoader = new VectorSource({
+    this.countrySource = new VectorSource({
       format: new GeoJSON({dataProjection: 'EPSG:4326'})
-    })
-    countryLoader.addFeatures((new GeoJSON()).readFeatures(countryData));
+    });
 
     const mapStyle = new Style({
           stroke: new Stroke({
@@ -80,7 +77,7 @@ class App extends Component {
       });
 
     const countryLayer= new VectorLayer({
-      source: countryLoader,
+      source: this.countrySource,
       style: (feature, res)=>{
           const text = mapStyle.getText();
           const name = feature.get('name');
@@ -91,7 +88,7 @@ class App extends Component {
 
           const stroke = mapStyle.getStroke();
           stroke.setColor(this.mapColorer.determineStroke(name));
-          
+
           return mapStyle;
       }
     });
@@ -146,7 +143,10 @@ class App extends Component {
     });
 
     this.props.dispatch(getCountryShapes()).then(shapes=>{
-      this.setState({shapes: shapes});
+      // this.setState({shapes: shapes});
+      const countryShapes = this.props.store.getState().countryShapes;
+      this.mapColorer = new MapColorer(countryShapes,continentData, this.state.selected);
+      this.countrySource.addFeatures((new GeoJSON()).readFeatures(countryShapes));
     });
   }
 

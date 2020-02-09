@@ -27,7 +27,7 @@ export default class MapColorer{
 	}
 
 	rgbToStr(rgb){
-	  return "rgb("+rgb+")"; 
+	  return "rgb("+rgb+")";
 	}
 
 	bend(rgb,n){

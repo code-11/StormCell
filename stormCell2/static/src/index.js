@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import ReduxThunk from 'redux-thunk'; 
+import ReduxThunk from 'redux-thunk';
 import Logger from 'redux-logger';
 // import tasks from './reducers';
 import mainReducer from './reducers';
@@ -23,7 +23,7 @@ const store = createStore(
 
 render(
     <Provider store={store}>
-        <App />
+        <App store={store} />
     </Provider>,
     document.getElementById('app')
 );

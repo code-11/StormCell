@@ -1,4 +1,4 @@
-export default { 
+export default {
 	"africa": {
 		"Algeria" : 0,
 		"Angola" : 0,
@@ -92,7 +92,7 @@ export default {
 		"Pakistan" : 0,
 		"Philippines" : 0,
 		"Qatar" : 0,
-		"Russian Federation" : 0,
+		"Russia" : 0,
 		"Saudi Arabia" : 0,
 		"Singapore" : 0,
 		"Sri Lanka" : 0,
