@@ -6,12 +6,18 @@ import sys
 
 class Clock(threading.Thread):
     def __init__(self, start_offset=datetime.timedelta(seconds=0)):
+        # Time at start
         self._start = None
-        self.str_time = None
-        self.cur_time = None
-        self.cur_game_time_dic = None
-        self.start_offset = start_offset
+
+        # Flag to stop the clock
         self.should_stop = False
+
+        # How long from year zero are we?
+        self.start_offset = start_offset
+
+        # Current game time
+        self.cur_time = Clock.YEAR_ZERO + self.start_offset
+
         threading.Thread.__init__(self)
 
 
