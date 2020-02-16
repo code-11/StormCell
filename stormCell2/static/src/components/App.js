@@ -165,7 +165,7 @@ class App extends Component {
     this.updateMap(); // Update map on render?
     return (
       <div>
-        <TimeControls/>
+        <TimeControls store={this.props.store}/>
         <div id="map" style={{ width: "100%", height: "100vh" }}></div>
       </div>
     );

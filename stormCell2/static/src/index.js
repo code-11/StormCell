@@ -11,7 +11,7 @@ import App from './components/App';
 
 const initialState={
 	time:"",
-	timeRate:"PLAY",
+	timeRate:"PAUSED",
 	countryShapes:{},
 }
 

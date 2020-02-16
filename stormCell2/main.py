@@ -53,20 +53,19 @@ def pause_time():
     new_clock = the_game.game_clock.clone()
     the_game.game_clock.stop()
     the_game.game_clock = new_clock
-    return jsonify(True)
+    return jsonify({"response": True})
 
 
 @app.route("/startTime")
 def start_time():
     global the_game
     the_game.game_clock.start()
-    return jsonify(True)
+    return jsonify({"response": True})
 
 
 @app.route("/time")
 def time():
     return jsonify(the_game.game_clock.game_time_dic())
-
 
 @app.route("/favicon.ico")
 def favicon():

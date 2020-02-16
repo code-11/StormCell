@@ -1,13 +1,27 @@
-const mainReducer = (state={}, action) => {
+const initialState={
+	time:"",
+	timeRate:"PAUSED",
+	countryShapes:{},
+}
+
+const mainReducer = (state=initialState, action) => {
 	switch(action.type){
-		case "GET_TIME":
+		case "RECEIVE_GET_TIME":
 			return { ...state, time: action.time};
-		case "PAUSED_TIME":
+		case "RECEIVE_PAUSE_TIME":
 			return { ...state, timeRate: "PAUSED"};
-		case "STARTED_TIME":
+		case "RECEIVE_START_TIME":
 			return { ...state, timeRate: "PLAY"};
-		case "RECEIVE_SHAPES":
+		case "RECEIVE_GET_SHAPES":
 			return { ...state, countryShapes: action.shapes};
+		case "SEND_GET_SHAPES":
+		case "SEND_START_TIME":
+		case "SEND_GET_TIME":
+		case "SEND_PAUSE_TIME":
+			return {...state};
+		default:
+			console.error(action);
+			return {...state};
 	}
 }
 
