@@ -4,9 +4,24 @@ import {getTime, pauseTime, startTime, getCountryShapes} from '../actions/index'
 import playImg from '../../data/play.png';
 import pauseImg from '../../data/pause.png';
 
+const YEAR_IN_SECONDS = 31536000;
+const GAME_DURATION = 50;  // years
+const FULL_SECOND_DURATION = YEAR_IN_SECONDS * GAME_DURATION;
+const TWO_HOURS = 7200;
+const MULTIPLIER = FULL_SECOND_DURATION / TWO_HOURS;
+
+const MILLISECONDS=1000;
+
 function mapStateToProps(state) {
   return {}
   // return { time: state.time };
+}
+
+function timeDicToDate(timeDic){
+  const toReturn = new Date();
+  toReturn.setFullYear(timeDic.year, timeDic.month, timeDic.day);
+  toReturn.setHours(timeDic.hour);
+  return toReturn;
 }
 
 class TimeContols extends Component {
@@ -14,22 +29,38 @@ class TimeContols extends Component {
     	super(props);
 			this.state={
 				displayPlay:true,
-				time:0,
+				serverTimeDic:0,
+        frontEndDate:0,
 				timeCaller:null
 			}
     }
 
-		requestSetTime(){
-			if(this.state!=undefined && !this.state.displayPlay){
-				this.props.dispatch(getTime()).then(()=>{
-							const newTime=this.props.store.getState().time;
-							this.setState({time:newTime});
-				});
-			}
-		}
+    componentDidMount(){
+        this.syncTime();
+    }
+
+    syncTime(){
+      this.props.dispatch(getTime()).then(()=>{
+            const newTime=this.props.store.getState().time;
+            this.setState({serverTimeDic:newTime, frontEndDate:timeDicToDate(newTime)});
+      });
+    }
+
+		// requestSetTime(force){
+		// 	if(this.state!=undefined && (!this.state.displayPlay || force)){
+    //
+		// 	}
+		// }
+
+    addOneSecond(){
+      const oldDate=this.state.frontEndDate;
+      const mult=MULTIPLIER;
+      const milli=MILLISECONDS;
+      this.setState({frontEndDate:new Date( oldDate.getTime() + .1 * mult * milli )});
+    }
 
 		startGuiTime(){
-			const timeCaller=setInterval(this.requestSetTime.bind(this), 1000);
+			const timeCaller=setInterval(this.addOneSecond.bind(this), 100);
 			this.setState({timeCaller});
 		}
 
@@ -55,9 +86,9 @@ class TimeContols extends Component {
 		}
 
     render(){
-			const day=this.state.time ? this.state.time.day : 0;
-			const month=this.state.time ? this.month(this.state.time.month) : 0;
-			const year=this.state.time ? this.state.time.year : 0;
+			const day=this.state.frontEndDate ? this.state.frontEndDate.getDate() : 0;
+			const month=this.state.frontEndDate ? this.month(this.state.frontEndDate.getMonth()) : 0;
+			const year=this.state.frontEndDate ? this.state.frontEndDate.getFullYear() : 0;
     	return <div>
 					<img src={this.state.displayPlay ? playImg : pauseImg} style={{width:"20px",height:"20px"}} onClick={()=>this.onClickHandler()}/>
 					{day} {month}, {year}
