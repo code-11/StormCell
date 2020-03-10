@@ -1,0 +1,84 @@
+Three types of advisors: military, political and cultural. Can be placed in all countries within 'range'. 
+Military would help train, provide decisions to lend equipment (at a cost), maybe even represent troops on the group.
+Political could improve relations, propoganda, spycraft, do UN actions
+Cultural would represent the proliferation of rock/blue jeans, religion, cult of personality?, Ideology
+
+Military alliances, economic leagues, embargos, rivals (rival up but usually not down), spheres of influence, vassalage. Historical versions of all of these.
+
+Each country has many factions within it, each representing some side. One will be in control of the government. They can have relations with each other. Alliances and rivals as well. They have ideology. They could overlap in ideology.
+This can represent both parties in stable countries and hostile factions/rebel groups in divided ones. They represent segments of the population. They can militarize independent of the government to represent rebels. 
+For instance in the united states, you might have democrats and republicans. However, as things progress you could get socalists and black/american indian power advocates.
+In south vietnam, you could get viet cong, nationalists, buddhists, french remnants. 
+Representing actual splitting of countries might be harder. 
+
+Political advisors can be assigned to the UN, and other regional organizations. These organizations can make decisions similar to the world Congress in civ. 
+Before an upcoming vote, you may want to influence the other voters. One common tactic is providing them with gaurentees but not sure how to enforce that.
+Sometimes there could be crisises. If you're on the security counsel maybe you get an additional advisor. Crises would be a flurry of events in rapid succession. 
+They would be regional things which threaten to spill over, like Rwandan genocide.
+
+
+Political Spectra (SPIRIT)h
+	DEMOS: democraticness vs authoritarian
+	SPEED: radical vs progressives vs conservatives vs reactionaries
+	CLERIC: level of religiousness
+	MARKET: level of market involvement, free trade vs protectionism
+	PEACE: 	pacifism vs level of interventionism and if so, multilateralism vs unilateralism
+	TOLERANCE: level of tolerance
+	SELF: self expression vs conformatism or individualism vs collectivism
+
+Ideologies are simply labels, held by one main country, the proponent of that ideology. They fold in other countries according to individual relationships and similarity along spectra.
+
+Government types:
+	Communism
+	Socialism
+	Fascism
+	Democracy
+	Oligarchy
+	Kleptocracy
+	Theocracy
+
+
+Important historical events:
+1945
+February 4-11: Yalta conference
+March-April: Poland goes communist
+April 12: Roosevelt dies
+July 24: Potsdam conference
+August 6: use of nuclear weapons against japan
+August 8: Russia invades Manchuria
+August 9: nuclear 
+August 17: Indoneasian independence -> war with netherlands
+September 2: Japanese surrender, occupation
+1946 
+January: Resume of Chinese Civil War
+January 7: Austria becomes a country
+January 11: Albania is a thing
+March: Greek civil war
+March 6: Winston Churchill Iron Curtain speech
+July 4: Philippines independent
+September 8: Bulgaria becomes communist
+December 19: French into indochina
+1947
+August 15: Indian and pakistani independence
+
+1948
+September 9: Koreas created
+...
+1950
+June 25: Korean war
+
+Period Era names:
+Korea-> People's republic of korea
+
+
+1948
+1951 US Japanese treaty
+
+
+SCOPE
+The cold war is too long and intricate for a paradox style game with one developer.
+I need to focus on one thing. It might be interesting to make a game focusing on a particular country.
+I would make sure that it was a country that had a civil war or conflict.
+By necessity that would make the game more conflict based. 
+However, it might also be interesting to try to juggle domestic politics without outright war.
+Balancing the budget and trying to do politics with different parties and stuff.
