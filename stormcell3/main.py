@@ -1,34 +1,30 @@
 import pygame, sys
 from pygame.locals import *
-from node import Node
 from scbutton import SCButton
-from Scenarios.testscenario import TestScenario
+from Scenarios.test_scenario import TestScenario
+
 
 def draw_outliner(window, turn, buttons, font):
     pygame.draw.line(window, 'white', (800, 0), (800, 600))
     for btn in buttons:
         btn.draw_button(window)
 
-    font.render_to(window, (850,  60), f"Turn: {turn}", (254, 254, 254))
+    text_surf, _ = font.render(f"Turn: {turn}", True, 'white')
+    text_rect = text_surf.get_rect(topleft=(850, 60))
+    pygame.draw.rect(window,'black', text_rect)
+    font.render_to(window, (850, 60), f"Turn: {turn}", (254, 254, 254))
 
-
-def incr_turn(turn, nations):
-    major_turn, nation_index = turn
-    if nation_index-1 == nations:
-        return major_turn+1, 0
-    else:
-        return major_turn, nation_index + 1
 
 def run():
     pygame.init()
     window = pygame.display.set_mode((1000, 600))
     pygame.display.set_caption('StormCell3')
     scenario = TestScenario()
-    turn = (0, 0)
     # font = pygame.freetype.Font("C:\\Users\\brend\\Documents\\StormCell\\stormCell3\\resources\\fonts\\vecna\\Vecna.otf", 12)
     font = pygame.freetype.SysFont('Verdana', 12)
 
     btn1 = SCButton(Rect(800, 540, 200, 60), font, 'Next Turn')
+    btn1.on_click = scenario.incr_turn
     buttons = [btn1]
 
     while True:  # main game loop
@@ -46,7 +42,7 @@ def run():
             node.draw_connections(window)
         for node in scenario.nodes:
             node.draw_node(window)
-        draw_outliner(window, turn, buttons, font)
+        draw_outliner(window, scenario.turn, buttons, font)
         pygame.display.update()
 
 
