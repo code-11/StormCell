@@ -12,12 +12,12 @@ class TestScenario(Scenario):
 
         self.nations = [red_nation, blue_nation]
 
-        a1 = Node((50, 50), owner=red_nation)
-        a2 = Node((80, 20), owner=red_nation)
+        a1 = Node((50, 50), owner=red_nation, build_id='M')
+        a2 = Node((80, 20), owner=red_nation, build_id='F')
         a3 = Node((80, 100))
         a4 = Node((120, 100))
-        a5 = Node((120, 20), owner=blue_nation)
-        a6 = Node((150, 50), owner=blue_nation)
+        a5 = Node((120, 20), owner=blue_nation, build_id='C')
+        a6 = Node((150, 50), owner=blue_nation, build_id='M')
 
         a1.connect(a2)
         a1.connect(a3)

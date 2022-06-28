@@ -41,7 +41,7 @@ def run():
         for node in scenario.nodes:
             node.draw_connections(window)
         for node in scenario.nodes:
-            node.draw_node(window)
+            node.draw_node(window, font)
         draw_outliner(window, scenario.turn, buttons, font)
         pygame.display.update()
 
