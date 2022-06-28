@@ -1,8 +1,8 @@
 import pygame, sys
 from pygame.locals import *
 from scbutton import SCButton
-from Scenarios.test_scenario import TestScenario
-
+# from Scenarios.test_scenario import TestScenario as TheScenario
+from Scenarios.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
 
 def draw_outliner(window, turn, buttons, font):
     pygame.draw.line(window, 'white', (800, 0), (800, 600))
@@ -19,7 +19,7 @@ def run():
     pygame.init()
     window = pygame.display.set_mode((1000, 600))
     pygame.display.set_caption('StormCell3')
-    scenario = TestScenario()
+    scenario = TheScenario()
     # font = pygame.freetype.Font("C:\\Users\\brend\\Documents\\StormCell\\stormCell3\\resources\\fonts\\vecna\\Vecna.otf", 12)
     font = pygame.freetype.SysFont('Verdana', 12)
 
