@@ -30,3 +30,15 @@ class Scenario(object):
         major_turn, _ = self.turn
         playing_nation = self.get_playing_nation()
         return f"Turn {major_turn}: {playing_nation.name}"
+
+    def possibly_build_at_node(self, node, build_id):
+        if node is None:
+            return
+
+        is_clear = node.building is None
+
+        playing_nation = self.get_playing_nation()
+        owner_matches_playing_nation = playing_nation is node.owner
+
+        if is_clear and owner_matches_playing_nation:
+            node.set_build_id(build_id)

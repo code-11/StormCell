@@ -14,9 +14,12 @@ class Node(object):
         self.building = Building.construct(build_id)
         self.army = 0
 
-    def set_owner_build_id(self, owner, build_id):
-        self.owner=owner
+    def set_build_id(self, build_id):
         self.building = Building.construct(build_id)
+
+    def set_owner_build_id(self, owner, build_id):
+        self.owner = owner
+        self.set_build_id(build_id)
 
     def connect(self, other_node):
         self.edges.append(other_node)

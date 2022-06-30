@@ -5,17 +5,17 @@ from scbutton import SCButton
 from Scenarios.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
 
 
-def draw_outliner(window, scenario, font):
+def draw_outliner(window, scenario, font, selected_node):
     pygame.draw.line(window, 'white', (800, 0), (800, 600))
 
     btn1 = SCButton(Rect(820, 120, 150, 60), font, 'Make City')
-    btn1.on_click = scenario.incr_turn
+    btn1.on_click = lambda: scenario.possibly_build_at_node(selected_node, "C")
 
     btn2 = SCButton(Rect(820, 220, 150, 60), font, 'Make Manufactory')
-    btn1.on_click = scenario.incr_turn
+    btn2.on_click = lambda: scenario.possibly_build_at_node(selected_node, "M")
 
     btn3 = SCButton(Rect(820, 320, 150, 60), font, 'Make Fort')
-    btn1.on_click = scenario.incr_turn
+    btn3.on_click = lambda: scenario.possibly_build_at_node(selected_node, "F")
 
     btn4 = SCButton(Rect(800, 540, 200, 60), font, 'Next Turn')
     btn4.on_click = scenario.incr_turn
@@ -45,7 +45,7 @@ def run():
     selected_node = None
 
     while True:  # main game loop
-        buttons = draw_outliner(window, scenario, font)
+        buttons = draw_outliner(window, scenario, font, selected_node)
 
         mouse = pygame.mouse.get_pos()
         for event in pygame.event.get():
@@ -64,6 +64,7 @@ def run():
                         selected_node.undraw_as_selected(window)
                     selected_node = new_selected_node
 
+        # TODO: Because things only happen on clicks, we *could* gate all refresh behind clicking
         for node in scenario.nodes:
             node.draw_connections(window)
         for node in scenario.nodes:
