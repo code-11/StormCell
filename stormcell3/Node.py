@@ -2,7 +2,7 @@ import pygame
 
 from building import Building
 
-NODE_WIDTH = 30
+NODE_WIDTH = 45
 
 
 class Node(object):
@@ -13,6 +13,7 @@ class Node(object):
         self.location = location
         self.building = Building.construct(build_id)
         self.army = 0
+        self.moved_army = 0
 
     def set_build_id(self, build_id):
         self.building = Building.construct(build_id)
@@ -55,8 +56,8 @@ class Node(object):
         pygame.draw.rect(window, 'white', pygame.Rect(self.location, (NODE_WIDTH + 1, NODE_WIDTH + 1)), width=1)
 
         # Draw building and army values
-        if self.army != 0:
-            army_text = str(self.army)
+        if self.army != 0 or self.moved_army != 0:
+            army_text = ("" if self.army == 0 else str(self.army)) + ("" if self.moved_army == 0 else f"({self.moved_army})")
             mid_bottom = self.get_rect().midbottom
             text_surf, _ = font.render(army_text, True, 'white')
             text_rect = text_surf.get_rect()
@@ -67,3 +68,31 @@ class Node(object):
             top_left = self.get_rect().topleft
             building_draw_location = (top_left[0] + 3, top_left[1] + 3)
             self.building.draw_building(window, building_draw_location, font)
+
+    def has_edge(self, other_node):
+        return other_node in self.edges
+
+    def move_army(self, other_node):
+        other_node.moved_army = self.army
+        other_node.owner = self.owner
+        self.army = 0
+
+
+    def attack_move_army(self, other_node):
+        total_defending_army = other_node.army + other_node.moved_army
+        # Positive is attacker win, negative is defender
+        diff = self.army - total_defending_army
+        if diff > 0:
+            # Win
+            other_node.army = 0
+            other_node.moved_army = diff
+            other_node.owner = self.owner
+            # TODO: Interesting decision, do buildings get destroyed? Yes for now.
+            other_node.building = None
+            self.army = 0
+        else:
+            # Lose
+            other_node.army = 0
+            # Negative diff is defender survivors
+            other_node.moved_army = -diff
+            self.army = 0

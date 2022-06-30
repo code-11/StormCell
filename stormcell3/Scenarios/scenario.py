@@ -6,12 +6,21 @@ class Scenario(object):
         self.nations = []
         self.nodes = []
 
+    def refresh_all_armies(self, nation):
+        for node in self.nodes:
+            if node.owner is nation and node.moved_army > 0:
+                node.army += node.moved_army
+                node.moved_army = 0
+
     def incr_turn(self):
         major_turn, nation_index = self.turn
         if nation_index == len(self.nations) - 1:
             self.turn = (major_turn + 1, 0)
         else:
             self.turn = (major_turn, nation_index + 1)
+
+        playing_nation = self.get_playing_nation()
+        self.refresh_all_armies(playing_nation)
 
     def click_test(self, mouse):
         for node in self.nodes:
@@ -42,3 +51,21 @@ class Scenario(object):
 
         if is_clear and owner_matches_playing_nation:
             node.set_build_id(build_id)
+
+    def move_command(self, source_node, destination_node):
+        playing_nation = self.get_playing_nation()
+        source_node_matches_playing_nation = playing_nation is source_node.owner
+
+        source_node_has_army = source_node.army > 0
+
+        destination_node_is_one_away = source_node.has_edge(destination_node)
+
+        if source_node_matches_playing_nation \
+            and source_node_has_army \
+            and destination_node_is_one_away:
+
+            if destination_node.owner is not source_node.owner:
+                # Combat!
+                source_node.attack_move_army(destination_node)
+            else:
+                source_node.move_army(destination_node)

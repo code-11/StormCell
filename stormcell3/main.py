@@ -4,6 +4,9 @@ from scbutton import SCButton
 # from Scenarios.test_scenario import TestScenario as TheScenario
 from Scenarios.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
 
+LEFT_BTN = 1
+MIDDLE_BTN = 2
+RIGHT_BTN = 3
 
 def draw_outliner(window, scenario, font, selected_node):
     pygame.draw.line(window, 'white', (800, 0), (800, 600))
@@ -53,7 +56,7 @@ def run():
                 pygame.quit()
                 sys.exit()
 
-            if event.type == MOUSEBUTTONDOWN:
+            if event.type == MOUSEBUTTONDOWN and event.button == LEFT_BTN:
                 for btn in buttons:
                     btn.click_test(mouse)
 
@@ -63,6 +66,11 @@ def run():
                     if selected_node is not None:
                         selected_node.undraw_as_selected(window)
                     selected_node = new_selected_node
+
+            if event.type == MOUSEBUTTONDOWN and event.button == RIGHT_BTN and selected_node is not None:
+                destination_node = scenario.click_test(mouse)
+                scenario.move_command(selected_node, destination_node)
+
 
         # TODO: Because things only happen on clicks, we *could* gate all refresh behind clicking
         for node in scenario.nodes:

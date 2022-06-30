@@ -79,6 +79,7 @@ class XMarksTheSpot4(Scenario):
         a3.set_owner_build_id(red_nation, "C")
         a1.army = 3
 
+
         b1 = loc_to_node((8, 0))
         b2 = loc_to_node((7, 0))
         b3 = loc_to_node((8, 1))
