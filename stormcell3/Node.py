@@ -34,6 +34,17 @@ class Node(object):
         for edge in self.edges:
             self.draw_connection(window, edge)
 
+    def is_clicked(self, mouse):
+        return self.get_rect().collidepoint(mouse)
+
+    def draw_as_selected(self, window):
+        selected_loc = (self.location[0]-6, self.location[1]-6)
+        pygame.draw.rect(window, 'green', pygame.Rect(selected_loc, (NODE_WIDTH+12, NODE_WIDTH+12)), width=2)
+
+    def undraw_as_selected(self,window):
+        selected_loc = (self.location[0]-6, self.location[1]-6)
+        pygame.draw.rect(window, 'black', pygame.Rect(selected_loc, (NODE_WIDTH+12, NODE_WIDTH+12)))
+
     def draw_node(self, window, font):
         # Draw outer edge and inner color. We want this first so that the text is atop it.
         fill_color = 'black' if self.owner is None else self.owner.color

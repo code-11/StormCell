@@ -4,15 +4,35 @@ from scbutton import SCButton
 # from Scenarios.test_scenario import TestScenario as TheScenario
 from Scenarios.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
 
-def draw_outliner(window, turn, buttons, font):
+
+def draw_outliner(window, scenario, font):
     pygame.draw.line(window, 'white', (800, 0), (800, 600))
+
+    btn1 = SCButton(Rect(820, 120, 150, 60), font, 'Make City')
+    btn1.on_click = scenario.incr_turn
+
+    btn2 = SCButton(Rect(820, 220, 150, 60), font, 'Make Manufactory')
+    btn1.on_click = scenario.incr_turn
+
+    btn3 = SCButton(Rect(820, 320, 150, 60), font, 'Make Fort')
+    btn1.on_click = scenario.incr_turn
+
+    btn4 = SCButton(Rect(800, 540, 200, 60), font, 'Next Turn')
+    btn4.on_click = scenario.incr_turn
+
+    buttons = [btn1, btn2, btn3, btn4]
+
     for btn in buttons:
         btn.draw_button(window)
 
-    text_surf, _ = font.render(f"Turn: {turn}", True, 'white')
+    longest_turn_text = scenario.get_longest_turn_text()
+    turn_text = scenario.get_cur_turn_text()
+    text_surf, _ = font.render(longest_turn_text, True, 'white')
     text_rect = text_surf.get_rect(topleft=(850, 60))
-    pygame.draw.rect(window,'black', text_rect)
-    font.render_to(window, (850, 60), f"Turn: {turn}", (254, 254, 254))
+    pygame.draw.rect(window, 'black', text_rect)
+    font.render_to(window, (850, 60), turn_text, 'white')
+
+    return buttons
 
 
 def run():
@@ -22,12 +42,11 @@ def run():
     scenario = TheScenario()
     # font = pygame.freetype.Font("C:\\Users\\brend\\Documents\\StormCell\\stormCell3\\resources\\fonts\\vecna\\Vecna.otf", 12)
     font = pygame.freetype.SysFont('Verdana', 12)
-
-    btn1 = SCButton(Rect(800, 540, 200, 60), font, 'Next Turn')
-    btn1.on_click = scenario.incr_turn
-    buttons = [btn1]
+    selected_node = None
 
     while True:  # main game loop
+        buttons = draw_outliner(window, scenario, font)
+
         mouse = pygame.mouse.get_pos()
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -38,11 +57,22 @@ def run():
                 for btn in buttons:
                     btn.click_test(mouse)
 
+                new_selected_node = scenario.click_test(mouse)
+
+                if new_selected_node is not None:
+                    if selected_node is not None:
+                        selected_node.undraw_as_selected(window)
+                    selected_node = new_selected_node
+
         for node in scenario.nodes:
             node.draw_connections(window)
         for node in scenario.nodes:
             node.draw_node(window, font)
-        draw_outliner(window, scenario.turn, buttons, font)
+
+        if selected_node is not None:
+            selected_node.draw_as_selected(window)
+
+
         pygame.display.update()
 
 
