@@ -3,37 +3,41 @@ from pygame.locals import *
 from scbutton import SCButton
 # from Scenarios.test_scenario import TestScenario as TheScenario
 from Scenarios.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
+from gui_utils import auto_text
 
 LEFT_BTN = 1
 MIDDLE_BTN = 2
 RIGHT_BTN = 3
 
-def draw_outliner(window, scenario, font, selected_node):
+
+def draw_outliner(window, scenario, font, selected_node, text_save_map):
     pygame.draw.line(window, 'white', (800, 0), (800, 600))
 
-    btn1 = SCButton(Rect(820, 120, 150, 60), font, 'Make City')
+    turn_text = scenario.get_cur_turn_text()
+    auto_text("turn-counter", window, text_save_map, font, turn_text, (820, 10))
+
+    y_pos = 40
+    for nation in scenario.nations:
+        text_id = f"{nation.name}-gold"
+        auto_text(text_id, window, text_save_map, font, f"{nation.name} gold: {nation.gold}", (870, y_pos))
+        y_pos += 17
+
+    btn1 = SCButton('buy-city', Rect(820, 120, 150, 60), font, 'Make City: \n Cost 10G, +4G/Turn')
     btn1.on_click = lambda: scenario.possibly_build_at_node(selected_node, "C")
 
-    btn2 = SCButton(Rect(820, 220, 150, 60), font, 'Make Manufactory')
+    btn2 = SCButton('buy-manu', Rect(820, 220, 150, 60), font, 'Make Manufactory: \n Cost 10G, \n +1Army/-4G/Turn ')
     btn2.on_click = lambda: scenario.possibly_build_at_node(selected_node, "M")
 
-    btn3 = SCButton(Rect(820, 320, 150, 60), font, 'Make Fort')
+    btn3 = SCButton('buy-fort', Rect(820, 320, 150, 60), font, 'Make Fort: \n Cost 10G, x1.5 Def')
     btn3.on_click = lambda: scenario.possibly_build_at_node(selected_node, "F")
 
-    btn4 = SCButton(Rect(800, 540, 200, 60), font, 'Next Turn')
+    btn4 = SCButton('next-turn', Rect(800, 540, 200, 60), font, 'Next Turn')
     btn4.on_click = scenario.incr_turn
 
     buttons = [btn1, btn2, btn3, btn4]
 
     for btn in buttons:
-        btn.draw_button(window)
-
-    longest_turn_text = scenario.get_longest_turn_text()
-    turn_text = scenario.get_cur_turn_text()
-    text_surf, _ = font.render(longest_turn_text, True, 'white')
-    text_rect = text_surf.get_rect(topleft=(850, 60))
-    pygame.draw.rect(window, 'black', text_rect)
-    font.render_to(window, (850, 60), turn_text, 'white')
+        btn.draw_button(window, text_save_map)
 
     return buttons
 
@@ -46,9 +50,10 @@ def run():
     # font = pygame.freetype.Font("C:\\Users\\brend\\Documents\\StormCell\\stormCell3\\resources\\fonts\\vecna\\Vecna.otf", 12)
     font = pygame.freetype.SysFont('Verdana', 12)
     selected_node = None
+    text_save_map={}
 
     while True:  # main game loop
-        buttons = draw_outliner(window, scenario, font, selected_node)
+        buttons = draw_outliner(window, scenario, font, selected_node, text_save_map)
 
         mouse = pygame.mouse.get_pos()
         for event in pygame.event.get():

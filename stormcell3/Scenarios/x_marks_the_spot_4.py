@@ -36,10 +36,10 @@ class XMarksTheSpot4(Scenario):
 
     def __init__(self):
         super().__init__()
-        red_nation = Nation('darkred', 'Red')
-        blue_nation = Nation('blue', 'Blue')
-        green_nation = Nation('darkgreen', 'Green')
-        purple_nation = Nation('purple', 'Purple')
+        red_nation = Nation('darkred', 'Red', starting_gold=30)
+        blue_nation = Nation('blue', 'Blue', starting_gold=30)
+        green_nation = Nation('darkgreen', 'Green', starting_gold=30)
+        purple_nation = Nation('purple', 'Purple', starting_gold=30)
 
         self.nations = [red_nation, blue_nation, green_nation, purple_nation]
 
@@ -74,32 +74,32 @@ class XMarksTheSpot4(Scenario):
         a1 = loc_to_node((0, 0))
         a2 = loc_to_node((1, 0))
         a3 = loc_to_node((0, 1))
-        a1.set_owner_build_id(red_nation, "F")
-        a2.set_owner_build_id(red_nation, "M")
-        a3.set_owner_build_id(red_nation, "C")
+        a1.set_owner_build_id(red_nation, "C")
+        a2.set_owner_build_id(red_nation, "")
+        a3.set_owner_build_id(red_nation, "")
         a1.army = 3
 
 
         b1 = loc_to_node((8, 0))
         b2 = loc_to_node((7, 0))
         b3 = loc_to_node((8, 1))
-        b1.set_owner_build_id(blue_nation, "F")
-        b2.set_owner_build_id(blue_nation, "M")
-        b3.set_owner_build_id(blue_nation, "C")
+        b1.set_owner_build_id(blue_nation, "C")
+        b2.set_owner_build_id(blue_nation, "")
+        b3.set_owner_build_id(blue_nation, "")
         b1.army = 3
 
         c1 = loc_to_node((8, 8))
         c2 = loc_to_node((7, 8))
         c3 = loc_to_node((8, 7))
-        c1.set_owner_build_id(green_nation, "F")
-        c2.set_owner_build_id(green_nation, "M")
-        c3.set_owner_build_id(green_nation, "C")
+        c1.set_owner_build_id(green_nation, "C")
+        c2.set_owner_build_id(green_nation, "")
+        c3.set_owner_build_id(green_nation, "")
         c1.army = 3
 
         d1 = loc_to_node((0, 8))
         d2 = loc_to_node((0, 7))
         d3 = loc_to_node((1, 8))
-        d1.set_owner_build_id(purple_nation, "F")
-        d2.set_owner_build_id(purple_nation, "M")
-        d3.set_owner_build_id(purple_nation, "C")
+        d1.set_owner_build_id(purple_nation, "C")
+        d2.set_owner_build_id(purple_nation, "")
+        d3.set_owner_build_id(purple_nation, "")
         d1.army = 3
