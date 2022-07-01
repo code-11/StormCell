@@ -1,3 +1,6 @@
+from building import Building
+
+
 class Scenario(object):
 
     def __init__(self):
@@ -49,8 +52,12 @@ class Scenario(object):
         playing_nation = self.get_playing_nation()
         owner_matches_playing_nation = playing_nation is node.owner
 
-        if is_clear and owner_matches_playing_nation:
+        building_cost = Building.construct(build_id).cost()
+        has_enough_money = playing_nation.gold >= building_cost
+
+        if is_clear and owner_matches_playing_nation and has_enough_money:
             node.set_build_id(build_id)
+            playing_nation.gold -= building_cost
 
     def move_command(self, source_node, destination_node):
         playing_nation = self.get_playing_nation()

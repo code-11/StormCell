@@ -24,6 +24,9 @@ class Building(object):
     def draw_building(self, window, location, font):
         font.render_to(window, location, self.abbreviation, 'white')
 
+    def cost(self):
+        return 10
+
 
 class Fort(Building):
     def __init__(self, ):
