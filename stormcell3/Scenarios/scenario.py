@@ -9,6 +9,23 @@ class Scenario(object):
         self.nations = []
         self.nodes = []
 
+    def evaluate_buildings(self, nation):
+        cities = []
+        manufactory_nodes = []
+        for node in self.nodes:
+            if node.owner is nation and node.building is not None:
+                if node.building.abbreviation == 'C':
+                    cities.append(node.building)
+                elif node.building.abbreviation == 'M':
+                    manufactory_nodes.append(node)
+        for city in cities:
+            nation.gold += 4
+
+        for manufactory_node in manufactory_nodes:
+            if nation.gold >= 4:
+                nation.gold -= 4
+                manufactory_node.army += 1
+
     def refresh_all_armies(self, nation):
         for node in self.nodes:
             if node.owner is nation and node.moved_army > 0:
@@ -24,6 +41,7 @@ class Scenario(object):
 
         playing_nation = self.get_playing_nation()
         self.refresh_all_armies(playing_nation)
+        self.evaluate_buildings(playing_nation)
 
     def click_test(self, mouse):
         for node in self.nodes:
@@ -42,6 +60,19 @@ class Scenario(object):
         major_turn, _ = self.turn
         playing_nation = self.get_playing_nation()
         return f"Turn {major_turn}: {playing_nation.name}"
+
+    def possibly_destroy_build_at_node(self, node):
+        if node is None:
+            return
+
+        has_building = node.building is not None
+
+        playing_nation = self.get_playing_nation()
+        owner_matches_playing_nation = playing_nation is node.owner
+
+        if has_building and owner_matches_playing_nation:
+            node.building=None
+
 
     def possibly_build_at_node(self, node, build_id):
         if node is None:

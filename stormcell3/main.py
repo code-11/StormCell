@@ -31,10 +31,13 @@ def draw_outliner(window, scenario, font, selected_node, text_save_map):
     btn3 = SCButton('buy-fort', Rect(820, 320, 150, 60), font, 'Make Fort: \n Cost 10G, x1.5 Def')
     btn3.on_click = lambda: scenario.possibly_build_at_node(selected_node, "F")
 
-    btn4 = SCButton('next-turn', Rect(800, 540, 200, 60), font, 'Next Turn')
-    btn4.on_click = scenario.incr_turn
+    btn4 = SCButton('destroy', Rect(820, 420, 150, 40), font, 'Raze own building')
+    btn4.on_click = lambda: scenario.possibly_destroy_build_at_node(selected_node)
 
-    buttons = [btn1, btn2, btn3, btn4]
+    btn5 = SCButton('next-turn', Rect(800, 540, 200, 60), font, 'Next Turn')
+    btn5.on_click = scenario.incr_turn
+
+    buttons = [btn1, btn2, btn3, btn4, btn5]
 
     for btn in buttons:
         btn.draw_button(window, text_save_map)
@@ -50,7 +53,7 @@ def run():
     # font = pygame.freetype.Font("C:\\Users\\brend\\Documents\\StormCell\\stormCell3\\resources\\fonts\\vecna\\Vecna.otf", 12)
     font = pygame.freetype.SysFont('Verdana', 12)
     selected_node = None
-    text_save_map={}
+    text_save_map = {}
 
     while True:  # main game loop
         buttons = draw_outliner(window, scenario, font, selected_node, text_save_map)

@@ -1,3 +1,5 @@
+from math import floor, ceil
+
 import pygame
 
 from building import Building
@@ -81,7 +83,8 @@ class Node(object):
     def attack_move_army(self, other_node):
         total_defending_army = other_node.army + other_node.moved_army
         # Positive is attacker win, negative is defender
-        diff = self.army - total_defending_army
+        fort_mult = 1.5 if other_node.building is not None and other_node.building.abbreviation == 'F' else 1
+        diff = floor(self.army - (total_defending_army * fort_mult))
         if diff > 0:
             # Win
             other_node.army = 0
@@ -93,6 +96,6 @@ class Node(object):
         else:
             # Lose
             other_node.army = 0
-            # Negative diff is defender survivors
-            other_node.moved_army = -diff
+            #Survivors
+            other_node.moved_army = ceil(total_defending_army - (self.army * (1/fort_mult)))
             self.army = 0
