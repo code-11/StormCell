@@ -2,7 +2,8 @@ import pygame, sys
 from pygame.locals import *
 from scbutton import SCButton
 # from Scenarios.test_scenario import TestScenario as TheScenario
-from Scenarios.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
+# from Scenarios.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
+from Scenarios.whirlpool_3 import Whirlpool3 as TheScenario
 from gui_utils import auto_text
 
 LEFT_BTN = 1

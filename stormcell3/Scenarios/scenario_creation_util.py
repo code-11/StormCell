@@ -1,3 +1,5 @@
+from math import cos, sin
+
 from node import Node
 
 
@@ -15,13 +17,11 @@ def mult(tup, scalar):
     tupx, tupy = tup
     return tupx * scalar, tupy * scalar
 
-
 def xshift_locs(tupes, val): return apply_to_locs(lambda tup: xshift(tup, val), tupes)
 def xshift_conns(conns, val): return apply_to_conns(lambda conn: xshift(conn, val), conns)
 def xshift(tup, val):
     tupx, tupy = tup
     return (tupx + val, tupy)
-
 
 def yshift_locs(tupes, val): return apply_to_locs(lambda tup: yshift(tup, val), tupes)
 def yshift_conns(conns, val): return apply_to_conns(lambda conn: yshift(conn, val), conns)
@@ -29,19 +29,28 @@ def yshift(tup, val):
     tupx, tupy = tup
     return (tupx, tupy + val)
 
-
 def x_mirror_locs(tupes, max_x_i): return apply_to_locs(lambda tup: x_mirror(tup, max_x_i), tupes)
 def x_mirror_conns(conns, max_x_i): return apply_to_conns(lambda conn: x_mirror(conn, max_x_i), conns)
 def x_mirror(tup, max_x_i):
     tupx, tupy = tup
     return (max_x_i - tupx, tupy)
 
-
 def y_mirror_locs(tupes, max_y_i): return apply_to_locs(lambda tup: y_mirror(tup, max_y_i), tupes)
 def y_mirror_conns(conns, max_y_i): return apply_to_conns(lambda conn: y_mirror(conn, max_y_i), conns)
 def y_mirror(tup, max_y_i):
     tupx, tupy = tup
     return (tupx, max_y_i - tupy)
+
+def rotate_conns(loc_center, conns, rad): return apply_to_conns(lambda conn: rotate(loc_center,conn,rad), conns)
+def rotate_locs(loc_center, tupes, rad): return apply_to_locs(lambda tup: rotate(loc_center,tup, rad), tupes)
+def rotate(loc_center, loc, in_rad):
+    rad = -in_rad
+    x, y = loc
+    x_c, y_c = loc_center
+    x_rot = (x-x_c)*cos(rad)-(y-y_c)*sin(rad) + x_c
+    y_rot = (x-x_c)*sin(rad)+(y-y_c)*cos(rad) + y_c
+    return x_rot, y_rot
+
 
 
 def nodify(tupes):
