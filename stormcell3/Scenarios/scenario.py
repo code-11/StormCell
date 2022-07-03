@@ -8,6 +8,10 @@ class Scenario(object):
         self.turn = (0, 0)
         self.nations = []
         self.nodes = []
+        self.defeated = {}  # nation name string to boolean
+
+    def set_all_undefeated(self):
+        self.defeated = {nation.name: False for nation in self.nations}
 
     def evaluate_buildings(self, nation):
         cities = []
@@ -32,6 +36,24 @@ class Scenario(object):
                 node.army += node.moved_army
                 node.moved_army = 0
 
+    def winning_nation(self):
+        is_alive=lambda nation_name: not self.defeated[nation_name]
+        alive_nations=filter(is_alive,self.defeated.keys())
+        if alive_nations==1:
+            return alive_nations[0]
+        else:
+            return None
+
+        for nation_name, defeated in self.defeated.keys():
+            if self.defeated[nation_name]:
+
+
+    def defeat_check(self, nation):
+        for node in self.nodes:
+            if node.owner is nation:
+                return False
+        return True
+
     def incr_turn(self):
         major_turn, nation_index = self.turn
         if nation_index == len(self.nations) - 1:
@@ -42,6 +64,11 @@ class Scenario(object):
         playing_nation = self.get_playing_nation()
         self.refresh_all_armies(playing_nation)
         self.evaluate_buildings(playing_nation)
+        if self.defeated[playing_nation.name] or self.defeat_check(playing_nation):
+            self.defeated[playing_nation.name] = True
+            self.incr_turn()
+            # TODO: Put game end condition here
+
 
     def click_test(self, mouse):
         for node in self.nodes:
@@ -71,8 +98,7 @@ class Scenario(object):
         owner_matches_playing_nation = playing_nation is node.owner
 
         if has_building and owner_matches_playing_nation:
-            node.building=None
-
+            node.building = None
 
     def possibly_build_at_node(self, node, build_id):
         if node is None:
@@ -99,8 +125,8 @@ class Scenario(object):
         destination_node_is_one_away = source_node.has_edge(destination_node)
 
         if source_node_matches_playing_nation \
-            and source_node_has_army \
-            and destination_node_is_one_away:
+                and source_node_has_army \
+                and destination_node_is_one_away:
 
             if destination_node.owner is not source_node.owner:
                 # Combat!

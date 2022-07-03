@@ -20,7 +20,8 @@ def draw_outliner(window, scenario, font, selected_node, text_save_map):
     y_pos = 40
     for nation in scenario.nations:
         text_id = f"{nation.name}-gold"
-        auto_text(text_id, window, text_save_map, font, f"{nation.name} gold: {nation.gold}", (870, y_pos))
+        defeated_string = '(Dead)' if scenario.defeated[nation.name] else ''
+        auto_text(text_id, window, text_save_map, font, f"{defeated_string} {nation.name} gold: {nation.gold}", (870, y_pos))
         y_pos += 17
 
     btn1 = SCButton('buy-city', Rect(820, 120, 150, 60), font, 'Make City: \n Cost 10G, +4G/Turn')
@@ -50,7 +51,10 @@ def run():
     pygame.init()
     window = pygame.display.set_mode((1000, 600))
     pygame.display.set_caption('StormCell3')
+
     scenario = TheScenario()
+    scenario.set_all_undefeated()
+
     # font = pygame.freetype.Font("C:\\Users\\brend\\Documents\\StormCell\\stormCell3\\resources\\fonts\\vecna\\Vecna.otf", 12)
     font = pygame.freetype.SysFont('Verdana', 12)
     selected_node = None
