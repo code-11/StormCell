@@ -49,8 +49,8 @@ class Whirlpool3(Scenario):
         a2 = loc_to_node(rotate((3, 3), (4, 6), 2 * math.pi / 3))
         a3 = loc_to_node(rotate((3, 3), (4, 6), 4 * math.pi / 3))
         a1.set_owner_build_id(red_nation, "C")
-        a1.army=3
-        a2.set_owner_build_id(blue_nation, "C")
+        a1.army = 3
+        a2.set_owner_build_id(red_nation, "C")
         a2.army = 3
         a3.set_owner_build_id(green_nation, "C")
         a3.army = 3

@@ -9,6 +9,7 @@ class Scenario(object):
         self.nations = []
         self.nodes = []
         self.defeated = {}  # nation name string to boolean
+        self.winning_nation = None
 
     def set_all_undefeated(self):
         self.defeated = {nation.name: False for nation in self.nations}
@@ -36,17 +37,16 @@ class Scenario(object):
                 node.army += node.moved_army
                 node.moved_army = 0
 
-    def winning_nation(self):
-        is_alive=lambda nation_name: not self.defeated[nation_name]
-        alive_nations=filter(is_alive,self.defeated.keys())
-        if alive_nations==1:
-            return alive_nations[0]
+    def get_winning_nation(self):
+        is_alive = lambda nation_name: not self.defeated[nation_name]
+        alive_nations = list(filter(is_alive, self.defeated.keys()))
+        if len(alive_nations) == 1:
+            for nation in self.nations:
+                if nation.name==alive_nations[0]:
+                    return nation
+            return
         else:
             return None
-
-        for nation_name, defeated in self.defeated.keys():
-            if self.defeated[nation_name]:
-
 
     def defeat_check(self, nation):
         for node in self.nodes:
@@ -67,8 +67,12 @@ class Scenario(object):
         if self.defeated[playing_nation.name] or self.defeat_check(playing_nation):
             self.defeated[playing_nation.name] = True
             self.incr_turn()
-            # TODO: Put game end condition here
 
+    def incr_turn_and_check_for_end(self):
+        self.incr_turn()
+        possible_winning_nation = self.get_winning_nation()
+        if possible_winning_nation is not None:
+            self.winning_nation = possible_winning_nation
 
     def click_test(self, mouse):
         for node in self.nodes:

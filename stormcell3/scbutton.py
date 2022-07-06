@@ -5,19 +5,25 @@ from gui_utils import auto_text
 
 class SCButton(object):
 
-    def __init__(self, text_id, rect, font, text):
+    def __init__(self, text_id, rect, font, text, text_color='white', background_color='black'):
         super().__init__()
         self.rect = rect
         self.text = text
         self.font = font
         self.text_id = text_id
+        self.text_color = text_color
+        self.background_color = background_color
 
     def draw_button(self, window, text_save_map):
         x_pos = self.rect.midleft[0]+3
         y_pos = self.rect.topleft[1]+3
+
+        pygame.draw.rect(window, self.background_color, self.rect)
+
         for line in self.text.split('\n'):
-            auto_text(self.text_id, window, text_save_map, self.font, line, (x_pos, y_pos))
-            y_pos+=15
+            auto_text(self.text_id, window, text_save_map, self.font, line, (x_pos, y_pos),
+                      text_color=self.text_color, background_color=self.background_color)
+            y_pos += 15
 
         # text_width = 35
         # # text_width, text_height = pygame.font.Font.size(self.font,self.text)
