@@ -8,9 +8,9 @@ class Frame(object):
         self.window = window
         self.text_save_map = {}
         self.default_font = pygame.freetype.SysFont('Verdana', 12)
-        self.buttons=[]
+        self.buttons = []
 
-    def exit_to_menu():
+    def exit_to_menu(self):
         pygame.quit()
         sys.exit()
 

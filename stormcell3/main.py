@@ -6,6 +6,7 @@ from Scenarios.test_scenario import TestScenario as TheScenario
 # from Scenarios.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
 # from Scenarios.whirlpool_3 import Whirlpool3 as TheScenario
 from gui.gui_utils import auto_text
+from gui.menu_frame import MenuFrame
 
 LEFT_BTN = 1
 MIDDLE_BTN = 2
@@ -29,7 +30,8 @@ def run():
     scenario.set_all_undefeated()
 
     # font = pygame.freetype.Font("C:\\Users\\brend\\Documents\\StormCell\\stormCell3\\resources\\fonts\\vecna\\Vecna.otf", 12)
-    cur_frame = GameFrame(window, scenario)
+    # cur_frame = GameFrame(window, scenario)
+    cur_frame = MenuFrame(window)
 
     while True:  # main game loop
         cur_frame.pre_event_draw()
