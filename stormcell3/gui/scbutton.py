@@ -1,6 +1,6 @@
 import pygame
 
-from gui_utils import auto_text
+from .gui_utils import auto_text
 
 
 class SCButton(object):
