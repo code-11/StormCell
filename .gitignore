@@ -1,0 +1,7 @@
+Assembly-CSharp.csproj
+Library/
+ProjectSettings/
+StormCell.sln
+StormCell.userprefs
+__pycache__/
+*.idea
