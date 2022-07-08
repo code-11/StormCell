@@ -1,14 +1,17 @@
-from building import Building
+from core.building import Building
 import json
 
-from nation import Nation
-from node import Node
+from core.nation import Nation
+from core.node import Node
 
 
 class Scenario(object):
 
     def __init__(self):
         super().__init__()
+        self.name = ''
+        self.max_players = 0
+        self.picture = None
         self.turn = (0, 0)
         self.nations = []
         self.nodes = []

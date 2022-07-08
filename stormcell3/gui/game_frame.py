@@ -1,7 +1,7 @@
 import pygame
 from pygame.rect import Rect
 
-from Scenarios.scenario import Scenario
+from core.scenario import Scenario
 from gui.frame import Frame
 from gui.gui_utils import auto_text
 import gui.menu_frame
@@ -67,7 +67,7 @@ class GameFrame(Frame):
         self.frame_changer(frame)
 
     def confirm_save(self):
-        confirm_save_text = "Sucessfully Saved \n (Click here to exit) "
+        confirm_save_text = "Sucessfully Saved \n (Click here to confirm) "
         confirm_btn = SCButton('confirm-save-btn', pygame.Rect(500, 300, 200, 60), self.default_font, confirm_save_text,
                            text_color='black',
                            background_color='white')

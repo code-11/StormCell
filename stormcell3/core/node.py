@@ -1,7 +1,7 @@
 from math import floor, ceil
 
 import pygame
-from building import Building
+from .building import Building
 
 NODE_WIDTH = 45
 

@@ -1,12 +1,14 @@
-from .scenario import Scenario
-from node import Node
-from nation import Nation
+from core.scenario import Scenario
+from core.node import Node
+from core.nation import Nation
 
 
 class TestScenario(Scenario):
 
     def __init__(self):
         super().__init__()
+        self.name = 'Test scenario'
+        self.max_players = 2
         red_nation = Nation('red', 'Red')
         blue_nation = Nation('blue', 'Blue')
 

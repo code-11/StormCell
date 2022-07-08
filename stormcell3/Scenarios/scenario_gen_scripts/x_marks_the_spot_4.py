@@ -1,9 +1,6 @@
-import math
-
-from .scenario import Scenario
-from .scenario_creation_util import *
-from node import Node
-from nation import Nation
+from core.scenario import Scenario
+from scenarios.scenario_creation_utils import *
+from core.nation import Nation
 
 
 # Represent the connections as points that exist between two nodes
@@ -36,6 +33,9 @@ class XMarksTheSpot4(Scenario):
 
     def __init__(self):
         super().__init__()
+        self.name = 'X Marks the Spot'
+        self.max_players = 4
+
         red_nation = Nation('darkred', 'Red', starting_gold=30)
         blue_nation = Nation('blue', 'Blue', starting_gold=30)
         green_nation = Nation('darkgreen', 'Green', starting_gold=30)

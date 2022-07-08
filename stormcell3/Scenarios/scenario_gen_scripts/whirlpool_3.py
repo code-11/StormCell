@@ -1,8 +1,8 @@
 import math
 
-from Scenarios.scenario import Scenario
-from Scenarios.scenario_creation_util import *
-from nation import Nation
+from core.scenario import Scenario
+from scenarios.scenario_creation_utils import *
+from core.nation import Nation
 
 
 def _arm_locs():
@@ -19,6 +19,9 @@ class Whirlpool3(Scenario):
 
     def __init__(self):
         super().__init__()
+        self.name = 'Whirlpool'
+        self.max_players = 2
+
         red_nation = Nation('darkred', 'Red', starting_gold=30)
         blue_nation = Nation('blue', 'Blue', starting_gold=30)
         green_nation = Nation('darkgreen', 'Green', starting_gold=30)

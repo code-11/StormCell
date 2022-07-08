@@ -50,5 +50,5 @@ class GameRunner(object):
 
 
 if __name__ == '__main__':
-    main=GameRunner()
+    main = GameRunner()
     main.run()

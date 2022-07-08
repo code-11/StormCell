@@ -1,6 +1,6 @@
 from math import cos, sin
 
-from node import Node
+from core.node import Node
 
 
 def apply_to_locs(fun, tupes):

@@ -4,14 +4,14 @@ import pygame
 from pygame.rect import Rect
 
 import gui.game_frame
-from Scenarios.scenario import Scenario
+from core.scenario import Scenario
 
 from gui.frame import Frame
 from gui.gui_utils import auto_text
 from gui.scbutton import SCButton
-# from Scenarios.test_scenario import TestScenario as TheScenario
-from Scenarios.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
-# from Scenarios.whirlpool_3 import Whirlpool3 as TheScenario
+# from scenarios.test_scenario import TestScenario as TheScenario
+from scenarios.scenario_gen_scripts.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
+# from scenarios.whirlpool_3 import Whirlpool3 as TheScenario
 
 class MenuFrame(Frame):
 
