@@ -13,3 +13,9 @@ class Nation(object):
             "gold": self.gold
         }
 
+    def sc_json_load(self, nation_dict):
+        self.color = nation_dict['color']
+        self.name = nation_dict['name']
+        self.gold = nation_dict['gold']
+
+

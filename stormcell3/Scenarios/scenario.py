@@ -1,6 +1,9 @@
 from building import Building
 import json
 
+from nation import Nation
+from node import Node
+
 
 class Scenario(object):
 
@@ -139,6 +142,19 @@ class Scenario(object):
             else:
                 source_node.move_army(destination_node)
 
+    @classmethod
+    def save_scenario(cls, scenario):
+        with open("saved_game.json", 'w', encoding='utf-8') as f:
+            f.write(scenario.sc_json_save())
+
+    @classmethod
+    def load_scenario(cls):
+        with open("saved_game.json", 'r') as f:
+            scenario_dict = json.loads(f.read())
+            new_scenario = Scenario()
+            new_scenario.sc_json_load(scenario_dict)
+            return new_scenario
+
     def sc_json_save(self):
         turn1, turn2 = self.turn
         return json.dumps({
@@ -152,3 +168,42 @@ class Scenario(object):
             ],
             "defeated": self.defeated
         })
+
+    def sc_json_load(self, scenario_dict):
+        self.turn = (scenario_dict['turn1'], scenario_dict['turn2'])
+        self.defeated = scenario_dict['defeated']
+        self.nations = []
+        for nation_dict in scenario_dict['nations']:
+            new_nation = Nation(None, None)
+            new_nation.sc_json_load(nation_dict)
+            self.nations.append(new_nation)
+        self.nodes = self.load_nodes(scenario_dict)
+
+    # TODO: EWWW
+    def load_nodes(self, scenario_dict):
+        node_dicts = scenario_dict['nodes']
+
+        this = self
+        def get_corresponding_nation(nation_name):
+            return next((nation for nation in this.nations
+                         if nation.name == nation_name), None)
+
+        node_id_to_node_map = {}
+        for node_dict in node_dicts:
+            new_node = Node(
+                node_dict['location'],
+                get_corresponding_nation(node_dict['owner']),
+                node_dict['building'],
+            )
+            new_node.id = node_dict['id']
+            new_node.army = node_dict['army']
+            new_node.moved_army = node_dict['moved_army']
+            new_node.edges = node_dict['edges']
+            Node.cur_id = 0
+            node_id_to_node_map[node_dict['id']] = new_node
+
+        for node in node_id_to_node_map.values():
+            real_edges = [node_id_to_node_map[edge_id] for edge_id in node.edges]
+            node.edges = real_edges
+
+        return node_id_to_node_map.values()

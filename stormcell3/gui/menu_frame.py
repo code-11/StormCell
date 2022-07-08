@@ -4,7 +4,7 @@ import pygame
 from pygame.rect import Rect
 
 import gui.game_frame
-
+from Scenarios.scenario import Scenario
 
 from gui.frame import Frame
 from gui.gui_utils import auto_text
@@ -27,6 +27,12 @@ class MenuFrame(Frame):
         new_frame = gui.game_frame.GameFrame(self.window, self.frame_changer, scenario)
         self.frame_changer(new_frame)
 
+    def change_frame_to_load_game(self):
+        scenario = Scenario.load_scenario()
+        new_frame = gui.game_frame.GameFrame(self.window, self.frame_changer, scenario)
+        self.frame_changer(new_frame)
+
+
     def quit(self):
         pygame.quit()
         sys.exit()
@@ -41,22 +47,25 @@ class MenuFrame(Frame):
                   text_color='white',
                   background_color='black')
 
-        btn1 = SCButton('play-btn', Rect(400, 190, 150, 50), self.default_font, 'Play')
+        btn1 = SCButton('play-btn', Rect(400, 180, 150, 45), self.default_font, 'Play')
         btn1.on_click = self.change_frame_to_game
 
-        btn2 = SCButton('how-to-play', Rect(400, 260, 150, 50), self.default_font, 'How to Play')
-        btn2.on_click = lambda: None
+        btn2 = SCButton('load-btn', Rect(400, 240, 150, 45), self.default_font, 'Load')
+        btn2.on_click = self.change_frame_to_load_game
 
-        btn3 = SCButton('settings', Rect(400, 330, 150, 50), self.default_font, 'Settings')
+        btn3 = SCButton('how-to-play', Rect(400, 300, 150, 45), self.default_font, 'How to Play')
         btn3.on_click = lambda: None
 
-        btn4 = SCButton('credits', Rect(400, 400, 150, 40), self.default_font, 'Credits')
+        btn4 = SCButton('settings', Rect(400, 360, 150, 45), self.default_font, 'Settings')
         btn4.on_click = lambda: None
 
-        btn5 = SCButton('quit', Rect(400, 470, 150, 40), self.default_font, 'Quit')
-        btn5.on_click = self.quit
+        btn5 = SCButton('credits', Rect(400, 420, 150, 45), self.default_font, 'Credits')
+        btn5.on_click = lambda: None
 
-        self.buttons = [btn1, btn2, btn3, btn4, btn5]
+        btn6 = SCButton('quit', Rect(400, 480, 150, 40), self.default_font, 'Quit')
+        btn6.on_click = self.quit
+
+        self.buttons = [btn1, btn2, btn3, btn4, btn5, btn6]
         for btn in self.buttons:
             btn.draw_button(self.window, self.text_save_map)
 

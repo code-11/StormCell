@@ -1,6 +1,7 @@
 import pygame
 from pygame.rect import Rect
 
+from Scenarios.scenario import Scenario
 from gui.frame import Frame
 from gui.gui_utils import auto_text
 import gui.menu_frame
@@ -80,8 +81,7 @@ class GameFrame(Frame):
         self.confirm_save_btn = confirm_btn
 
     def save_scenario(self):
-        with open("saved_game.json", 'w', encoding='utf-8') as f:
-            f.write(self.scenario.sc_json_save())
+        Scenario.save_scenario(self.scenario)
         self.confirm_save()
 
     def draw_outliner(self, window, scenario, font, selected_node, text_save_map):
