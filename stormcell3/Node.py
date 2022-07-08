@@ -1,16 +1,18 @@
 from math import floor, ceil
 
 import pygame
-
 from building import Building
 
 NODE_WIDTH = 45
 
 
 class Node(object):
+    cur_id = 0
+
     def __init__(self, location, owner=None, build_id=''):
+        self.id = Node.cur_id
+        Node.cur_id += 1
         self.edges = []
-        self.armies = []
         self.owner = owner
         self.location = location
         self.building = Building.construct(build_id)
@@ -44,12 +46,12 @@ class Node(object):
         return self.get_rect().collidepoint(mouse)
 
     def draw_as_selected(self, window):
-        selected_loc = (self.location[0]-6, self.location[1]-6)
-        pygame.draw.rect(window, 'green', pygame.Rect(selected_loc, (NODE_WIDTH+12, NODE_WIDTH+12)), width=2)
+        selected_loc = (self.location[0] - 6, self.location[1] - 6)
+        pygame.draw.rect(window, 'green', pygame.Rect(selected_loc, (NODE_WIDTH + 12, NODE_WIDTH + 12)), width=2)
 
-    def undraw_as_selected(self,window):
-        selected_loc = (self.location[0]-6, self.location[1]-6)
-        pygame.draw.rect(window, 'black', pygame.Rect(selected_loc, (NODE_WIDTH+12, NODE_WIDTH+12)))
+    def undraw_as_selected(self, window):
+        selected_loc = (self.location[0] - 6, self.location[1] - 6)
+        pygame.draw.rect(window, 'black', pygame.Rect(selected_loc, (NODE_WIDTH + 12, NODE_WIDTH + 12)))
 
     def draw_node(self, window, font):
         # Draw outer edge and inner color. We want this first so that the text is atop it.
@@ -59,11 +61,12 @@ class Node(object):
 
         # Draw building and army values
         if self.army != 0 or self.moved_army != 0:
-            army_text = ("" if self.army == 0 else str(self.army)) + ("" if self.moved_army == 0 else f"({self.moved_army})")
+            army_text = ("" if self.army == 0 else str(self.army)) + (
+                "" if self.moved_army == 0 else f"({self.moved_army})")
             mid_bottom = self.get_rect().midbottom
             text_surf, _ = font.render(army_text, True, 'white')
             text_rect = text_surf.get_rect()
-            army_draw_location = mid_bottom[0] - text_rect.width//2 , mid_bottom[1] - (text_rect.height + 3)
+            army_draw_location = mid_bottom[0] - text_rect.width // 2, mid_bottom[1] - (text_rect.height + 3)
             font.render_to(window, army_draw_location, army_text, 'white')
 
         if self.building is not None:
@@ -78,7 +81,6 @@ class Node(object):
         other_node.moved_army = self.army
         other_node.owner = self.owner
         self.army = 0
-
 
     def attack_move_army(self, other_node):
         total_defending_army = other_node.army + other_node.moved_army
@@ -96,6 +98,17 @@ class Node(object):
         else:
             # Lose
             other_node.army = 0
-            #Survivors
-            other_node.moved_army = ceil(total_defending_army - (self.army * (1/fort_mult)))
+            # Survivors
+            other_node.moved_army = ceil(total_defending_army - (self.army * (1 / fort_mult)))
             self.army = 0
+
+    def sc_json_save(self):
+        return {
+            "id": self.id,
+            "edges": [edge.id for edge in self.edges],
+            "owner": self.owner.name if self.owner is not None else "",
+            "location": self.location,
+            "building": self.building.abbreviation if self.building is not None else "",
+            "army": self.army,
+            "moved_army": self.moved_army
+        }

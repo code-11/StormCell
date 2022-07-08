@@ -1,4 +1,5 @@
 from building import Building
+import json
 
 
 class Scenario(object):
@@ -42,7 +43,7 @@ class Scenario(object):
         alive_nations = list(filter(is_alive, self.defeated.keys()))
         if len(alive_nations) == 1:
             for nation in self.nations:
-                if nation.name==alive_nations[0]:
+                if nation.name == alive_nations[0]:
                     return nation
             return
         else:
@@ -137,3 +138,17 @@ class Scenario(object):
                 source_node.attack_move_army(destination_node)
             else:
                 source_node.move_army(destination_node)
+
+    def sc_json_save(self):
+        turn1, turn2 = self.turn
+        return json.dumps({
+            "turn1": turn1,
+            "turn2": turn2,
+            "nations": [
+                nation.sc_json_save() for nation in self.nations
+            ],
+            "nodes": [
+                node.sc_json_save() for node in self.nodes
+            ],
+            "defeated": self.defeated
+        })

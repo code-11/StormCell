@@ -3,16 +3,18 @@ from pygame.rect import Rect
 
 from gui.frame import Frame
 from gui.gui_utils import auto_text
+import gui.menu_frame
 from gui.scbutton import SCButton
 
 
 class GameFrame(Frame):
 
-    def __init__(self, window, scenario):
-        super().__init__(window)
+    def __init__(self, window, frame_changer, scenario):
+        super().__init__(window, frame_changer)
         self.scenario = scenario
         self.selected_node = None
         self.end_btn = None
+        self.confirm_save_btn = None
 
     def pre_event_draw(self):
         self.buttons = self.draw_outliner(self.window, self.scenario, self.default_font, self.selected_node, self.text_save_map)
@@ -28,6 +30,9 @@ class GameFrame(Frame):
 
     def on_left_click(self, mouse):
         super().on_left_click(mouse)
+        if self.confirm_save_btn is not None:
+            self.confirm_save_btn.click_test(mouse)
+
         new_selected_node = self.scenario.click_test(mouse)
 
         if new_selected_node is not None:
@@ -52,6 +57,32 @@ class GameFrame(Frame):
 
         if self.end_btn is not None:
             self.end_btn.draw_button(self.window, self.text_save_map)
+
+        if self.confirm_save_btn is not None:
+            self.confirm_save_btn.draw_button(self.window, self.text_save_map)
+
+    def change_frame_to_menu(self):
+        frame = gui.menu_frame.MenuFrame(self.window, self.frame_changer)
+        self.frame_changer(frame)
+
+    def confirm_save(self):
+        confirm_save_text = "Sucessfully Saved \n (Click here to exit) "
+        confirm_btn = SCButton('confirm-save-btn', pygame.Rect(500, 300, 200, 60), self.default_font, confirm_save_text,
+                           text_color='black',
+                           background_color='white')
+        this = self
+        def on_confirm():
+            this.confirm_save_btn = None
+            confirm_btn.undraw_button(this.window, background_override='black')
+
+        confirm_btn.on_click = on_confirm
+        confirm_btn.draw_button(self.window, self.text_save_map)
+        self.confirm_save_btn = confirm_btn
+
+    def save_scenario(self):
+        with open("saved_game.json", 'w', encoding='utf-8') as f:
+            f.write(self.scenario.sc_json_save())
+        self.confirm_save()
 
     def draw_outliner(self, window, scenario, font, selected_node, text_save_map):
         pygame.draw.line(window, 'white', (800, 0), (800, 600))
@@ -79,10 +110,16 @@ class GameFrame(Frame):
         btn4 = SCButton('destroy', Rect(820, 420, 150, 40), font, 'Raze own building')
         btn4.on_click = lambda: scenario.possibly_destroy_build_at_node(selected_node)
 
-        btn5 = SCButton('next-turn', Rect(800, 540, 200, 60), font, 'Next Turn')
+        btn5 = SCButton('next-turn', Rect(800, 510, 200, 60), font, 'Next Turn')
         btn5.on_click = scenario.incr_turn_and_check_for_end
 
-        buttons = [btn1, btn2, btn3, btn4, btn5]
+        btn6 = SCButton('save', Rect(800, 570, 100, 30), font, 'Save')
+        btn6.on_click = self.save_scenario
+
+        btn7 = SCButton('exit', Rect(900, 570, 100, 30), font, 'Exit')
+        btn7.on_click = self.change_frame_to_menu
+
+        buttons = [btn1, btn2, btn3, btn4, btn5, btn6, btn7]
 
         for btn in buttons:
             btn.draw_button(window, text_save_map)

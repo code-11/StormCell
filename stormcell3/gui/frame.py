@@ -4,11 +4,12 @@ import pygame
 
 
 class Frame(object):
-    def __init__(self, window):
+    def __init__(self, window, frame_changer):
         self.window = window
         self.text_save_map = {}
         self.default_font = pygame.freetype.SysFont('Verdana', 12)
         self.buttons = []
+        self.frame_changer = frame_changer
 
     def exit_to_menu(self):
         pygame.quit()
