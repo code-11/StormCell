@@ -9,6 +9,7 @@ from core.scenario import Scenario
 from gui.frame import Frame
 from gui.gui_utils import auto_text
 from gui.scbutton import SCButton
+from gui.map_choice_frame import MapChoiceFrame
 # from scenarios.test_scenario import TestScenario as TheScenario
 from scenarios.scenario_gen_scripts.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
 # from scenarios.whirlpool_3 import Whirlpool3 as TheScenario
@@ -20,6 +21,10 @@ class MenuFrame(Frame):
         self.title_font = pygame.freetype.Font(
             "C:\\Users\\brend\\Documents\\StormCell\\stormCell3\\resources\\fonts\\vecna\\Vecna.otf",
             60)
+
+    def change_frame_to_map_choice(self):
+        new_frame = MapChoiceFrame(self.window, self.frame_changer)
+        self.frame_changer(new_frame)
 
     def change_frame_to_game(self):
         scenario = TheScenario()
@@ -48,7 +53,7 @@ class MenuFrame(Frame):
                   background_color='black')
 
         btn1 = SCButton('play-btn', Rect(400, 180, 150, 45), self.default_font, 'Play')
-        btn1.on_click = self.change_frame_to_game
+        btn1.on_click = self.change_frame_to_map_choice
 
         btn2 = SCButton('load-btn', Rect(400, 240, 150, 45), self.default_font, 'Load')
         btn2.on_click = self.change_frame_to_load_game
