@@ -1,7 +1,10 @@
 from pygame import Rect
 
+from core.scenario import Scenario
 from gui.frame import Frame
 import os
+
+from . import game_frame
 from .scbutton import SCButton
 from .gui_utils import auto_text
 
@@ -21,7 +24,12 @@ class MapChoiceFrame(Frame):
         return int(splits[-1])
 
     def make_on_map_click(self, map_file_name):
-        return lambda:print(map_file_name)
+        def on_map_click():
+            new_scenario=Scenario.load_scenario(map_file_name)
+            new_frame = game_frame.GameFrame(self.window, self.frame_changer, new_scenario)
+            self.frame_changer(new_frame)
+
+        return on_map_click
 
     def draw_map_list(self):
         buttons = []

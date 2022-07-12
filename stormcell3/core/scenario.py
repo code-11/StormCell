@@ -1,3 +1,5 @@
+import os
+
 from core.building import Building
 import json
 
@@ -153,6 +155,14 @@ class Scenario(object):
     @classmethod
     def load_scenario(cls):
         with open("saved_game.json", 'r') as f:
+            scenario_dict = json.loads(f.read())
+            new_scenario = Scenario()
+            new_scenario.sc_json_load(scenario_dict)
+            return new_scenario
+
+    @classmethod
+    def load_scenario(cls, scenario_name):
+        with open(os.path.join("scenarios/maps", scenario_name+".sc_map")) as f:
             scenario_dict = json.loads(f.read())
             new_scenario = Scenario()
             new_scenario.sc_json_load(scenario_dict)
