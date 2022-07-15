@@ -19,13 +19,22 @@ class Whirlpool3(Scenario):
 
     def __init__(self):
         super().__init__()
-        self.name = 'Whirlpool'
-        self.max_players = 2
+        self.name = 'Whirlpool 3'
+        self.max_players = 3
+
+        self.description = """
+            Players start on three arms which meet in the middle \n 
+            Try to push into enemy territory, but beware...\n
+            others will try the same!\n
+            Players start with 3 army and a city.        
+        """
 
         red_nation = Nation('darkred', 'Red', starting_gold=30)
         blue_nation = Nation('blue', 'Blue', starting_gold=30)
         green_nation = Nation('darkgreen', 'Green', starting_gold=30)
         self.nations = [red_nation, blue_nation, green_nation]
+
+        self.set_all_undefeated()
 
         arm1 = _arm_locs()
         arm2 = rotate_locs((3, 3), _arm_locs(), (2 * math.pi / 3))

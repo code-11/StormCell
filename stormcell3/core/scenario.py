@@ -12,13 +12,13 @@ class Scenario(object):
     def __init__(self):
         super().__init__()
         self.name = ''
-        self.max_players = 0
         self.picture = None
         self.turn = (0, 0)
         self.nations = []
         self.nodes = []
         self.defeated = {}  # nation name string to boolean
         self.winning_nation = None
+        self.description = 'No Description'
 
     def set_all_undefeated(self):
         self.defeated = {nation.name: False for nation in self.nations}
@@ -179,7 +179,9 @@ class Scenario(object):
             "nodes": [
                 node.sc_json_save() for node in self.nodes
             ],
-            "defeated": self.defeated
+            "defeated": self.defeated,
+            "name": self.name,
+            "description": self.description
         })
 
     def sc_json_load(self, scenario_dict):
@@ -191,6 +193,8 @@ class Scenario(object):
             new_nation.sc_json_load(nation_dict)
             self.nations.append(new_nation)
         self.nodes = self.load_nodes(scenario_dict)
+        self.name = scenario_dict['name']
+        self.description = scenario_dict['description']
 
     # TODO: EWWW
     def load_nodes(self, scenario_dict):

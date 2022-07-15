@@ -33,7 +33,7 @@ class XMarksTheSpot4(Scenario):
 
     def __init__(self):
         super().__init__()
-        self.name = 'X Marks the Spot'
+        self.name = 'X Marks the Spot 4'
         self.max_players = 4
 
         red_nation = Nation('darkred', 'Red', starting_gold=30)
@@ -42,6 +42,8 @@ class XMarksTheSpot4(Scenario):
         purple_nation = Nation('purple', 'Purple', starting_gold=30)
 
         self.nations = [red_nation, blue_nation, green_nation, purple_nation]
+
+        self.set_all_undefeated()
 
         # Create locations
         top_left = _corner_locs()

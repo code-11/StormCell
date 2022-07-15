@@ -11,6 +11,12 @@ class Frame(object):
         self.buttons = []
         self.frame_changer = frame_changer
 
+    def get_width(self):
+        return self.window.get_size()[0]
+
+    def get_height(self):
+        return self.window.get_size()[1]
+
     def exit_to_menu(self):
         pygame.quit()
         sys.exit()

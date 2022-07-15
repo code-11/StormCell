@@ -1,8 +1,6 @@
 from scenarios.scenario_gen_scripts.test_scenario import TestScenario as TheScenario
-# from scenarios.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
-
-
-# from scenarios.whirlpool_3 import Whirlpool3 as TheScenario
+# from scenarios.scenario_gen_scripts.x_marks_the_spot_4 import XMarksTheSpot4 as TheScenario
+# from scenarios.scenario_gen_scripts.whirlpool_3 import Whirlpool3 as TheScenario
 
 
 def name_to_file_name(name):
