@@ -2,10 +2,12 @@ import pygame
 from pygame import Rect
 
 from core.scenario import Scenario
+from core.nation import ai_types
 from gui.frame import Frame
 import os
 
 from . import game_frame, menu_frame
+from .sc_radio_button_group import SCRadioButtonGroup
 from .scbutton import SCButton
 from .gui_utils import auto_text
 
@@ -23,6 +25,10 @@ class MapChoiceFrame(Frame):
         self.selected_scenario = None
         self.clear_scenario_description = lambda: None
         self.clear_place_selector = lambda: None
+
+        self.type_buttons = []
+        self.nation_ai_types=[]
+
 
     def extract_file_name(self, map_path):
         return map_path.split("\\")[-1].split('.')[0]
@@ -46,12 +52,20 @@ class MapChoiceFrame(Frame):
         this = self
 
         def on_scenario_click():
-            this.selected_scenario = Scenario.load_scenario(map_file_name)
+            this.selected_scenario = Scenario.load_map(map_file_name)
             this.clear_scenario_description()
             this.clear_place_selector()
-            this.start_btn.on_click = lambda: self.frame_changer(game_frame.GameFrame(self.window, self.frame_changer, this.selected_scenario))
+            def on_start_click():
+                this.update_nation_ai_types()
+                self.frame_changer(game_frame.GameFrame(self.window, self.frame_changer, this.selected_scenario))
+            this.start_btn.on_click = on_start_click
+            this.nation_ai_types = [0 for _ in this.selected_scenario.nations]
 
         return on_scenario_click
+
+    def update_nation_ai_types(self):
+        for i, nation in enumerate(self.selected_scenario.nations):
+            nation.ai_type = ai_types[self.nation_ai_types[i]]
 
     def draw_map_list(self):
         buttons = []
@@ -84,7 +98,7 @@ class MapChoiceFrame(Frame):
 
         y_end_of_thumb = self.draw_map_thumbnail()
         if self.selected_scenario is not None:
-            place_rect=self.draw_place_selector(third_x, y_end_of_thumb)
+            place_rect = self.draw_place_selector(third_x, y_end_of_thumb)
             this = self
             def inner_clear_place_selector():
                 pygame.draw.rect(this.window, 'black', place_rect)
@@ -122,6 +136,10 @@ class MapChoiceFrame(Frame):
         # return y end of thumb
         return 20 + thumb_width
 
+
+    def assign_nation_ai_type(self, nation_index, ai_type_index):
+        self.nation_ai_types[nation_index] = ai_type_index
+
     def draw_place_selector(self, line_x, thumb_y):
         col_buffer = 100
         row_buffer = 40
@@ -134,13 +152,32 @@ class MapChoiceFrame(Frame):
         type_col = color_col + col_w + col_buffer
         text_w, text_h = auto_text('type-header', self.window, self.text_save_map, self.default_font, 'Type', (type_col, thumb_y + buffer_from_thumb))
         max_text_w = text_w
+        type_btns = []
         for i, nation in enumerate(self.selected_scenario.nations):
             loc_y = thumb_y + buffer_from_thumb + (1+i)*row_buffer
             text_w, text_h = auto_text(f"loc-{i}", self.window, self.text_save_map, self.default_font, nation.name,(color_col, loc_y))
-            max_text_w = max(max_text_w, text_w)
 
-        return Rect(color_col,thumb_y + buffer_from_thumb, max_text_w, text_h + loc_y)
+            def on_click_assign_nation_ai_type(nation_index):
+                return lambda ai_type: self.assign_nation_ai_type(nation_index, ai_type)
 
+            type_btns.append(SCRadioButtonGroup(
+                nation.name+"select",
+                ai_types,
+                type_col,
+                loc_y,
+                self.nation_ai_types[i],
+                self.default_font,
+                on_click_assign_nation_ai_type(i),
+                text_color='white',
+                background_color='black'))
+
+            # Take the last button in the group, which is defined to be the rightmost, and find its right edge x value.
+            # That is the extent of the place that needs to be refreshed.
+            max_text_w = max(max_text_w, type_btns[i].buttons[-1].rect.right)
+
+        self.type_buttons = type_btns
+
+        return Rect(color_col, thumb_y + buffer_from_thumb, max_text_w, text_h + loc_y)
 
     def find_maps(self):
         maps = []
@@ -151,9 +188,12 @@ class MapChoiceFrame(Frame):
 
     def pre_event_draw(self):
         self.buttons = self.draw_map_list()
-        self.more_buttons = self.draw_map_config()
+        self.draw_map_config()
         self.start_btn.draw_button(self.window, self.text_save_map)
         self.back_btn.draw_button(self.window, self.text_save_map)
+        for button_group in self.type_buttons:
+            button_group.draw_buttons(self.window, self.text_save_map)
+            self.buttons.extend(button_group.buttons)
         self.buttons.extend([self.start_btn, self.back_btn])
 
     def on_left_click(self, mouse):

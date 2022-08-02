@@ -18,9 +18,9 @@ class SCButton(object):
         background_color_to_use = background_override if background_override is not None else self.background_color
         pygame.draw.rect(window, background_color_to_use, self.rect)
 
-    def draw_button(self, window, text_save_map):
-        x_pos = self.rect.midleft[0]+3
-        y_pos = self.rect.topleft[1]+3
+    def draw_button(self, window, text_save_map, draw_frame=True):
+        x_pos = self.rect.midleft[0] + 3
+        y_pos = self.rect.topleft[1] + 3
 
         self.undraw_button(window)
 
@@ -33,11 +33,12 @@ class SCButton(object):
         # # text_width, text_height = pygame.font.Font.size(self.font,self.text)
         # text_pos_x = self.rect.centerx - text_width
         # self.font.render_to(window, (text_pos_x, self.rect.centery), self.text, 'white')
-        pygame.draw.rect(window, 'white', self.rect, width=1)
+        if draw_frame:
+            pygame.draw.rect(window, 'white', self.rect, width=1)
 
     def click_test(self, mouse):
         if self.rect.collidepoint(mouse):
             self.on_click()
 
     def on_click(self):
-        print('test')
+        print(f"Unassigned Button Press: {self.text_id}")

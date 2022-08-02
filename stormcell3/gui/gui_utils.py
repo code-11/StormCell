@@ -1,5 +1,11 @@
-import pygame, sys
+import pygame
 from pygame.locals import *
+
+
+def auto_text_extents(font, text):
+    text_surf, _ = font.render(text, True)
+    text_rect = text_surf.get_rect()
+    return text_rect.width, text_rect.height
 
 
 def auto_text(text_id, window, text_save_map, font, new_text, loc, text_color='white', background_color='black'):

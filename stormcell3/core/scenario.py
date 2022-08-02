@@ -161,7 +161,7 @@ class Scenario(object):
             return new_scenario
 
     @classmethod
-    def load_scenario(cls, scenario_name):
+    def load_map(cls, scenario_name):
         with open(os.path.join("scenarios/maps", scenario_name+".sc_map")) as f:
             scenario_dict = json.loads(f.read())
             new_scenario = Scenario()
