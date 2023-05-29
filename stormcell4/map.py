@@ -257,7 +257,37 @@ class MapOne(object):
         tower_of_illedion=Nation("Illedion's Tower")
         tower_of_eregion=Nation("Eregion's Tower")
         zultans_keep = Nation("Zultan's Keep")
+        jibacoa = Nation("Jibacoa")
+        maniabon = Nation("Maniabon")
+        canimao = Nation("Canimao")
+        naguabo = Nation("Naguabo")
+        seluceria = Nation("Seluceria")
+        havernia = Nation("Havernia")
+        iphakhealis = Nation("Iphakhealis' Hold")
+        northumber = Nation("Northumber")
+        #guohugong = Nation("Guohugong")
+        #huangshagong = Nation("Huangshagong")
+        coastal_hill_palace = Nation("Coastal Hill Palace") #shanhaiangong
+        celestial_palace = Nation("Celestial Palace") #zhizunxiangong
 
+        self.starting_regions = {
+            farthener_tribes:[L1,L2,L3,L4],
+            dunhollow_tribes:[L6,L7,L8],
+            amonhold:[L5,L15,L16],
+            pinemar_keep:[L17,L18,L20,L19,L21],
+            tower_of_eregion:[L81],
+            tower_of_illedion:[L78],
+            zultans_keep:[L79,L80],
+            jibacoa:[L82],
+            canimao:[L81],
+            maniabon:[L59,L84,L65],
+            naguabo:[L62,L60,L61,L63,L66],
+            seluceria:[L56,L57,L54,L58,L68],
+            havernia:[L48,L83,L49,L51],
+            iphakhealis:[L45,L43],
+            northumber:[L71,L72,L72,L77,L76,L74,L75],
+            guohugong:[L38,L39,L47]
+        }
 
         self.region_graph=[
             (L1,L2),
@@ -405,7 +435,5 @@ class MapOne(object):
             (L31,L47)
         ]
 
-        self.starting_regions = {
 
-        }
 
