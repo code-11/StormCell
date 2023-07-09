@@ -32,8 +32,9 @@ if __name__ == "__main__":
 
     the_map=MapOne()
 
-    for region in the_map.regions:
-        region.draw(screen,"#D5CEAB",(50,50,50))
+    # for region in the_map.regions:
+    #     region.draw(screen,"#D5CEAB",(50,50,50))
+    the_map.color_according_to_ownership(screen)
     pygame.display.flip()
 
     while True:

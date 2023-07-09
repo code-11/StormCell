@@ -1,5 +1,7 @@
 import json
 
+import pygame
+
 from StormCell.stormcell4.sc_mapping.region_attrs import People, Culture, Religion, Region, Nation
 from StormCell.stormcell4.sc_mapping.region_geometry import RegionGeometry
 
@@ -255,57 +257,81 @@ class MapOne(object):
         L84 = Region("L84")
         L85 = Region("L85")
 
-        # farthener_tribes = Nation("Farthener Tribes")
-        # dunhollow_tribes = Nation("Dunhollow Tribes")
-        # amonhold = Nation("Amonhold")
-        # pinemar_keep = Nation("Pinemorn")
-        # tower_of_illedion=Nation("Illedion's Tower")
-        # tower_of_eregion=Nation("Eregion's Tower")
-        # zultans_keep = Nation("Zultan's Keep")
-        # jibacoa = Nation("Jibacoa")
-        # maniabon = Nation("Maniabon")
-        # canimao = Nation("Canimao")
-        # naguabo = Nation("Naguabo")
-        # seluceria = Nation("Seluceria")
-        # havernia = Nation("Havernia")
-        # iphakhealis = Nation("Iphakhealis' Hold")
-        # northumber = Nation("Northumber")
-        # central_empire = Nation("Central Empire")
-        # north_east_empire = Nation("North East Empire")
-        # north_west_empire = Nation("North West Empire")
-        # south_west_empire = Nation("South West Empire")
-        # south_east_empire = Nation("South East Empire")
+        farthener_tribes = Nation("Farthener Tribes",None,None,None)
+        dunhollow_tribes = Nation("Dunhollow Tribes",None,None,None)
+        amonhold = Nation("Amonhold",None,None,None)
+        pinemar_keep = Nation("Pinemorn",None,None,None)
+        tower_of_illedion=Nation("Illedion's Tower",None,None,None)
+        tower_of_eregion=Nation("Eregion's Tower",None,None,None)
+        zultans_keep = Nation("Zultan's Keep",None,None,None)
+        artemons_hold = Nation("Artemon's Hold",None,None,None)
+        jibacoa = Nation("Jibacoa",None,None,None)
+        maniabon = Nation("Maniabon",None,None,None)
+        canimao = Nation("Canimao",None,None,None)
+        naguabo = Nation("Naguabo",None,None,None)
+        seluceria = Nation("Seluceria",None,None,None)
+        havernia = Nation("Havernia",None,None,None)
+        iphakhealis = Nation("Iphakhealis' Hold",None,None,None)
+        northumber = Nation("Northumber",None,None,None)
+        central_empire = Nation("Central Empire",None,None,None)
+        north_east_empire = Nation("North East Empire",None,None,None)
+        north_west_empire = Nation("North West Empire",None,None,None)
+        south_west_empire = Nation("South West Empire",None,None,None)
+        south_east_empire = Nation("South East Empire",None,None,None)
 
 
-
+        self.national_colors = {
+            farthener_tribes: "#0064ff",
+            dunhollow_tribes: "#6a472f",
+            amonhold: "#c75700",
+            pinemar_keep: "#705700",
+            tower_of_illedion: "#9e0095",
+            tower_of_eregion: "#69008b",
+            artemons_hold: "#781de7",
+            zultans_keep: "#7a3a8f",
+            jibacoa: "#3bf9f3",
+            maniabon: "#24a09c",
+            canimao: "#24a072",
+            naguabo: "#00f9be",
+            seluceria: "#004022",
+            havernia: "#029900",
+            iphakhealis: "#9e00ff",
+            northumber: "#002f55",
+            central_empire: "#ff0011",
+            north_east_empire: "#bc000d",
+            north_west_empire: "#820009",
+            south_west_empire: "#ff545f",
+            south_east_empire: "#ac3b42",
+        }
 
         #guohugong = Nation("Guohugong")
         #huangshagong = Nation("Huangshagong")
         #coastal_hill_palace = Nation("Coastal Hill Palace") #shanhaiangong
         #celestial_palace = Nation("Celestial Palace") #zhizunxiangong
 
-        # self.starting_regions = {
-        #     farthener_tribes:[L1,L2,L3,L4], #A
-        #     dunhollow_tribes:[L6,L7,L8], #D
-        #     amonhold:[L5,L15,L16], #B
-        #     pinemar_keep:[L17,L18,L20,L19,L21], #C
-        #     tower_of_eregion:[L85], #E
-        #     tower_of_illedion:[L78], #F
-        #     zultans_keep:[L79,L80], #G
-        #     jibacoa:[L82], #H
-        #     canimao:[L81], #I
-        #     maniabon:[L59,L84,L65], #J
-        #     naguabo:[L62,L60,L61,L63,L66], #K
-        #     seluceria:[L56,L57,L54,L58,L68], #L
-        #     havernia:[L48,L83,L49,L51], #M
-        #     iphakhealis:[L45,L43], #N
-        #     northumber:[L71,L72,L72,L77,L76,L74,L75], #O
-        #     central_empire:[L28,L32,L33,L34], #Q
-        #     south_east_empire:[L38,L39,L47], #T
-        #     south_west_empire:[L26,L35,L36,L37], #S
-        #     north_west_empire:[L10,L9,L12,L11], #R
-        #     north_east_empire:[L14,L25,L27,L29,L30,L31,L70,L69],#P
-        # }
+        self.starting_regions = {
+            farthener_tribes:[L1,L2,L3,L4], #A
+            dunhollow_tribes:[L6,L7,L8], #D
+            amonhold:[L5,L15,L16], #B
+            pinemar_keep:[L17,L18,L20,L19,L21], #C
+            tower_of_eregion:[L85], #E
+            tower_of_illedion:[L78], #F
+            artemons_hold:[L13],
+            zultans_keep:[L79,L80], #G
+            jibacoa:[L82], #H
+            canimao:[L81], #I
+            maniabon:[L59,L84,L65], #J
+            naguabo:[L62,L60,L61,L63,L66], #K
+            seluceria:[L56,L57,L54,L58,L68], #L
+            havernia:[L48,L83,L49,L51], #M
+            iphakhealis:[L45,L43], #N
+            northumber:[L71,L72,L73,L77,L76,L74,L75], #O
+            central_empire:[L28,L32,L33,L34], #Q
+            south_east_empire:[L38,L39,L47], #T
+            south_west_empire:[L26,L35,L36,L37], #S
+            north_west_empire:[L10,L9,L12,L11], #R
+            north_east_empire:[L25,L27,L29,L30,L31,L70,L69],#P
+        }
 
 
 
@@ -544,7 +570,7 @@ class MapOne(object):
 
     @property
     def regions(self):
-         return self.color_mapping.values()
+         return list(self.color_mapping.values())
 
 
     def load_and_connect_polys(self):
@@ -561,4 +587,31 @@ class MapOne(object):
                 return region
         return None
 
+    def reverse_color_mapping(self):
+        return {region.tile_num:color for color,region in self.color_mapping.items()}
+
+    @staticmethod
+    def l_val(hex_color):
+        pycolor=pygame.Color(hex_color)
+        color=(pycolor.r/255.0,pycolor.g/255.0,pycolor.b/255.0)
+        c_max=max(color)
+        c_min=min(color)
+        return ((c_max+c_min)/2)*100
+
+    def color_according_to_ownership(self,screen):
+        unseen_regions=set(self.regions)
+        # print(unseen_regions)
+        for nation,regions in self.starting_regions.items():
+            for region in regions:
+                try:
+                    unseen_regions.remove(region)
+                    fill_color=self.national_colors[nation]
+                    edge_color_to_use = (200,200,200) if MapOne.l_val(fill_color) <=20 else (50,50,50)
+                    if region.tile_num == 73:
+                        print(MapOne.l_val(fill_color))
+                    region.draw(screen, fill_color=fill_color, edge_color=edge_color_to_use)
+                except KeyError as e:
+                    print(region.tile_num)
+        for unseen_region in unseen_regions:
+            unseen_region.draw(screen, fill_color="#D5CEAB", edge_color=(50, 50, 50))
 

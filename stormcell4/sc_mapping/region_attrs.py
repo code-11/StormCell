@@ -1,3 +1,5 @@
+from typing import Optional
+
 import pygame
 class Resource(object):
     def __init__(self, name):
@@ -53,7 +55,7 @@ class People(object):
 
 
 class Nation(object):
-    def __init__(self, name, primary_people: People, primary_culture: Culture, primary_religion: Religion, level: int = 1):
+    def __init__(self, name, primary_people: Optional[People], primary_culture: Optional[Culture], primary_religion: Optional[Religion], level: int = 1):
         self.primary_people = primary_people
         self.primary_culture = primary_culture
         self.primary_religion = primary_religion
