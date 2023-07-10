@@ -1,4 +1,5 @@
 from typing import Optional
+from enum import Enum
 
 import pygame
 class Resource(object):
@@ -27,6 +28,25 @@ class Religion(object):
         ind = Religion._index
         Religion._index += 1
         return Religion(f"R{ind}")
+
+
+class Terrain(object):
+
+    def __init__(self,name,color):
+        self.name=name
+        self.color=color
+
+Terrain.MOUNTAINS=Terrain("Mountains","#362910")
+Terrain.COAST=Terrain("Coast","#ffd282")
+Terrain.GRASSLANDS=Terrain("Grasslands","#3ec453")
+Terrain.PLAINS = Terrain("Plains", "#aa9161")
+Terrain.DESERT = Terrain("Desert", "#d08f55")
+Terrain.SWAMP = Terrain("Swamp", "#2c3e26")
+Terrain.HILLS = Terrain("Hills", "#636200")
+Terrain.WOODS = Terrain("Woods", "#29661e")
+Terrain.FOREST = Terrain("Forest", "#14430c")
+Terrain.TUNDRA = Terrain("Tundra", "#53774d")
+Terrain.ICE = Terrain("Ice", "#dad2af")
 
 
 class People(object):

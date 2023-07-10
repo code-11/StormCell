@@ -2,7 +2,7 @@ import json
 
 import pygame
 
-from StormCell.stormcell4.sc_mapping.region_attrs import People, Culture, Religion, Region, Nation
+from StormCell.stormcell4.sc_mapping.region_attrs import People, Culture, Religion, Region, Nation,Terrain
 from StormCell.stormcell4.sc_mapping.region_geometry import RegionGeometry
 
 
@@ -420,6 +420,91 @@ class MapOne(object):
 
         }
 
+        self.terrain_map={
+            L1:Terrain.ICE,
+            L2:Terrain.TUNDRA,
+            L3:Terrain.MOUNTAINS,
+            L4:Terrain.FOREST,
+            L5:Terrain.FOREST,
+            L6:Terrain.HILLS,
+            L7: Terrain.HILLS,
+            L8: Terrain.HILLS,
+            L9: Terrain.GRASSLANDS,
+            L10: Terrain.GRASSLANDS,
+            L11: Terrain.COAST,
+            L12: Terrain.HILLS,
+            L13: Terrain.MOUNTAINS,
+            L14: Terrain.MOUNTAINS,
+            L15: Terrain.WOODS,
+            L16: Terrain.WOODS,
+            L17: Terrain.FOREST,
+            L18: Terrain.FOREST,
+            L19: Terrain.FOREST,
+            L20: Terrain.HILLS,
+            L21: Terrain.FOREST,
+            L22: Terrain.FOREST,
+            L23: Terrain.FOREST,
+            L25: Terrain.GRASSLANDS,
+            L26: Terrain.GRASSLANDS,
+            L27: Terrain.GRASSLANDS,
+            L28: Terrain.GRASSLANDS,
+            L29: Terrain.GRASSLANDS,
+            L30: Terrain.PLAINS,
+            L31: Terrain.PLAINS,
+            L32: Terrain.GRASSLANDS,
+            L33: Terrain.GRASSLANDS,
+            L34: Terrain.MOUNTAINS,
+            L35: Terrain.COAST,
+            L36: Terrain.PLAINS,
+            L37: Terrain.DESERT,
+            L38: Terrain.PLAINS,
+            L39: Terrain.COAST,
+            L40: Terrain.DESERT,
+            L41: Terrain.DESERT,
+            L42: Terrain.MOUNTAINS,
+            L43: Terrain.MOUNTAINS,
+            L45: Terrain.COAST,
+            L47: Terrain.WOODS,
+            L48: Terrain.HILLS,
+            L49: Terrain.WOODS,
+            L50: Terrain.WOODS,
+            L51: Terrain.HILLS,
+            L52: Terrain.FOREST,
+            L53: Terrain.FOREST,
+            L54: Terrain.FOREST,
+            L55: Terrain.FOREST,
+            L56: Terrain.FOREST,
+            L57: Terrain.FOREST,
+            L58: Terrain.FOREST,
+            L59: Terrain.GRASSLANDS,
+            L60: Terrain.MOUNTAINS,
+            L61: Terrain.COAST,
+            L62: Terrain.COAST,
+            L63: Terrain.GRASSLANDS,
+            L64: Terrain.DESERT,
+            L65: Terrain.PLAINS,
+            L66: Terrain.MOUNTAINS,
+            L67: Terrain.WOODS,
+            L68: Terrain.FOREST,
+            L69: Terrain.HILLS,
+            L70: Terrain.HILLS,
+            L71: Terrain.MOUNTAINS,
+            L72: Terrain.MOUNTAINS,
+            L73: Terrain.MOUNTAINS,
+            L74: Terrain.HILLS,
+            L75: Terrain.HILLS,
+            L76: Terrain.HILLS,
+            L77: Terrain.GRASSLANDS,
+            L78: Terrain.PLAINS,
+            L79: Terrain.HILLS,
+            L80: Terrain.HILLS,
+            L81: Terrain.COAST,
+            L82: Terrain.COAST,
+            L83: Terrain.HILLS,
+            L84: Terrain.HILLS,
+            L85: Terrain.PLAINS,
+        }
+
         self.region_graph=[
             (L1,L2),
             (L3,L2),
@@ -603,15 +688,15 @@ class MapOne(object):
         # print(unseen_regions)
         for nation,regions in self.starting_regions.items():
             for region in regions:
-                try:
-                    unseen_regions.remove(region)
-                    fill_color=self.national_colors[nation]
-                    edge_color_to_use = (200,200,200) if MapOne.l_val(fill_color) <=20 else (50,50,50)
-                    if region.tile_num == 73:
-                        print(MapOne.l_val(fill_color))
-                    region.draw(screen, fill_color=fill_color, edge_color=edge_color_to_use)
-                except KeyError as e:
-                    print(region.tile_num)
+                unseen_regions.remove(region)
+                fill_color=self.national_colors[nation]
+                edge_color_to_use = (200,200,200) if MapOne.l_val(fill_color) <=20 else (50,50,50)
+                region.draw(screen, fill_color=fill_color, edge_color=edge_color_to_use)
         for unseen_region in unseen_regions:
             unseen_region.draw(screen, fill_color="#D5CEAB", edge_color=(50, 50, 50))
 
+    def color_according_to_terrain(self,screen):
+        for region in self.regions:
+            fill_color = self.terrain_map[region]
+            edge_color_to_use = (200, 200, 200) if MapOne.l_val(fill_color) <= 20 else (50, 50, 50)
+            region.draw(screen, fill_color=fill_color, edge_color=edge_color_to_use)

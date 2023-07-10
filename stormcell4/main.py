@@ -34,7 +34,9 @@ if __name__ == "__main__":
 
     # for region in the_map.regions:
     #     region.draw(screen,"#D5CEAB",(50,50,50))
-    the_map.color_according_to_ownership(screen)
+
+    # the_map.color_according_to_ownership(screen)
+    the_map.color_according_to_terrain(screen)
     pygame.display.flip()
 
     while True:
