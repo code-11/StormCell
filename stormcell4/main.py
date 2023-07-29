@@ -6,8 +6,9 @@ import json
 import pygame
 import sys
 
+from StormCell.stormcell4.sc_game.game import Game
 from StormCell.stormcell4.sc_mapping.stormcell_map import MapOne
-
+from StormCell.stormcell4.sc_ui.side_bar import SideBar
 
 
 def get_neighbors(pos):
@@ -26,17 +27,24 @@ def is_black(color):
 
 if __name__ == "__main__":
     pygame.init()
-    screen = pygame.display.set_mode((3000/4, 950))
+    screen = pygame.display.set_mode((1100, 950))
     pygame.display.set_caption(f"Stormcell 4")
     screen.fill("#80a8de")
 
     the_map=MapOne()
-
+    the_ui = SideBar((800,0),(300,950))
     # for region in the_map.regions:
     #     region.draw(screen,"#D5CEAB",(50,50,50))
 
-    # the_map.color_according_to_ownership(screen)
-    the_map.color_according_to_terrain(screen)
+    starting_region=the_map.region_from_id("L28")
+    starting_nation=the_map.nation_from_starting_region(starting_region)
+    the_game = Game(starting_nation)
+
+    print(starting_nation)
+
+    the_map.color_according_to_ownership(screen)
+    the_ui.draw(screen)
+    # the_map.color_according_to_terrain(screen)
     pygame.display.flip()
 
     while True:

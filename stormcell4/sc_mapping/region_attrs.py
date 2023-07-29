@@ -32,13 +32,26 @@ class Religion(object):
 
 class Terrain(object):
 
+
+    ICE = None
+    TUNDRA = None
+    WOODS = None
+    HILLS = None
+    FOREST = None
+    PLAINS = None
+    DESERT = None
+    COAST = None
+    GRASSLANDS = None
+    MOUNTAINS = None
+    SWAMP = None
+
     def __init__(self,name,color):
         self.name=name
         self.color=color
 
-Terrain.MOUNTAINS=Terrain("Mountains","#362910")
-Terrain.COAST=Terrain("Coast","#ffd282")
-Terrain.GRASSLANDS=Terrain("Grasslands","#3ec453")
+Terrain.MOUNTAINS = Terrain("Mountains", "#362910")
+Terrain.COAST = Terrain("Coast", "#ffd282")
+Terrain.GRASSLANDS = Terrain("Grasslands", "#3ec453")
 Terrain.PLAINS = Terrain("Plains", "#aa9161")
 Terrain.DESERT = Terrain("Desert", "#d08f55")
 Terrain.SWAMP = Terrain("Swamp", "#2c3e26")
@@ -80,6 +93,10 @@ class Nation(object):
         self.primary_culture = primary_culture
         self.primary_religion = primary_religion
         self.level = level
+        self.name = name
+
+    def __str__(self):
+        return self.name
 
 class Pop(object):
     def __init__(self, number: int, culture: Culture, religion: Religion, ebang: float, magic: float, disease: float):

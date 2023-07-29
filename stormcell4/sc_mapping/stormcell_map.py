@@ -420,6 +420,10 @@ class MapOne(object):
 
         }
 
+        self.region_id_to_region={
+           region.name:region for color, region in self.color_mapping.items()
+        }
+
         self.terrain_map={
             L1:Terrain.ICE,
             L2:Terrain.TUNDRA,
@@ -672,6 +676,14 @@ class MapOne(object):
                 return region
         return None
 
+    def region_from_id(self, region_id):
+        return self.region_id_to_region.get(region_id,None)
+
+    def nation_from_starting_region(self, region):
+        for nation, owned_regions in self.starting_regions.items():
+            if region in owned_regions:
+                return nation
+
     def reverse_color_mapping(self):
         return {region.tile_num:color for color,region in self.color_mapping.items()}
 
@@ -697,6 +709,6 @@ class MapOne(object):
 
     def color_according_to_terrain(self,screen):
         for region in self.regions:
-            fill_color = self.terrain_map[region]
+            fill_color = self.terrain_map[region].color
             edge_color_to_use = (200, 200, 200) if MapOne.l_val(fill_color) <= 20 else (50, 50, 50)
             region.draw(screen, fill_color=fill_color, edge_color=edge_color_to_use)
