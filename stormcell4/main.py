@@ -10,6 +10,8 @@ from StormCell.stormcell4.sc_game.game import Game
 from StormCell.stormcell4.sc_mapping.stormcell_map import MapOne
 from StormCell.stormcell4.sc_ui.side_bar import SideBar
 
+import pygame_gui
+
 
 def get_neighbors(pos):
     return [
@@ -27,9 +29,14 @@ def is_black(color):
 
 if __name__ == "__main__":
     pygame.init()
-    screen = pygame.display.set_mode((1100, 950))
+    size=(1100, 950)
+    screen = pygame.display.set_mode(size)
+    manager = pygame_gui.UIManager(size)
+
     pygame.display.set_caption(f"Stormcell 4")
     screen.fill("#80a8de")
+
+    clock = pygame.time.Clock()
 
     the_map=MapOne()
     the_ui = SideBar((800,0),(300,950))
@@ -43,11 +50,16 @@ if __name__ == "__main__":
     print(starting_nation)
 
     the_map.color_according_to_ownership(screen)
-    the_ui.draw(screen)
+    the_ui.draw(screen, the_game)
     # the_map.color_according_to_terrain(screen)
-    pygame.display.flip()
+
+    button_layout_rect = pygame.Rect(800, 0, 100, 50)
+    hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((800,0), (100, 50)),
+                                                text='Say Hello',
+                                                manager=manager)
 
     while True:
+        time_delta = clock.tick(60) / 1000.0
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -58,6 +70,10 @@ if __name__ == "__main__":
                 if clicked_region is not None:
                     clicked_region.draw(screen,(255,0,0),(50,50,50))
                     pygame.display.flip()
+            manager.process_events(event)
+        manager.update(time_delta)
+        manager.draw_ui(screen)
+        pygame.display.flip()
 
 # if __name__ =="__main__":
 #     pygame.init()

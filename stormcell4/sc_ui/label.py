@@ -1,7 +1,9 @@
 import pygame
+from pygame.font import get_default_font
+
 
 class Label(object):
-    def __init__(self, txt, location, size=(160,30), bg=pygame.Color('white'), fg=pygame.Color('black'), font_name="Segoe Print", font_size=12):
+    def __init__(self, txt, location, size=(160,30), bg=pygame.Color('white'), fg=pygame.Color('black'), font_name=get_default_font(), font_size=12):
         self.bg = bg
         self.fg = fg
         self.size = size
