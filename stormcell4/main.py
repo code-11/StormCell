@@ -1,5 +1,6 @@
 import os
 from math import hypot
+from pygame.font import get_default_font
 from pygame.math import Vector3
 import json
 
@@ -9,8 +10,6 @@ import sys
 from StormCell.stormcell4.sc_game.game import Game
 from StormCell.stormcell4.sc_mapping.stormcell_map import MapOne
 from StormCell.stormcell4.sc_ui.side_bar import SideBar
-
-import pygame_gui
 
 
 def get_neighbors(pos):
@@ -31,7 +30,6 @@ if __name__ == "__main__":
     pygame.init()
     size=(1100, 950)
     screen = pygame.display.set_mode(size)
-    manager = pygame_gui.UIManager(size)
 
     pygame.display.set_caption(f"Stormcell 4")
     screen.fill("#80a8de")
@@ -53,11 +51,6 @@ if __name__ == "__main__":
     the_ui.draw(screen, the_game)
     # the_map.color_according_to_terrain(screen)
 
-    button_layout_rect = pygame.Rect(800, 0, 100, 50)
-    hello_button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((800,0), (100, 50)),
-                                                text='Say Hello',
-                                                manager=manager)
-
     while True:
         time_delta = clock.tick(60) / 1000.0
         for event in pygame.event.get():
@@ -70,9 +63,6 @@ if __name__ == "__main__":
                 if clicked_region is not None:
                     clicked_region.draw(screen,(255,0,0),(50,50,50))
                     pygame.display.flip()
-            manager.process_events(event)
-        manager.update(time_delta)
-        manager.draw_ui(screen)
         pygame.display.flip()
 
 # if __name__ =="__main__":
