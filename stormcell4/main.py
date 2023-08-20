@@ -63,6 +63,11 @@ if __name__ == "__main__":
                 if clicked_region is not None:
                     clicked_region.draw(screen,(255,0,0),(50,50,50))
                     pygame.display.flip()
+
+                    the_widget=the_ui.get_selected_tile_widget()
+                    the_widget.txt=clicked_region.name
+                    the_widget.parent.update()
+                    the_ui.draw(screen, the_game)
         pygame.display.flip()
 
 # if __name__ =="__main__":

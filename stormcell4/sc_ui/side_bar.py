@@ -44,7 +44,24 @@ class SideBar():
         )
         emblem_and_else=SCContainer([emblem,country_title_and_else])
 
-        emblem_and_else.draw(self.surface,(0,0))
+        resources=["a","b","c","d","e"]
+        resource_boxes=[]
+        for i,resource in enumerate(resources):
+            resource_amnt=Label(str(i))
+            resource_icon=SCImage(
+                image_path=f"/Users/brendanritter/fun/StormCell/stormcell4/resources/images/{resource}.png",
+                size=(20, 20)
+            )
+            resource_and_icon=SCContainer([resource_amnt,resource_icon],inner_padding=5)
+            resource_boxes.append(resource_and_icon)
+
+        resources = SCContainer(resource_boxes,inner_padding=15)
+        top_and_resources = SCContainer([emblem_and_else,resources],orientation=ContainerOrientation.VERTICAL, inner_padding=15)
+
+        self.selected_tile_label = Label("", font_size=20)
+        country_info_and_selected = SCContainer([top_and_resources,self.selected_tile_label], orientation=ContainerOrientation.VERTICAL,inner_padding=15)
+
+        country_info_and_selected.draw(self.surface,(0,0))
 
         # censer_img = pygame.image.load("/Users/brendanritter/fun/StormCell/stormcell4/resources/images/censer.png").convert_alpha()
         # censer_img = pygame.transform.scale(censer_img, (25, 30))
@@ -77,3 +94,6 @@ class SideBar():
         # self.surface.blit(censer_img, (250, 30))
         #
         screen.blit(self.surface, self.rect)
+
+    def get_selected_tile_widget(self):
+        return self.selected_tile_label
