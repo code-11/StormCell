@@ -2,12 +2,11 @@ import json
 
 import pygame
 
-from StormCell.stormcell4.sc_mapping.region_attrs import People, Culture, Religion, Region, Nation,Terrain
-from StormCell.stormcell4.sc_mapping.region_geometry import RegionGeometry
+from .region_attrs import People, Culture, Religion, Region, Nation, Terrain
+from .region_geometry import RegionGeometry
 
 
 class MapOne(object):
-
     no_religion = Religion("R0")
     ice_spirits = Religion("Ice Spirits")
     hill_spirits = Religion("Hill Spirits")
@@ -22,8 +21,8 @@ class MapOne(object):
     IMP = Culture("Imperial", "IMP")
     SI = Culture("Southern Isles", "SI")
     WD = Culture("Great Woods", "WD")
-    PA = Culture("Peripa","PA")
-    NA = Culture("None","NA")
+    PA = Culture("Peripa", "PA")
+    NA = Culture("None", "NA")
 
     fartheners = People(
         name="fartheners",
@@ -134,7 +133,7 @@ class MapOne(object):
         tradition=.5,
     )
 
-    def __init__(self):
+    def __init__(self, desired_size):
 
         self.peoples = [
             MapOne.fartheners,
@@ -150,7 +149,7 @@ class MapOne(object):
             MapOne.haverguard,
             MapOne.selucians
         ]
-        self.cultures=[
+        self.cultures = [
             MapOne.NP,
             MapOne.HL,
             MapOne.IMP,
@@ -159,7 +158,7 @@ class MapOne(object):
             MapOne.PA,
             MapOne.NA
         ]
-        self.religions=[
+        self.religions = [
             MapOne.no_religion,
             MapOne.ice_spirits,
             MapOne.hill_spirits,
@@ -169,7 +168,6 @@ class MapOne(object):
             MapOne.deep_gods,
             MapOne.earth_gods,
         ]
-
 
         L1 = Region("L1")
         L2 = Region("L2")
@@ -257,28 +255,27 @@ class MapOne(object):
         L84 = Region("L84")
         L85 = Region("L85")
 
-        farthener_tribes = Nation("Farthener Tribes",None,None,None)
-        dunhollow_tribes = Nation("Dunhollow Tribes",None,None,None)
-        amonhold = Nation("Amonhold",None,None,None)
-        pinemar_keep = Nation("Pinemorn",None,None,None)
-        tower_of_illedion=Nation("Illedion's Tower",None,None,None)
-        tower_of_eregion=Nation("Eregion's Tower",None,None,None)
-        zultans_keep = Nation("Zultan's Keep",None,None,None)
-        artemons_hold = Nation("Artemon's Hold",None,None,None)
-        jibacoa = Nation("Jibacoa",None,None,None)
-        maniabon = Nation("Maniabon",None,None,None)
-        canimao = Nation("Canimao",None,None,None)
-        naguabo = Nation("Naguabo",None,None,None)
-        seluceria = Nation("Seluceria",None,None,None)
-        havernia = Nation("Havernia",None,None,None)
-        iphakhealis = Nation("Iphakhealis' Hold",None,None,None)
-        northumber = Nation("Northumber",None,None,None)
-        central_empire = Nation("Central Empire",None,None,None)
-        north_east_empire = Nation("North East Empire",None,None,None)
-        north_west_empire = Nation("North West Empire",None,None,None)
-        south_west_empire = Nation("South West Empire",None,None,None)
-        south_east_empire = Nation("South East Empire",None,None,None)
-
+        farthener_tribes = Nation("Farthener Tribes", None, None, None)
+        dunhollow_tribes = Nation("Dunhollow Tribes", None, None, None)
+        amonhold = Nation("Amonhold", None, None, None)
+        pinemar_keep = Nation("Pinemorn", None, None, None)
+        tower_of_illedion = Nation("Illedion's Tower", None, None, None)
+        tower_of_eregion = Nation("Eregion's Tower", None, None, None)
+        zultans_keep = Nation("Zultan's Keep", None, None, None)
+        artemons_hold = Nation("Artemon's Hold", None, None, None)
+        jibacoa = Nation("Jibacoa", None, None, None)
+        maniabon = Nation("Maniabon", None, None, None)
+        canimao = Nation("Canimao", None, None, None)
+        naguabo = Nation("Naguabo", None, None, None)
+        seluceria = Nation("Seluceria", None, None, None)
+        havernia = Nation("Havernia", None, None, None)
+        iphakhealis = Nation("Iphakhealis' Hold", None, None, None)
+        northumber = Nation("Northumber", None, None, None)
+        central_empire = Nation("Central Empire", None, None, None)
+        north_east_empire = Nation("North East Empire", None, None, None)
+        north_west_empire = Nation("North West Empire", None, None, None)
+        south_west_empire = Nation("South West Empire", None, None, None)
+        south_east_empire = Nation("South East Empire", None, None, None)
 
         self.national_colors = {
             farthener_tribes: "#0064ff",
@@ -304,133 +301,131 @@ class MapOne(object):
             south_east_empire: "#ac3b42",
         }
 
-        #guohugong = Nation("Guohugong")
-        #huangshagong = Nation("Huangshagong")
-        #coastal_hill_palace = Nation("Coastal Hill Palace") #shanhaiangong
-        #celestial_palace = Nation("Celestial Palace") #zhizunxiangong
+        # guohugong = Nation("Guohugong")
+        # huangshagong = Nation("Huangshagong")
+        # coastal_hill_palace = Nation("Coastal Hill Palace") #shanhaiangong
+        # celestial_palace = Nation("Celestial Palace") #zhizunxiangong
 
         self.starting_regions = {
-            farthener_tribes:[L1,L2,L3,L4], #A
-            dunhollow_tribes:[L6,L7,L8], #D
-            amonhold:[L5,L15,L16], #B
-            pinemar_keep:[L17,L18,L20,L19,L21], #C
-            tower_of_eregion:[L85], #E
-            tower_of_illedion:[L78], #F
-            artemons_hold:[L13],
-            zultans_keep:[L79,L80], #G
-            jibacoa:[L82], #H
-            canimao:[L81], #I
-            maniabon:[L59,L84,L65], #J
-            naguabo:[L62,L60,L61,L63,L66], #K
-            seluceria:[L56,L57,L54,L58,L68], #L
-            havernia:[L48,L83,L49,L51], #M
-            iphakhealis:[L45,L43], #N
-            northumber:[L71,L72,L73,L77,L76,L74,L75], #O
-            central_empire:[L28,L32,L33,L34], #Q
-            south_east_empire:[L38,L39,L47], #T
-            south_west_empire:[L26,L35,L36,L37], #S
-            north_west_empire:[L10,L9,L12,L11], #R
-            north_east_empire:[L25,L27,L29,L30,L31,L70,L69],#P
+            farthener_tribes: [L1, L2, L3, L4],  # A
+            dunhollow_tribes: [L6, L7, L8],  # D
+            amonhold: [L5, L15, L16],  # B
+            pinemar_keep: [L17, L18, L20, L19, L21],  # C
+            tower_of_eregion: [L85],  # E
+            tower_of_illedion: [L78],  # F
+            artemons_hold: [L13],
+            zultans_keep: [L79, L80],  # G
+            jibacoa: [L82],  # H
+            canimao: [L81],  # I
+            maniabon: [L59, L84, L65],  # J
+            naguabo: [L62, L60, L61, L63, L66],  # K
+            seluceria: [L56, L57, L54, L58, L68],  # L
+            havernia: [L48, L83, L49, L51],  # M
+            iphakhealis: [L45, L43],  # N
+            northumber: [L71, L72, L73, L77, L76, L74, L75],  # O
+            central_empire: [L28, L32, L33, L34],  # Q
+            south_east_empire: [L38, L39, L47],  # T
+            south_west_empire: [L26, L35, L36, L37],  # S
+            north_west_empire: [L10, L9, L12, L11],  # R
+            north_east_empire: [L25, L27, L29, L30, L31, L70, L69],  # P
         }
 
-
-
-        self.color_mapping={
-            "ff0000":L1,
-            "2500ff":L2,
-            "eb00ff":L3,
-            "66dd71":L4,
-            "66b9dd":L5,
-            "ddae66":L6,
-            "5f00e4":L7,
-            "016400":L8,
-            "8cfff0":L9,
-            "6b0082":L10,
-            "ffac00":L11,
-            "a00000":L12,
-            "45784c":L13,
-            "764578":L14,
-            "d0869f":L15,
-            "988f01":L16,
-            "03ff00":L17,
-            "273a9e":L18,
-            "ccce00":L19,
-            "fea3ff":L20,
-            "d3d3d3":L21,
-            "2c2c2c":L22,
-            "602929":L23,
-            "295960":L25,
-            "007587":L26,
-            "197528":L27,
-            "7e0080":L28,
-            "2f3c99":L29,
-            "157e2d":L30,
-            "aa0839":L31,
-            "7b7b7b":L32,
-            "ba1d62":L33,
-            "1d60ba":L34,
-            "803c00":L35,
-            "a5a5a5":L36,
-            "500000":L37,
-            "4fa248":L38,
-            "fff69a":L39,
-            "ff4f4f":L40,
-            "4f9aff":L41,
-            "9857a6":L42,
-            "d55e00":L43,
-            "2c5e00":L45,
-            "434343":L47,
-            "00044f":L48,
-            "ddcf41":L49,
-            "91882c":L50,
-            "ffe800":L51,
-            "757148":L52,
-            "4a4616":L53,
-            "464430":L54,
-            "baad23":L55,
-            "363200":L56,
-            "ffd55c":L57,
-            "ffaf5c":L58,
-            "6c30c0":L59,
-            "542695":L60,
-            "6e578f":L61,
-            "9575c1":L62,
-            "757cc1":L63,
-            "404cc0":L65,
-            "1723a2":L66,
-            "0c605d":L67,
-            "003635":L68,
-            "1a8e8a":L69,
-            "1dc1bc":L70,
-            "20efe8":L71,
-            "486463":L72,
-            "6a9896":L73,
-            "6edaa7":L74,
-            "4dffab":L75,
-            "0bbc68":L76,
-            "048c4c":L77,
-            "2a362a":L78,
-            "016636":L79,
-            "004022":L80,
-            "c03065":L81,
-            "c17e97":L82,
-            "ff9dc1":L83,
-            "7b002d":L84,
-            "996c27":L85,
+        self.color_mapping = {
+            "ff0000": L1,
+            "2500ff": L2,
+            "eb00ff": L3,
+            "66dd71": L4,
+            "66b9dd": L5,
+            "ddae66": L6,
+            "5f00e4": L7,
+            "016400": L8,
+            "8cfff0": L9,
+            "6b0082": L10,
+            "ffac00": L11,
+            "a00000": L12,
+            "45784c": L13,
+            "764578": L14,
+            "d0869f": L15,
+            "988f01": L16,
+            "03ff00": L17,
+            "273a9e": L18,
+            "ccce00": L19,
+            "fea3ff": L20,
+            "d3d3d3": L21,
+            "2c2c2c": L22,
+            "602929": L23,
+            "295960": L25,
+            "007587": L26,
+            "197528": L27,
+            "7e0080": L28,
+            "2f3c99": L29,
+            "157e2d": L30,
+            "aa0839": L31,
+            "7b7b7b": L32,
+            "ba1d62": L33,
+            "1d60ba": L34,
+            "803c00": L35,
+            "a5a5a5": L36,
+            "500000": L37,
+            "4fa248": L38,
+            "fff69a": L39,
+            "ff4f4f": L40,
+            "4f9aff": L41,
+            "9857a6": L42,
+            "d55e00": L43,
+            "2c5e00": L45,
+            "434343": L47,
+            "00044f": L48,
+            "ddcf41": L49,
+            "91882c": L50,
+            "ffe800": L51,
+            "757148": L52,
+            "4a4616": L53,
+            "464430": L54,
+            "baad23": L55,
+            "363200": L56,
+            "ffd55c": L57,
+            "ffaf5c": L58,
+            "6c30c0": L59,
+            "542695": L60,
+            "6e578f": L61,
+            "9575c1": L62,
+            "757cc1": L63,
+            "404cc0": L65,
+            "1723a2": L66,
+            "0c605d": L67,
+            "003635": L68,
+            "1a8e8a": L69,
+            "1dc1bc": L70,
+            "20efe8": L71,
+            "486463": L72,
+            "6a9896": L73,
+            "6edaa7": L74,
+            "4dffab": L75,
+            "0bbc68": L76,
+            "048c4c": L77,
+            "2a362a": L78,
+            "016636": L79,
+            "004022": L80,
+            "c03065": L81,
+            "c17e97": L82,
+            "ff9dc1": L83,
+            "7b002d": L84,
+            "996c27": L85,
 
         }
 
-        self.region_id_to_region={
-           region.name:region for color, region in self.color_mapping.items()
+        self.region_id_to_region = {
+            region.name: region for color, region in self.color_mapping.items()
         }
 
-        self.terrain_map={
-            L1:Terrain.ICE,
-            L2:Terrain.TUNDRA,
-            L3:Terrain.MOUNTAINS,
-            L4:Terrain.FOREST,
-            L5:Terrain.FOREST,
-            L6:Terrain.HILLS,
+        self.terrain_map = {
+            L1: Terrain.ICE,
+            L2: Terrain.TUNDRA,
+            L3: Terrain.MOUNTAINS,
+            L4: Terrain.FOREST,
+            L5: Terrain.FOREST,
+            L6: Terrain.HILLS,
             L7: Terrain.HILLS,
             L8: Terrain.HILLS,
             L9: Terrain.GRASSLANDS,
@@ -509,175 +504,197 @@ class MapOne(object):
             L85: Terrain.PLAINS,
         }
 
-        self.region_graph=[
-            (L1,L2),
-            (L3,L2),
-            (L3,L4),
-            (L4,L7),
-            (L4,L6),
-            (L4,L5),
-            (L8,L7),
-            (L7,L6),
-            (L6,L5),
-            (L8,L10),
-            (L10,L7),
-            (L10,L9),
-            (L7,L9),
-            (L9,L13),
-            (L9,L12),
-            (L5,L15),
-            (L5,L16),
-            (L5,L14),
-            (L6,L13),
-            (L13,L14),
-            (L17,L15),
-            (L17,L16),
-            (L15,L16),
-            (L16,L15),
-            (L16,L14),
-            (L10,L11),
-            (L11,L9),
-            (L11,L28),
-            (L11,L26),
-            (L28,L12),
-            (L12,L25),
-            (L13,L25),
-            (L14,L25),
-            (L26,L28),
-            (L28,L32),
-            (L12,L32),
-            (L32,L27),
-            (L25,L27),
-            (L27,L29),
-            (L25,L29),
-            (L14,L29),
-            (L17,L20),
-            (L17,L18),
-            (L17,L19),
-            (L20,L18),
-            (L18,L19),
-            (L20,L19),
-            (L20,L21),
-            (L21,L19),
-            (L16,L22),
-            (L19,L22),
-            (L19,L23),
-            (L22,L23),
-            (L22,L29),
-            (L23,L30),
-            (L29,L30),
-            (L29,L31),
-            (L30,L31),
-            (L30,L70),
-            (L31,L69),
-            (L31,L70),
-            (L70,L69),
-            (L70,L71),
-            (L69,L71),
-            (L71,L73),
-            (L73,L72),
-            (L71,L72),
-            (L73,L74),
-            (L72,L77),
-            (L73,L77),
-            (L73,L76),
-            (L74,L76),
-            (L73,L75),
-            (L76,L75),
-            (L77,L75),
-            (L26,L35),
-            (L35,L37),
-            (L28,L37),
-            (L32,L33),
-            (L28,L33),
-            (L33,L38),
-            (L34,L33),
-            (L34,L38),
-            (L37,L38),
-            (L36,L37),
-            (L35,L36),
-            (L36,L41),
-            (L36,L40),
-            (L37,L41),
-            (L40,L41),
-            (L39,L34),
-            (L38,L39),
-            (L37,L42),
-            (L38,L42),
-            (L43,L42),
-            (L41,L45),
-            (L45,L43),
-            (L41,L43),
-            (L39,L47),
-            (L39,L50),
-            (L39,L48),
-            (L42,L48),
-            (L83,L43),
-            (L83,L48),
-            (L43,L48),
-            (L43,L83),
-            (L48,L50),
-            (L48,L49),
-            (L83,L49),
-            (L49,L50),
-            (L50,L47),
-            (L49,L51),
-            (L50,L51),
-            (L51,L52),
-            (L50,L52),
-            (L47,L52),
-            (L47,L58),
-            (L52,L54),
-            (L51,L53),
-            (L53,L55),
-            (L51,L55),
-            (L55,L54),
-            (L52,L55),
-            (L58,L54),
-            (L58,L57),
-            (L54,L57),
-            (L54,L56),
-            (L55,L56),
-            (L53,L56),
-            (L53,L57),
-            (L56,L57),
-            (L84,L62),
-            (L84,L60),
-            (L84,L61),
-            (L62,L60),
-            (L60,L61),
-            (L62,L63),
-            (L60,L63),
-            (L61,L63),
-            (L67,L68),
-            (L79,L80),
-            (L78,L85),
-            (L31,L47)
+        self.region_graph = [
+            (L1, L2),
+            (L3, L2),
+            (L3, L4),
+            (L4, L7),
+            (L4, L6),
+            (L4, L5),
+            (L8, L7),
+            (L7, L6),
+            (L6, L5),
+            (L8, L10),
+            (L10, L7),
+            (L10, L9),
+            (L7, L9),
+            (L9, L13),
+            (L9, L12),
+            (L5, L15),
+            (L5, L16),
+            (L5, L14),
+            (L6, L13),
+            (L13, L14),
+            (L17, L15),
+            (L17, L16),
+            (L15, L16),
+            (L16, L15),
+            (L16, L14),
+            (L10, L11),
+            (L11, L9),
+            (L11, L28),
+            (L11, L26),
+            (L28, L12),
+            (L12, L25),
+            (L13, L25),
+            (L14, L25),
+            (L26, L28),
+            (L28, L32),
+            (L12, L32),
+            (L32, L27),
+            (L25, L27),
+            (L27, L29),
+            (L25, L29),
+            (L14, L29),
+            (L17, L20),
+            (L17, L18),
+            (L17, L19),
+            (L20, L18),
+            (L18, L19),
+            (L20, L19),
+            (L20, L21),
+            (L21, L19),
+            (L16, L22),
+            (L19, L22),
+            (L19, L23),
+            (L22, L23),
+            (L22, L29),
+            (L23, L30),
+            (L29, L30),
+            (L29, L31),
+            (L30, L31),
+            (L30, L70),
+            (L31, L69),
+            (L31, L70),
+            (L70, L69),
+            (L70, L71),
+            (L69, L71),
+            (L71, L73),
+            (L73, L72),
+            (L71, L72),
+            (L73, L74),
+            (L72, L77),
+            (L73, L77),
+            (L73, L76),
+            (L74, L76),
+            (L73, L75),
+            (L76, L75),
+            (L77, L75),
+            (L26, L35),
+            (L35, L37),
+            (L28, L37),
+            (L32, L33),
+            (L28, L33),
+            (L33, L38),
+            (L34, L33),
+            (L34, L38),
+            (L37, L38),
+            (L36, L37),
+            (L35, L36),
+            (L36, L41),
+            (L36, L40),
+            (L37, L41),
+            (L40, L41),
+            (L39, L34),
+            (L38, L39),
+            (L37, L42),
+            (L38, L42),
+            (L43, L42),
+            (L41, L45),
+            (L45, L43),
+            (L41, L43),
+            (L39, L47),
+            (L39, L50),
+            (L39, L48),
+            (L42, L48),
+            (L83, L43),
+            (L83, L48),
+            (L43, L48),
+            (L43, L83),
+            (L48, L50),
+            (L48, L49),
+            (L83, L49),
+            (L49, L50),
+            (L50, L47),
+            (L49, L51),
+            (L50, L51),
+            (L51, L52),
+            (L50, L52),
+            (L47, L52),
+            (L47, L58),
+            (L52, L54),
+            (L51, L53),
+            (L53, L55),
+            (L51, L55),
+            (L55, L54),
+            (L52, L55),
+            (L58, L54),
+            (L58, L57),
+            (L54, L57),
+            (L54, L56),
+            (L55, L56),
+            (L53, L56),
+            (L53, L57),
+            (L56, L57),
+            (L84, L62),
+            (L84, L60),
+            (L84, L61),
+            (L62, L60),
+            (L60, L61),
+            (L62, L63),
+            (L60, L63),
+            (L61, L63),
+            (L67, L68),
+            (L79, L80),
+            (L78, L85),
+            (L31, L47)
         ]
 
-        self.load_and_connect_polys()
+        self.load_and_connect_polys(desired_size)
 
     @property
     def regions(self):
-         return list(self.color_mapping.values())
+        return list(self.color_mapping.values())
 
-
-    def load_and_connect_polys(self):
+    def load_and_connect_polys(self, desired_map_size):
+        desired_map_size_x, desired_map_size_y = desired_map_size
         with open('region_list.txt', "r") as f:
             regions_dict = json.load(f)
+        max_x = 0
+        max_y = 0
         for region in self.regions:
-            region.geometry=RegionGeometry(
-                regions_dict.get(str(region.tile_num),[])
+            region.geometry = RegionGeometry(
+                regions_dict.get(str(region.tile_num), [])
             )
+            top, right, bottom, left = region.geometry.bbox()
+            if region.tile_num=="60":
+                print(f"bbox_60:t {top}, r {right}, b {bottom}, l {left}")
+            if max_x < right[0]:
+                max_x = right[0]
+            if max_y < bottom[1]:
+                max_y = bottom[1]
 
-    def region_clicked(self,click_pos):
+        print(f"max_x: {max_x}")
+        print(f"max_y: {max_y}")
+
+        x_scale = desired_map_size_x / max_x
+        y_scale = desired_map_size_y / max_y
+
+        print(f"x_scale: {x_scale}")
+        print(f"y_scale: {y_scale}")
+
+        for region in self.regions:
+            region.geometry.scale(x_scale, y_scale)
+
+
+    def region_clicked(self, click_pos):
         for region in self.regions:
             if region.geometry.in_bbox(click_pos) and region.geometry.in_polys(click_pos):
                 return region
         return None
 
     def region_from_id(self, region_id):
-        return self.region_id_to_region.get(region_id,None)
+        return self.region_id_to_region.get(region_id, None)
 
     def nation_from_starting_region(self, region):
         for nation, owned_regions in self.starting_regions.items():
@@ -685,29 +702,29 @@ class MapOne(object):
                 return nation
 
     def reverse_color_mapping(self):
-        return {region.tile_num:color for color,region in self.color_mapping.items()}
+        return {region.tile_num: color for color, region in self.color_mapping.items()}
 
     @staticmethod
     def l_val(hex_color):
-        pycolor=pygame.Color(hex_color)
-        color=(pycolor.r/255.0,pycolor.g/255.0,pycolor.b/255.0)
-        c_max=max(color)
-        c_min=min(color)
-        return ((c_max+c_min)/2)*100
+        pycolor = pygame.Color(hex_color)
+        color = (pycolor.r / 255.0, pycolor.g / 255.0, pycolor.b / 255.0)
+        c_max = max(color)
+        c_min = min(color)
+        return ((c_max + c_min) / 2) * 100
 
-    def color_according_to_ownership(self,screen):
-        unseen_regions=set(self.regions)
+    def color_according_to_ownership(self, screen):
+        unseen_regions = set(self.regions)
         # print(unseen_regions)
-        for nation,regions in self.starting_regions.items():
+        for nation, regions in self.starting_regions.items():
             for region in regions:
                 unseen_regions.remove(region)
-                fill_color=self.national_colors[nation]
-                edge_color_to_use = (200,200,200) if MapOne.l_val(fill_color) <=20 else (50,50,50)
+                fill_color = self.national_colors[nation]
+                edge_color_to_use = (200, 200, 200) if MapOne.l_val(fill_color) <= 20 else (50, 50, 50)
                 region.draw(screen, fill_color=fill_color, edge_color=edge_color_to_use)
         for unseen_region in unseen_regions:
             unseen_region.draw(screen, fill_color="#D5CEAB", edge_color=(50, 50, 50))
 
-    def color_according_to_terrain(self,screen):
+    def color_according_to_terrain(self, screen):
         for region in self.regions:
             fill_color = self.terrain_map[region].color
             edge_color_to_use = (200, 200, 200) if MapOne.l_val(fill_color) <= 20 else (50, 50, 50)

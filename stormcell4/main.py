@@ -7,28 +7,31 @@ import json
 import pygame
 import sys
 
-from StormCell.stormcell4.sc_game.game import Game
-from StormCell.stormcell4.sc_mapping.stormcell_map import MapOne
-from StormCell.stormcell4.sc_ui.side_bar import SideBar
+from sc_game.game import Game
+from sc_mapping.stormcell_map import MapOne
+from sc_ui.side_bar import SideBar
 
 
 def get_neighbors(pos):
     return [
-        (pos[0]-1,pos[1]),
-        (pos[0]+1,pos[1]),
-        (pos[0],pos[1]-1),
-        (pos[0],pos[1]+1)
+        (pos[0] - 1, pos[1]),
+        (pos[0] + 1, pos[1]),
+        (pos[0], pos[1] - 1),
+        (pos[0], pos[1] + 1)
     ]
+
 
 def lerp(v0, v1, t):
     return (1 - t) * v0 + t * v1
 
+
 def is_black(color):
-    return color[0]<10 and color[1]<10 and color[2]<10
+    return color[0] < 10 and color[1] < 10 and color[2] < 10
+
 
 if __name__ == "__main__":
     pygame.init()
-    size=(1100, 950)
+    size = (1100, 750)
     screen = pygame.display.set_mode(size)
 
     pygame.display.set_caption(f"Stormcell 4")
@@ -36,13 +39,13 @@ if __name__ == "__main__":
 
     clock = pygame.time.Clock()
 
-    the_map=MapOne()
-    the_ui = SideBar((800,0),(300,950))
+    the_map = MapOne((800, 750))
+    the_ui = SideBar((800, 0), (300, 750))
     # for region in the_map.regions:
     #     region.draw(screen,"#D5CEAB",(50,50,50))
 
-    starting_region=the_map.region_from_id("L28")
-    starting_nation=the_map.nation_from_starting_region(starting_region)
+    starting_region = the_map.region_from_id("L28")
+    starting_nation = the_map.nation_from_starting_region(starting_region)
     the_game = Game(starting_nation)
 
     print(starting_nation)
@@ -59,13 +62,13 @@ if __name__ == "__main__":
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONUP:
                 pos = pygame.mouse.get_pos()
-                clicked_region=the_map.region_clicked(pos)
+                clicked_region = the_map.region_clicked(pos)
                 if clicked_region is not None:
-                    clicked_region.draw(screen,(255,0,0),(50,50,50))
+                    clicked_region.draw(screen, (255, 0, 0), (50, 50, 50))
                     pygame.display.flip()
 
-                    the_widget=the_ui.get_selected_tile_widget()
-                    the_widget.txt=clicked_region.name
+                    the_widget = the_ui.get_selected_tile_widget()
+                    the_widget.txt = clicked_region.name
                     the_widget.parent.update()
                     the_ui.draw(screen, the_game)
         pygame.display.flip()
@@ -148,7 +151,3 @@ if __name__ == "__main__":
 #                     screen.set_at(pixel,color)
 #                 pygame.display.flip()
 #                 region_lists.append(ordered)
-
-
-
-

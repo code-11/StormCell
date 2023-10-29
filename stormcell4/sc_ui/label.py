@@ -1,7 +1,7 @@
 import pygame
 from pygame.font import get_default_font
 
-from StormCell.stormcell4.sc_ui.sc_widget import SCWidget
+from .sc_widget import SCWidget
 
 
 class Label(SCWidget):

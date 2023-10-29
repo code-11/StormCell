@@ -8,17 +8,26 @@ class RegionGeometry(object):
     def flatten(l):
         return [item for sublist in l for item in sublist]
 
+    def scale(self, x_scale, y_scale):
+        new_polys = []
+        for poly in self.polys:
+            new_poly = []
+            for pt in poly:
+                new_poly.append([pt[0]*x_scale, pt[1]*y_scale])
+            new_polys.append(new_poly)
+        self.polys=new_polys
+
     def bbox(self):
         flat_polys=RegionGeometry.flatten(self.polys)
-        top=max(flat_polys,key=lambda pt:pt[1])
+        top=min(flat_polys,key=lambda pt:pt[1])
         left=min(flat_polys,key=lambda pt:pt[0])
-        bottom=min(flat_polys,key=lambda pt:pt[1])
+        bottom=max(flat_polys,key=lambda pt:pt[1])
         right=max(flat_polys,key=lambda pt:pt[0])
         return top,right,bottom,left
 
     def in_bbox(self,pos):
         top, right, bottom, left=self.bbox()
-        return left[0] <= pos[0] <= right[0] and bottom[1] <= pos[1] <= top[1]
+        return left[0] <= pos[0] <= right[0] and top[1] <= pos[1] <= bottom[1]
 
     def in_polys(self,pos):
         for poly in self.polys:

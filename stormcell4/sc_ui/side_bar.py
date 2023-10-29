@@ -1,8 +1,8 @@
 import pygame
 
-from StormCell.stormcell4.sc_ui.label import Label
-from StormCell.stormcell4.sc_ui.sc_container import SCContainer, ContainerOrientation
-from StormCell.stormcell4.sc_ui.sc_image import SCImage
+from .label import Label
+from .sc_container import SCContainer, ContainerOrientation
+from .sc_image import SCImage
 
 NATION_GOV_TYPE="Imperial Despotism"
 
@@ -17,7 +17,7 @@ class SideBar():
         # self.surface.blit(self.txt_surf, self.txt_rect)
 
         emblem = SCImage(
-            image_path="/Users/brendanritter/fun/StormCell/stormcell4/resources/images/spearhead.png",
+            image_path="C:/Users/brend/Documents/StormCell/StormCell/stormCell4/resources/images/spearhead.png",
             size=(52, 60),
             border_size=5,
             border_color='#E80755',
@@ -30,7 +30,7 @@ class SideBar():
         country_type_text.update()
 
         religion_icon = SCImage(
-            image_path="/Users/brendanritter/fun/StormCell/stormcell4/resources/images/censer.png",
+            image_path="C:/Users/brend/Documents/StormCell/StormCell/stormCell4/resources/images/censer.png",
             size=(25, 30),
         )
 
@@ -49,7 +49,7 @@ class SideBar():
         for i,resource in enumerate(resources):
             resource_amnt=Label(str(i))
             resource_icon=SCImage(
-                image_path=f"/Users/brendanritter/fun/StormCell/stormcell4/resources/images/{resource}.png",
+                image_path=f"C:/Users/brend/Documents/StormCell/StormCell/stormCell4/resources/images/{resource}.png",
                 size=(20, 20)
             )
             resource_and_icon=SCContainer([resource_amnt,resource_icon],inner_padding=5)

@@ -1,6 +1,6 @@
 import pygame
 
-from StormCell.stormcell4.sc_ui.sc_widget import SCWidget
+from .sc_widget import SCWidget
 
 
 class SCImage(SCWidget):
