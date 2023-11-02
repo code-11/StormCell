@@ -652,6 +652,9 @@ class MapOne(object):
 
         self.load_and_connect_polys(desired_size)
 
+        for region in self.regions:
+            region.terrain = self.terrain_map[region]
+
     @property
     def regions(self):
         return list(self.color_mapping.values())
@@ -700,6 +703,7 @@ class MapOne(object):
         for nation, owned_regions in self.starting_regions.items():
             if region in owned_regions:
                 return nation
+        return None
 
     def reverse_color_mapping(self):
         return {region.tile_num: color for color, region in self.color_mapping.items()}

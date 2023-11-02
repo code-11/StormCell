@@ -2,6 +2,8 @@ from typing import Optional
 from enum import Enum
 
 import pygame
+
+
 class Resource(object):
     def __init__(self, name):
         self.name = name
@@ -15,8 +17,10 @@ class Culture(object):
     def __repr__(self):
         return self.short
 
+
 class Religion(object):
     _index = 1
+
     def __init__(self, name):
         self.name = name
 
@@ -31,8 +35,6 @@ class Religion(object):
 
 
 class Terrain(object):
-
-
     ICE = None
     TUNDRA = None
     WOODS = None
@@ -45,9 +47,10 @@ class Terrain(object):
     MOUNTAINS = None
     SWAMP = None
 
-    def __init__(self,name,color):
-        self.name=name
-        self.color=color
+    def __init__(self, name, color):
+        self.name = name
+        self.color = color
+
 
 Terrain.MOUNTAINS = Terrain("Mountains", "#362910")
 Terrain.COAST = Terrain("Coast", "#ffd282")
@@ -65,7 +68,7 @@ Terrain.ICE = Terrain("Ice", "#dad2af")
 class People(object):
     def __init__(self, name, culture: Culture, religion: Religion, ebang: float, magic: float, religiousness: float,
                  tradition: float):
-        self.name=name
+        self.name = name
         self.religiousness = religiousness
         self.magic = magic
         self.ebang = ebang
@@ -76,7 +79,7 @@ class People(object):
     def __str__(self):
         return str(self.__dict__)
 
-    def to_pop(self,number,disease=0.0):
+    def to_pop(self, number, disease=0.0):
         Pop(
             number=number,
             culture=self.culture,
@@ -88,7 +91,8 @@ class People(object):
 
 
 class Nation(object):
-    def __init__(self, name, primary_people: Optional[People], primary_culture: Optional[Culture], primary_religion: Optional[Religion], level: int = 1):
+    def __init__(self, name, primary_people: Optional[People], primary_culture: Optional[Culture],
+                 primary_religion: Optional[Religion], level: int = 1):
         self.primary_people = primary_people
         self.primary_culture = primary_culture
         self.primary_religion = primary_religion
@@ -97,6 +101,7 @@ class Nation(object):
 
     def __str__(self):
         return self.name
+
 
 class Pop(object):
     def __init__(self, number: int, culture: Culture, religion: Religion, ebang: float, magic: float, disease: float):
@@ -110,18 +115,18 @@ class Pop(object):
 
 
 class Region(object):
-    def __init__(self,name):
-        self.name=name
+    def __init__(self, name):
+        self.name = name
         self.resources: dict[Resource:float] = {}
         self.pops = []
-        self.geometry=None
+        self.geometry = None
+        self.terrain = Terrain.GRASSLANDS
 
     @property
     def tile_num(self):
-        return int(self.name.rsplit("L",1)[1])
-
+        return int(self.name.rsplit("L", 1)[1])
 
     def draw(self, screen, fill_color, edge_color):
         for poly in self.geometry.polys:
-            pygame.draw.polygon(screen, edge_color , poly, width=5)
+            pygame.draw.polygon(screen, edge_color, poly, width=5)
             pygame.draw.polygon(screen, fill_color, poly, width=0)

@@ -7,6 +7,7 @@ import json
 import pygame
 import sys
 
+from sc_ui.side_bar_state import SideBarState
 from sc_game.game import Game
 from sc_mapping.stormcell_map import MapOne
 from sc_ui.side_bar import SideBar
@@ -46,12 +47,13 @@ if __name__ == "__main__":
 
     starting_region = the_map.region_from_id("L28")
     starting_nation = the_map.nation_from_starting_region(starting_region)
-    the_game = Game(starting_nation)
+    the_game = Game(starting_nation, the_map)
 
     print(starting_nation)
 
     the_map.color_according_to_ownership(screen)
-    the_ui.draw(screen, the_game)
+    ui_state = SideBarState(None)
+    the_ui.draw(screen, the_game, ui_state)
     # the_map.color_according_to_terrain(screen)
 
     while True:
@@ -67,10 +69,11 @@ if __name__ == "__main__":
                     clicked_region.draw(screen, (255, 0, 0), (50, 50, 50))
                     pygame.display.flip()
 
-                    the_widget = the_ui.get_selected_tile_widget()
-                    the_widget.txt = clicked_region.name
-                    the_widget.parent.update()
-                    the_ui.draw(screen, the_game)
+                    # the_widget = the_ui.get_selected_tile_widget()
+                    # the_widget.txt = clicked_region.name
+                    # the_widget.parent.update()
+                    ui_state = SideBarState(clicked_region)
+                    the_ui.draw(screen, the_game, ui_state)
         pygame.display.flip()
 
 # if __name__ =="__main__":

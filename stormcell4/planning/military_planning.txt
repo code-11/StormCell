@@ -1,0 +1,59 @@
+Military is conducted by armies, which are presistant entities paid for by nations.
+They can move 1 space per turn but are inactive the turn they arrive.
+If there are armies of warring factions, there is a chance they will engage with mean time being ~3 turns
+Attacker and defender is made by land control and ties are broken by army presence (fighting in neutral territory)
+
+Army has:
+	Size
+	Quality
+		- Controls effect once engaged
+
+Land has:
+	Terrain-Defensiveness
+	Terrain-Mobility
+	Terrain-Attrition
+	Populace-Prosperity
+	Populace-Support/unrest for each army
+	Control by each faction
+
+Each stance has different:
+-Supply usage
+-Unrest effects
+-Chance of meeting the enemy
+-Casualities if enemy is met
+-Restrictions on when it can be performed
+-Modifications based on terrain
+
+
+Several army stances:
+-Pacify
+	-Reduces unrest
+	-Ok against guerilla
+	-Dispersed
+-Raiding
+	-Semi-Dispersed
+	-Retreats to aggressive
+	-Effective against limited amounts of defensive
+	-Increases unrest
+-Aggressive
+	- Most likely to meet the enemy in battle
+-Defensive
+	-If both defensive, low casualities
+	-Entrenchment bonus if in this for long time
+-Guerilla
+	-Strength scales with both unrest and number of men
+	-Too many men and you cant perform this
+	-Only certain nations can do this
+
+Stance versus chart
++------------+-------------+-----------+----------+---------+----------+
+| V Atk Def> |  Aggressive | Defensive |  Pacify  | Raiding | Guerilla |
++------------+-------------+-----------+----------+---------+----------+
+| Aggressive | Neutral     | Terrain   | Atk++    | Atk     | Def+     |
+| Defensive  | Terrain     | Neutral   | Neutral  | Neutral | Def      |
+| Pacify     | Def++       | Neutral   | Neutral  | Def     | Neutral  |
+| Raiding    | Def         | Neutral   | Atk      | Atk     | Def      |
+| Guerilla   | Atk+        | Atk       | Neutral  | Atk     | Def      |
++------------+-------------+-----------+----------+---------+----------+
+
+

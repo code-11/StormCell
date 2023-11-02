@@ -4,17 +4,21 @@ from .label import Label
 from .sc_container import SCContainer, ContainerOrientation
 from .sc_image import SCImage
 
-NATION_GOV_TYPE="Imperial Despotism"
+NATION_GOV_TYPE = "Imperial Despotism"
+
 
 class SideBar():
     def __init__(self, location, size):
-        self.size=size
+        self.size = size
         self.surface = pygame.surface.Surface(size)
         self.rect = self.surface.get_rect(topleft=location)
+        self.selected_tile_label = None
 
-    def draw(self, screen, game):
+    def draw(self, screen, game, sidebar_state):
         self.surface.fill(pygame.Color('white'))
         # self.surface.blit(self.txt_surf, self.txt_rect)
+
+        selected_nation = game.the_map.nation_from_starting_region(sidebar_state.selected_region)
 
         emblem = SCImage(
             image_path="C:/Users/brend/Documents/StormCell/StormCell/stormCell4/resources/images/spearhead.png",
@@ -23,10 +27,11 @@ class SideBar():
             border_color='#E80755',
         )
 
-        country_title_text=Label(game.playing_as_country.name,font_size=20)
+        # country_title_text = Label(game.playing_as_country.name, font_size=20)
+        country_title_text = Label("" if selected_nation is None else selected_nation.name, font_size=20)
         country_title_text.update()
 
-        country_type_text=Label(NATION_GOV_TYPE,font_size=16)
+        country_type_text = Label(NATION_GOV_TYPE, font_size=16)
         country_type_text.update()
 
         religion_icon = SCImage(
@@ -34,39 +39,41 @@ class SideBar():
             size=(25, 30),
         )
 
-        gov_type_and_religion_icon=SCContainer(
-            [country_type_text,religion_icon]
+        gov_type_and_religion_icon = SCContainer(
+            [country_type_text, religion_icon]
         )
 
-        country_title_and_else=SCContainer(
-            [country_title_text,gov_type_and_religion_icon],
+        country_title_and_else = SCContainer(
+            [country_title_text, gov_type_and_religion_icon],
             orientation=ContainerOrientation.VERTICAL
         )
-        emblem_and_else=SCContainer([emblem,country_title_and_else])
+        emblem_and_else = SCContainer([emblem, country_title_and_else])
 
-        resources=["a","b","c","d","e"]
-        resource_boxes=[]
-        for i,resource in enumerate(resources):
-            resource_amnt=Label(str(i))
-            resource_icon=SCImage(
+        resources = ["a", "b", "c", "d", "e"]
+        resource_boxes = []
+        for i, resource in enumerate(resources):
+            resource_amnt = Label(str(i))
+            resource_icon = SCImage(
                 image_path=f"C:/Users/brend/Documents/StormCell/StormCell/stormCell4/resources/images/{resource}.png",
                 size=(20, 20)
             )
-            resource_and_icon=SCContainer([resource_amnt,resource_icon],inner_padding=5)
+            resource_and_icon = SCContainer([resource_amnt, resource_icon], inner_padding=5)
             resource_boxes.append(resource_and_icon)
 
-        resources = SCContainer(resource_boxes,inner_padding=15)
-        top_and_resources = SCContainer([emblem_and_else,resources],orientation=ContainerOrientation.VERTICAL, inner_padding=15)
+        resources = SCContainer(resource_boxes, inner_padding=15)
+        top_and_resources = SCContainer([emblem_and_else, resources], orientation=ContainerOrientation.VERTICAL,
+                                        inner_padding=15)
 
-        self.selected_tile_label = Label("", font_size=20)
-        country_info_and_selected = SCContainer([top_and_resources,self.selected_tile_label], orientation=ContainerOrientation.VERTICAL,inner_padding=15)
-
-        country_info_and_selected.draw(self.surface,(0,0))
+        self.selected_tile_label = Label("" if sidebar_state.selected_region is None else sidebar_state.selected_region.name, font_size=20)
+        terrain_label = Label("" if sidebar_state.selected_region is None else sidebar_state.selected_region.terrain.name)
+        country_info_and_selected = SCContainer([top_and_resources, self.selected_tile_label, terrain_label],
+                                                orientation=ContainerOrientation.VERTICAL, inner_padding=15)
+        country_info_and_selected.update()
+        country_info_and_selected.draw(self.surface, (0, 0))
 
         # censer_img = pygame.image.load("/Users/brendanritter/fun/StormCell/stormcell4/resources/images/censer.png").convert_alpha()
         # censer_img = pygame.transform.scale(censer_img, (25, 30))
         # self.surface.blit(censer_img, (250, 30))
-
 
         # img = pygame.image.load("/Users/brendanritter/fun/StormCell/stormcell4/resources/images/spearhead.png").convert_alpha()
         # img = pygame.transform.scale(img, (52, 60))

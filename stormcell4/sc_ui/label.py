@@ -38,4 +38,8 @@ class Label(SCWidget):
 
     def update(self):
         self.txt_surf = self.font.render(self.txt, 1, self.fg)
+        this_size = self.txt_surf.get_size()
+        self.txt_rect = self.txt_surf.get_rect(center=[s//2 for s in this_size])
+
+        self.surface = pygame.surface.Surface(this_size)
         self.surface.blit(self.txt_surf, self.txt_rect)
