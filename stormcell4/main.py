@@ -11,6 +11,7 @@ from sc_ui.side_bar_state import SideBarState
 from sc_game.game import Game
 from sc_mapping.stormcell_map import MapOne
 from sc_ui.side_bar import SideBar
+from sc_game.military.mil_calc import test1
 
 
 def get_neighbors(pos):
@@ -50,6 +51,8 @@ if __name__ == "__main__":
     the_game = Game(starting_nation, the_map)
 
     print(starting_nation)
+
+    print(f"Army calc:{test1()}")
 
     the_map.color_according_to_ownership(screen)
     ui_state = SideBarState(None)

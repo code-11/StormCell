@@ -7,6 +7,8 @@ Army has:
 	Size
 	Quality
 		- Controls effect once engaged
+	General Quality
+		- Controls engagement chance
 
 Land has:
 	Terrain-Defensiveness
@@ -49,8 +51,8 @@ Stance versus chart
 +------------+-------------+-----------+----------+---------+----------+
 | V Atk Def> |  Aggressive | Defensive |  Pacify  | Raiding | Guerilla |
 +------------+-------------+-----------+----------+---------+----------+
-| Aggressive | Neutral     | Terrain   | Atk++    | Atk     | Def+     |
-| Defensive  | Terrain     | Neutral   | Neutral  | Neutral | Def      |
+| Aggressive | Neutral     | Def       | Atk++    | Atk     | Def+     |
+| Defensive  | Def         | Neutral   | Neutral  | Neutral | Def      |
 | Pacify     | Def++       | Neutral   | Neutral  | Def     | Neutral  |
 | Raiding    | Def         | Neutral   | Atk      | Atk     | Def      |
 | Guerilla   | Atk+        | Atk       | Neutral  | Atk     | Def      |

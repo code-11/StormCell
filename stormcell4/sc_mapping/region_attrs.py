@@ -47,22 +47,25 @@ class Terrain(object):
     MOUNTAINS = None
     SWAMP = None
 
-    def __init__(self, name, color):
+    def __init__(self, name, color, defensiveness, mobility, attrition):
         self.name = name
         self.color = color
+        self.defensiveness = defensiveness  # multiplier
+        self.mobility = mobility  # multiplier
+        self.attrition = attrition  # multiplier
 
 
-Terrain.MOUNTAINS = Terrain("Mountains", "#362910")
-Terrain.COAST = Terrain("Coast", "#ffd282")
-Terrain.GRASSLANDS = Terrain("Grasslands", "#3ec453")
-Terrain.PLAINS = Terrain("Plains", "#aa9161")
-Terrain.DESERT = Terrain("Desert", "#d08f55")
-Terrain.SWAMP = Terrain("Swamp", "#2c3e26")
-Terrain.HILLS = Terrain("Hills", "#636200")
-Terrain.WOODS = Terrain("Woods", "#29661e")
-Terrain.FOREST = Terrain("Forest", "#14430c")
-Terrain.TUNDRA = Terrain("Tundra", "#53774d")
-Terrain.ICE = Terrain("Ice", "#dad2af")
+Terrain.MOUNTAINS = Terrain("Mountains", "#362910", 2, .1, 1.3)
+Terrain.COAST = Terrain("Coast", "#ffd282", 1, 1, 1.1)
+Terrain.GRASSLANDS = Terrain("Grasslands", "#3ec453", 1, 1, 1)
+Terrain.PLAINS = Terrain("Plains", "#aa9161", .7, 1.5, 1.2)
+Terrain.DESERT = Terrain("Desert", "#d08f55", .5, 1.6, 5)
+Terrain.SWAMP = Terrain("Swamp", "#2c3e26", 1.5, .2, 4)
+Terrain.HILLS = Terrain("Hills", "#636200", 1.7, .4, 1)
+Terrain.WOODS = Terrain("Woods", "#29661e", 1.5, .4, 1)
+Terrain.FOREST = Terrain("Forest", "#14430c", 1.7, .3, 1.1)
+Terrain.TUNDRA = Terrain("Tundra", "#53774d", .5, .9, 4)
+Terrain.ICE = Terrain("Ice", "#dad2af", .5, .6, 6)
 
 
 class People(object):
