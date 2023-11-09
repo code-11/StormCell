@@ -52,12 +52,14 @@ if __name__ == "__main__":
 
     print(starting_nation)
 
-    print(f"Army calc:{test1()}")
+    # print(f"Army calc:{test1(the_map.active_nations[0],the_map.active_nations[1])}")
 
     the_map.color_according_to_ownership(screen)
     ui_state = SideBarState(None)
     the_ui.draw(screen, the_game, ui_state)
     # the_map.color_according_to_terrain(screen)
+
+    the_map.draw_armies(screen)
 
     while True:
         time_delta = clock.tick(60) / 1000.0

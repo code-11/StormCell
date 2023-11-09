@@ -1,4 +1,4 @@
-from .army import ArmyStance, Army, ArmyStatus
+from .army import ArmyStance, Army
 
 
 from StormCell.stormCell4.sc_mapping.region_attrs import Terrain, Region
@@ -51,34 +51,32 @@ STANCE_MULT_TABLE = {
 }
 
 
-def stance_vs_mult(attacker_status: ArmyStatus, defender_status: ArmyStatus):
-    atk_table = STANCE_MULT_TABLE.get(attacker_status.stance, None)
+def stance_vs_mult(attacker: Army, defender: Army):
+    atk_table = STANCE_MULT_TABLE.get(attacker.stance, None)
     if atk_table is not None:
-        val = atk_table.get(defender_status.stance, None)
+        val = atk_table.get(defender.stance, None)
         if val is not None:
             return val
         else:
-            print(f"Could not determine defender stance: {defender_status.stance}")
+            print(f"Could not determine defender stance: {defender.stance}")
     else:
-        print(f"Could not determine attacker stance: {attacker_status.stance}")
+        print(f"Could not determine attacker stance: {attacker.stance}")
 
 
 def atk_terrain_mult(region):
     return 1/region.terrain.defensiveness
 
 
-def atk_full_mult(attacker_status: ArmyStatus, defender_status: ArmyStatus):
-    stance_mult = stance_vs_mult(attacker_status, defender_status)
-    terrain_mult = atk_terrain_mult(attacker_status.region)
+def atk_full_mult(attacker: Army, defender: Army):
+    stance_mult = stance_vs_mult(attacker, defender)
+    terrain_mult = atk_terrain_mult(attacker.region)
     return stance_mult * terrain_mult
 
 
-def test1():
+def test1(nation1, nation2):
     region = Region("test_region")
     region.terrain = Terrain.HILLS
-    attacker = Army("attacker", 100, 1.0, 1.0)
-    defender = Army("defender", 100, 1.0, 1.0)
-    attacker_status = ArmyStatus(attacker, ArmyStance.AGGRESSIVE, region)
-    defender_status = ArmyStatus(defender, ArmyStance.GUERILLA, region)
-    return atk_full_mult(attacker_status, defender_status)
+    attacker = Army("attacker", 100, 1.0, 1.0, region, nation1, ArmyStance.AGGRESSIVE)
+    defender = Army("defender", 100, 1.0, 1.0, region, nation2, ArmyStance.DEFENSIVE)
+    return atk_full_mult(attacker, defender)
 

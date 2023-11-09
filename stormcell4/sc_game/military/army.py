@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
 
-from StormCell.stormCell4.sc_mapping.region_attrs import Region
+from StormCell.stormCell4.sc_mapping.region_attrs import Region, Nation
 
 
 class ArmyStance(Enum):
@@ -19,10 +19,6 @@ class Army(object):
     size: int
     quality: float  # 0-100
     general_quality: float  # 0-100
-
-
-class ArmyStatus(object):
-    def __init__(self, army: Army, stance: ArmyStance, region: Optional[Region]):
-        self.army = army
-        self.stance = stance
-        self.region = region
+    region: Region
+    nation: Nation
+    stance: ArmyStance = ArmyStance.AGGRESSIVE

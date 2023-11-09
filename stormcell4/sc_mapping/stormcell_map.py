@@ -4,6 +4,7 @@ import pygame
 
 from .region_attrs import People, Culture, Religion, Region, Nation, Terrain
 from .region_geometry import RegionGeometry
+from StormCell.stormCell4.sc_game.military.army import Army
 
 
 class MapOne(object):
@@ -132,6 +133,8 @@ class MapOne(object):
         religiousness=.7,
         tradition=.5,
     )
+
+    ARMY_DRAW_RADIUS = 6
 
     def __init__(self, desired_size):
 
@@ -276,6 +279,30 @@ class MapOne(object):
         north_west_empire = Nation("North West Empire", None, None, None)
         south_west_empire = Nation("South West Empire", None, None, None)
         south_east_empire = Nation("South East Empire", None, None, None)
+
+        self.active_nations = [
+            farthener_tribes,
+            dunhollow_tribes,
+            amonhold,
+            pinemar_keep,
+            tower_of_illedion,
+            tower_of_eregion,
+            zultans_keep,
+            artemons_hold,
+            jibacoa,
+            maniabon,
+            canimao,
+            naguabo,
+            seluceria,
+            havernia,
+            iphakhealis,
+            northumber,
+            central_empire,
+            north_east_empire,
+            north_west_empire,
+            south_west_empire,
+            south_east_empire,
+        ]
 
         self.national_colors = {
             farthener_tribes: "#0064ff",
@@ -655,6 +682,11 @@ class MapOne(object):
         for region in self.regions:
             region.terrain = self.terrain_map[region]
 
+        self.armies = [
+            Army("am1",100, 1.0, 1.0,L22,north_east_empire),
+            Army("am2", 100, 1.0, 1.0, L22, pinemar_keep)
+        ]
+
     @property
     def regions(self):
         return list(self.color_mapping.values())
@@ -670,7 +702,7 @@ class MapOne(object):
                 regions_dict.get(str(region.tile_num), [])
             )
             top, right, bottom, left = region.geometry.bbox()
-            if region.tile_num=="60":
+            if region.tile_num == "60":
                 print(f"bbox_60:t {top}, r {right}, b {bottom}, l {left}")
             if max_x < right[0]:
                 max_x = right[0]
@@ -688,7 +720,6 @@ class MapOne(object):
 
         for region in self.regions:
             region.geometry.scale(x_scale, y_scale)
-
 
     def region_clicked(self, click_pos):
         for region in self.regions:
@@ -733,3 +764,29 @@ class MapOne(object):
             fill_color = self.terrain_map[region].color
             edge_color_to_use = (200, 200, 200) if MapOne.l_val(fill_color) <= 20 else (50, 50, 50)
             region.draw(screen, fill_color=fill_color, edge_color=edge_color_to_use)
+
+
+
+    def draw_army(self, army, screen, loc):
+        army_color = self.national_colors[army.nation]
+        pygame.draw.circle(screen,"black",loc, MapOne.ARMY_DRAW_RADIUS)
+        pygame.draw.circle(screen, army_color, loc, MapOne.ARMY_DRAW_RADIUS-2)
+
+    def draw_armies(self, screen):
+        region_to_armies = dict()
+        for army in self.armies:
+            if army.region in region_to_armies:
+                existing_list = region_to_armies.get(army.region)
+                existing_list.append(army)
+            else:
+                region_to_armies[army.region] = [army]
+
+        for region, loc_armies in region_to_armies.items():
+            region_draw_point = region.geometry.a_draw_point()
+            army_line_draw_width = MapOne.ARMY_DRAW_RADIUS * 2 * len(loc_armies)
+            cur_army_draw_x = region_draw_point[0]-army_line_draw_width/2
+            for army in loc_armies:
+                cur_army_draw_x += (MapOne.ARMY_DRAW_RADIUS+1)*2
+                self.draw_army(army, screen, (cur_army_draw_x, region_draw_point[1]))
+
+

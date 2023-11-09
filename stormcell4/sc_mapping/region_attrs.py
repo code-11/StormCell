@@ -3,6 +3,8 @@ from enum import Enum
 
 import pygame
 
+from StormCell.stormCell4.sc_mapping.region_geometry import RegionGeometry
+
 
 class Resource(object):
     def __init__(self, name):
@@ -122,7 +124,7 @@ class Region(object):
         self.name = name
         self.resources: dict[Resource:float] = {}
         self.pops = []
-        self.geometry = None
+        self.geometry: Optional[RegionGeometry] = None
         self.terrain = Terrain.GRASSLANDS
 
     @property

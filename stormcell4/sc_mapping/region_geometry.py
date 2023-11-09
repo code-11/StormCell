@@ -25,6 +25,10 @@ class RegionGeometry(object):
         right=max(flat_polys,key=lambda pt:pt[0])
         return top,right,bottom,left
 
+    def a_draw_point(self):
+        top, right, bottom, left = self.bbox()
+        return (right[0]+left[0])/2, (top[1]+bottom[1])/2
+
     def in_bbox(self,pos):
         top, right, bottom, left=self.bbox()
         return left[0] <= pos[0] <= right[0] and top[1] <= pos[1] <= bottom[1]
