@@ -3,6 +3,7 @@ import pygame
 from .label import Label
 from .sc_container import SCContainer, ContainerOrientation
 from .sc_image import SCImage
+from .sc_military_gui import MilitaryGui
 
 NATION_GOV_TYPE = "Imperial Despotism"
 
@@ -66,10 +67,13 @@ class SideBar():
 
         self.selected_tile_label = Label("" if sidebar_state.selected_region is None else sidebar_state.selected_region.name, font_size=20)
         terrain_label = Label("" if sidebar_state.selected_region is None else sidebar_state.selected_region.terrain.name)
-        country_info_and_selected = SCContainer([top_and_resources, self.selected_tile_label, terrain_label],
+        military_gui = MilitaryGui(screen, game, sidebar_state)
+        country_info_and_selected = SCContainer([top_and_resources, self.selected_tile_label, terrain_label,military_gui],
                                                 orientation=ContainerOrientation.VERTICAL, inner_padding=15)
         country_info_and_selected.update()
         country_info_and_selected.draw(self.surface, (0, 0))
+
+
 
         # censer_img = pygame.image.load("/Users/brendanritter/fun/StormCell/stormcell4/resources/images/censer.png").convert_alpha()
         # censer_img = pygame.transform.scale(censer_img, (25, 30))

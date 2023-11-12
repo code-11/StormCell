@@ -683,7 +683,7 @@ class MapOne(object):
             region.terrain = self.terrain_map[region]
 
         self.armies = [
-            Army("am1",100, 1.0, 1.0,L22,north_east_empire),
+            Army("am1",100, 1.0, 1.0, L22, north_east_empire),
             Army("am2", 100, 1.0, 1.0, L22, pinemar_keep)
         ]
 
@@ -739,6 +739,16 @@ class MapOne(object):
     def reverse_color_mapping(self):
         return {region.tile_num: color for color, region in self.color_mapping.items()}
 
+    def make_region_to_armies_map(self):
+        region_to_armies = dict()
+        for army in self.armies:
+            if army.region in region_to_armies:
+                existing_list = region_to_armies.get(army.region)
+                existing_list.append(army)
+            else:
+                region_to_armies[army.region] = [army]
+        return region_to_armies
+
     @staticmethod
     def l_val(hex_color):
         pycolor = pygame.Color(hex_color)
@@ -769,17 +779,11 @@ class MapOne(object):
 
     def draw_army(self, army, screen, loc):
         army_color = self.national_colors[army.nation]
-        pygame.draw.circle(screen,"black",loc, MapOne.ARMY_DRAW_RADIUS)
+        pygame.draw.circle(screen, "black", loc, MapOne.ARMY_DRAW_RADIUS)
         pygame.draw.circle(screen, army_color, loc, MapOne.ARMY_DRAW_RADIUS-2)
 
     def draw_armies(self, screen):
-        region_to_armies = dict()
-        for army in self.armies:
-            if army.region in region_to_armies:
-                existing_list = region_to_armies.get(army.region)
-                existing_list.append(army)
-            else:
-                region_to_armies[army.region] = [army]
+        region_to_armies = self.make_region_to_armies_map()
 
         for region, loc_armies in region_to_armies.items():
             region_draw_point = region.geometry.a_draw_point()

@@ -34,6 +34,7 @@ class SCContainer(SCWidget):
         max_x = 0
         max_y = 0
         for child in self.children:
+            child.update()
             sum_x+=child.get_width()
             sum_y+=child.get_height()
             max_y=max(max_y,child.get_height())
@@ -53,7 +54,6 @@ class SCContainer(SCWidget):
 
         pos_val=0
         for child in self.children:
-            child.update()
             if self.orientation == ContainerOrientation.HORIZONTAL:
                 child.draw(self._surface,(pos_val,0))
                 pos_val+=child.get_width()+self.inner_padding
