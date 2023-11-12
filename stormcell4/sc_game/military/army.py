@@ -12,6 +12,15 @@ class ArmyStance(Enum):
     RAIDING = 4
     GUERILLA = 5
 
+    def to_label(self):
+        return {
+            ArmyStance.AGGRESSIVE: "Aggressisve",
+            ArmyStance.DEFENSIVE: "Defensive",
+            ArmyStance.PACIFY: "Pacify",
+            ArmyStance.RAIDING: "Raiding",
+            ArmyStance.GUERILLA: "Guerilla",
+        }.get(self, "")
+
 
 @dataclass
 class Army(object):
