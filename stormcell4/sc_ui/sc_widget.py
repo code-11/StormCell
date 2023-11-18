@@ -1,7 +1,14 @@
+from typing import Tuple, Optional
+
+from pygame import Rect
+
+
 class SCWidget(object):
 
     def __init__(self):
-        self.parent=None
+        self.parent = None
+        self.prev_location: Optional[Tuple[float, float]] = None
+        self.callback = lambda *args: None
 
     def get_width(self):
         return 0
@@ -20,3 +27,25 @@ class SCWidget(object):
 
     def get_surface(self):
         pass
+
+    def set_last_location(self, location):
+        self.prev_location = location
+
+    def set_on_click(self, callback=lambda *args: None):
+        self.callback = callback
+
+    def on_click_propagation(self, pos):
+        pass
+
+    def on_click(self, pos):
+        print(f"On click {self}, pos {pos}")
+        width = self.get_width()
+        height = self.get_height()
+        if width != 0 and height != 0:
+            if self.prev_location:
+                x, y = self.prev_location
+                if Rect(x, y, width, height).collidepoint(pos):
+                    print(f"Clicked {self}, pos {pos}")
+                    self.callback()
+                    self.on_click_propagation(pos)
+

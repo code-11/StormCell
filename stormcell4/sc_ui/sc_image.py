@@ -2,8 +2,14 @@ import pygame
 
 from .sc_widget import SCWidget
 
-
 class SCImage(SCWidget):
+
+    @classmethod
+    def using_name(cls, image_name: str, size=None, border_size=0, border_color=pygame.color.Color('black')):
+        return SCImage(
+            f"C:/Users/brend/Documents/StormCell/StormCell/stormCell4/resources/images/{image_name}",
+            size, border_size, border_color)
+
     def __init__(self, image_path, size=None, border_size=0, border_color=pygame.color.Color('black')):
         super().__init__()
         self.image_path=image_path

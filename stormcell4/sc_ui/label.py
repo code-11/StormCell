@@ -5,7 +5,8 @@ from .sc_widget import SCWidget
 
 
 class Label(SCWidget):
-    def __init__(self, txt, location=None, bg=pygame.Color('white'), fg=pygame.Color('black'), font_name=get_default_font(),
+    def __init__(self, txt, location=None, bg=pygame.Color('white'), fg=pygame.Color('black'),
+                 font_name=get_default_font(),
                  font_size=12):
         super().__init__()
         self.bg = bg
@@ -15,10 +16,10 @@ class Label(SCWidget):
         self.txt = txt
         self.txt_surf = self.font.render(self.txt, 1, self.fg)
         this_size = self.txt_surf.get_size()
-        self.txt_rect = self.txt_surf.get_rect(center=[s//2 for s in this_size])
+        self.txt_rect = self.txt_surf.get_rect(center=[s // 2 for s in this_size])
 
         self.surface = pygame.surface.Surface(this_size)
-        self.location=location
+        self.location = location
 
     def get_width(self):
         return self.txt_rect.width
@@ -29,17 +30,16 @@ class Label(SCWidget):
     def get_surface(self):
         return self.surface
 
-    def draw(self,screen, location):
+    def draw(self, screen, location):
         self.surface.fill(self.bg)
         self.surface.blit(self.txt_surf, self.txt_rect)
-        location_to_use=self.location if self.location else location
+        location_to_use = self.location if self.location else location
         screen.blit(self.surface, self.surface.get_rect(topleft=location_to_use))
-
 
     def update(self):
         self.txt_surf = self.font.render(self.txt, 1, self.fg)
         this_size = self.txt_surf.get_size()
-        self.txt_rect = self.txt_surf.get_rect(center=[s//2 for s in this_size])
+        self.txt_rect = self.txt_surf.get_rect(center=[s // 2 for s in this_size])
 
         self.surface = pygame.surface.Surface(this_size)
         self.surface.blit(self.txt_surf, self.txt_rect)

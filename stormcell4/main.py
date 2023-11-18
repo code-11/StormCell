@@ -46,7 +46,7 @@ if __name__ == "__main__":
     # for region in the_map.regions:
     #     region.draw(screen,"#D5CEAB",(50,50,50))
 
-    starting_region = the_map.region_from_id("L28")
+    starting_region = the_map.region_from_id("L25")
     starting_nation = the_map.nation_from_starting_region(starting_region)
     the_game = Game(starting_nation, the_map)
 
@@ -79,6 +79,7 @@ if __name__ == "__main__":
                     # the_widget.parent.update()
                     ui_state = SideBarState(clicked_region)
                     the_ui.draw(screen, the_game, ui_state)
+                    the_ui.on_click(pos)
         pygame.display.flip()
 
 # if __name__ =="__main__":

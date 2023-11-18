@@ -14,6 +14,8 @@ class SideBar():
         self.surface = pygame.surface.Surface(size)
         self.rect = self.surface.get_rect(topleft=location)
         self.selected_tile_label = None
+        self.last_top_level=None
+
 
     def draw(self, screen, game, sidebar_state):
         self.surface.fill(pygame.Color('white'))
@@ -70,10 +72,9 @@ class SideBar():
         military_gui = MilitaryGui(screen, game, sidebar_state)
         country_info_and_selected = SCContainer([top_and_resources, self.selected_tile_label, terrain_label,military_gui],
                                                 orientation=ContainerOrientation.VERTICAL, inner_padding=15)
+        country_info_and_selected.set_last_location((800, 0))
         country_info_and_selected.update()
         country_info_and_selected.draw(self.surface, (0, 0))
-
-
 
         # censer_img = pygame.image.load("/Users/brendanritter/fun/StormCell/stormcell4/resources/images/censer.png").convert_alpha()
         # censer_img = pygame.transform.scale(censer_img, (25, 30))
@@ -108,3 +109,8 @@ class SideBar():
 
     def get_selected_tile_widget(self):
         return self.selected_tile_label
+
+    def on_click(self, pos):
+        parentx,parenty=self.rect.topleft
+        print(f"Global {self}, pos {pos}")
+        self.last_top_level.on_click((pos[0]-parentx, pos[1]-parenty))
