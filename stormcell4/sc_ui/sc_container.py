@@ -54,13 +54,15 @@ class SCContainer(SCWidget):
 
         pos_val = 0
         for child in self.children:
+            last_pos_x = self.prev_location[0] if self.prev_location is not None else 0
+            last_pos_y = self.prev_location[1] if self.prev_location is not None else 0
             if self.orientation == ContainerOrientation.HORIZONTAL:
                 child.draw(self._surface, (pos_val, 0))
-                child.set_last_location((self.prev_location[0] + pos_val, self.prev_location[1] + 0))
+                child.set_last_location((pos_val, 0))
                 pos_val += child.get_width() + self.inner_padding
             else:
                 child.draw(self._surface, (0, pos_val))
-                child.set_last_location((self.prev_location[0] + 0, self.prev_location[1] + pos_val))
+                child.set_last_location((0, pos_val))
                 pos_val += child.get_height() + self.inner_padding
 
     def get_height(self):
@@ -75,5 +77,7 @@ class SCContainer(SCWidget):
         screen.blit(self._surface, pygame.rect.Rect(x_pos, y_pos, self.get_width(), self.get_height()))
 
     def on_click_propagation(self, pos):
+        should_refresh = False
         for child in self.children:
-            child.on_click(pos)
+            should_refresh = should_refresh or child.on_click(pos)
+        return should_refresh

@@ -79,7 +79,9 @@ if __name__ == "__main__":
                     # the_widget.parent.update()
                     ui_state = SideBarState(clicked_region)
                     the_ui.draw(screen, the_game, ui_state)
-                    the_ui.on_click(pos)
+                should_refresh = the_ui.on_click(pos)
+                if should_refresh:
+                    the_ui.draw(screen, the_game, ui_state)
         pygame.display.flip()
 
 # if __name__ =="__main__":

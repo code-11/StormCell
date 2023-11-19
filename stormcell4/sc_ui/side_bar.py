@@ -76,6 +76,8 @@ class SideBar():
         country_info_and_selected.update()
         country_info_and_selected.draw(self.surface, (0, 0))
 
+        self.last_top_level = country_info_and_selected
+
         # censer_img = pygame.image.load("/Users/brendanritter/fun/StormCell/stormcell4/resources/images/censer.png").convert_alpha()
         # censer_img = pygame.transform.scale(censer_img, (25, 30))
         # self.surface.blit(censer_img, (250, 30))
@@ -111,6 +113,6 @@ class SideBar():
         return self.selected_tile_label
 
     def on_click(self, pos):
-        parentx,parenty=self.rect.topleft
-        print(f"Global {self}, pos {pos}")
-        self.last_top_level.on_click((pos[0]-parentx, pos[1]-parenty))
+        parentx,parenty = self.rect.topleft
+        # print(f"Global {self}, pos {pos}")
+        return self.last_top_level.on_click((pos[0], pos[1]))

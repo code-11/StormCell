@@ -7,6 +7,7 @@ from StormCell.stormCell4.sc_ui.sc_container import ContainerOrientation, SCCont
 from StormCell.stormCell4.sc_ui.sc_image import SCImage
 from StormCell.stormCell4.sc_ui.sc_widget import SCWidget
 
+from functools import partial
 
 class ArmyGui(SCContainer):
     def __init__(self, army):
@@ -22,14 +23,14 @@ class ArmyGui(SCContainer):
         self.children.append(Label(str(self.army.stance.to_label()), font_size=12))
         super().update()
 
-
 class ControlledArmyGui(SCContainer):
     def __init__(self, army):
         self.army = army
         super().__init__([], orientation=ContainerOrientation.VERTICAL)
 
-    def update_army_stance(self,army, stance):
+    def update_army_stance(self, army, stance):
         army.stance = stance
+        return True
 
     def update(self):
         self.children = [ArmyGui(self.army)]
@@ -40,19 +41,19 @@ class ControlledArmyGui(SCContainer):
         guerilla_icon = SCImage.using_name("mask.jpg", size=(17, 17), border_size=1)
 
         aggressive_icon.set_on_click(
-            lambda: self.update_army_stance(self.army, ArmyStance.AGGRESSIVE)
+           partial(self.update_army_stance, self.army, ArmyStance.AGGRESSIVE)
         )
         defensive_icon.set_on_click(
-            lambda: self.update_army_stance(self.army, ArmyStance.DEFENSIVE)
+            partial(self.update_army_stance, self.army, ArmyStance.DEFENSIVE)
         )
         pacify_icon.set_on_click(
-            lambda: self.update_army_stance(self.army, ArmyStance.PACIFY)
+            partial(self.update_army_stance, self.army, ArmyStance.PACIFY)
         )
         raiding_icon.set_on_click(
-            lambda: self.update_army_stance(self.army, ArmyStance.RAIDING)
+            partial(self.update_army_stance, self.army, ArmyStance.RAIDING)
         )
         guerilla_icon.set_on_click(
-            lambda: self.update_army_stance(self.army, ArmyStance.GUERILLA)
+            partial(self.update_army_stance, self.army, ArmyStance.GUERILLA)
         )
 
         icons_box = SCContainer([
@@ -85,7 +86,7 @@ class MilitaryGui(SCContainer):
                 self.children.append(Label("Armies", font_size=20))
                 for army in selected_region_armies:
                     if self.game.playing_as_country == army.nation:
-                        self.children.append(ControlledArmyGui(army))
+                        self.add(ControlledArmyGui(army), update=False)
                     else:
                         self.children.append(ArmyGui(army))
         super().update()

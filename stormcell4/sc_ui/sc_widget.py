@@ -38,14 +38,14 @@ class SCWidget(object):
         pass
 
     def on_click(self, pos):
-        print(f"On click {self}, pos {pos}")
+        should_refresh = False
         width = self.get_width()
         height = self.get_height()
         if width != 0 and height != 0:
             if self.prev_location:
                 x, y = self.prev_location
                 if Rect(x, y, width, height).collidepoint(pos):
-                    print(f"Clicked {self}, pos {pos}")
-                    self.callback()
-                    self.on_click_propagation(pos)
-
+                    # print(f"Clicked {self}, pos {pos}")
+                    should_refresh = should_refresh or self.callback()
+                    should_refresh = should_refresh or self.on_click_propagation((pos[0] - x, pos[1] - y))
+        return should_refresh
