@@ -11,6 +11,7 @@ class ArmyStance(Enum):
     PACIFY = 3
     RAIDING = 4
     GUERILLA = 5
+    MOVING = 6
 
     def to_label(self):
         return {
@@ -19,6 +20,7 @@ class ArmyStance(Enum):
             ArmyStance.PACIFY: "Pacify",
             ArmyStance.RAIDING: "Raiding",
             ArmyStance.GUERILLA: "Guerilla",
+            ArmyStance.MOVING: "Moving",
         }.get(self, "")
 
 

@@ -18,7 +18,8 @@ STANCE_MULT_TABLE = {
         ArmyStance.DEFENSIVE: DEF,
         ArmyStance.PACIFY: ATK_II,
         ArmyStance.RAIDING: ATK,
-        ArmyStance.GUERILLA: DEF_I
+        ArmyStance.GUERILLA: DEF_I,
+        ArmyStance.MOVING: ATK_I,
     },
     ArmyStance.DEFENSIVE: {
         ArmyStance.AGGRESSIVE: DEF,
@@ -26,6 +27,7 @@ STANCE_MULT_TABLE = {
         ArmyStance.PACIFY: NEUTRAL,
         ArmyStance.RAIDING: NEUTRAL,
         ArmyStance.GUERILLA: DEF,
+        ArmyStance.MOVING: NEUTRAL,
     },
     ArmyStance.PACIFY: {
         ArmyStance.AGGRESSIVE: DEF_II,
@@ -33,6 +35,7 @@ STANCE_MULT_TABLE = {
         ArmyStance.PACIFY: NEUTRAL,
         ArmyStance.RAIDING: DEF,
         ArmyStance.GUERILLA: NEUTRAL,
+        ArmyStance.MOVING: DEF_II,
     },
     ArmyStance.RAIDING: {
         ArmyStance.AGGRESSIVE: DEF,
@@ -40,6 +43,7 @@ STANCE_MULT_TABLE = {
         ArmyStance.PACIFY: ATK,
         ArmyStance.RAIDING: ATK,
         ArmyStance.GUERILLA: DEF,
+        ArmyStance.MOVING: ATK_I,
     },
     ArmyStance.GUERILLA: {
         ArmyStance.AGGRESSIVE: ATK_I,
@@ -47,6 +51,15 @@ STANCE_MULT_TABLE = {
         ArmyStance.PACIFY: NEUTRAL,
         ArmyStance.RAIDING: ATK,
         ArmyStance.GUERILLA: DEF,
+        ArmyStance.MOVING: ATK_II,
+    },
+    ArmyStance.MOVING: {
+        ArmyStance.AGGRESSIVE: DEF_I,
+        ArmyStance.DEFENSIVE: DEF_I,
+        ArmyStance.PACIFY: NEUTRAL,
+        ArmyStance.RAIDING: DEF_I,
+        ArmyStance.GUERILLA: DEF_II,
+        ArmyStance.MOVING: NEUTRAL,
     }
 }
 

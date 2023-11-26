@@ -1,10 +1,13 @@
 from typing import List
 
+import pygame
+
 from StormCell.stormCell4.sc_game.military import army
 from StormCell.stormCell4.sc_game.military.army import ArmyStance
 from StormCell.stormCell4.sc_ui.label import Label
 from StormCell.stormCell4.sc_ui.sc_container import ContainerOrientation, SCContainer
 from StormCell.stormCell4.sc_ui.sc_image import SCImage
+from StormCell.stormCell4.sc_ui.sc_selectable_image import SelectableImage
 from StormCell.stormCell4.sc_ui.sc_widget import SCWidget
 
 from functools import partial
@@ -34,11 +37,13 @@ class ControlledArmyGui(SCContainer):
 
     def update(self):
         self.children = [ArmyGui(self.army)]
-        aggressive_icon = SCImage.using_name("sword.jpg", size=(17, 17), border_size=1)
-        defensive_icon = SCImage.using_name("shield.jpg", size=(17, 17), border_size=1)
-        pacify_icon = SCImage.using_name("fist-down.jpg", size=(17, 17), border_size=1)
-        raiding_icon = SCImage.using_name("fire.jpg", size=(17, 17), border_size=1)
-        guerilla_icon = SCImage.using_name("mask.jpg", size=(17, 17), border_size=1)
+
+        aggressive_icon = SelectableImage.using_name("sword.jpg", size=(17, 17), border_size=1, border_color=pygame.color.Color('black'), selected_size=1, select_color=pygame.color.Color('blue'), padding=1, selected=self.army.stance == ArmyStance.AGGRESSIVE)
+        defensive_icon = SelectableImage.using_name("shield.jpg", size=(17, 17), border_size=1, border_color=pygame.color.Color('black'), selected_size=1, select_color=pygame.color.Color('blue'), padding=1, selected=self.army.stance == ArmyStance.DEFENSIVE)
+        pacify_icon = SelectableImage.using_name("fist-down.jpg", size=(17, 17), border_size=1, border_color=pygame.color.Color('black'), selected_size=1, select_color=pygame.color.Color('blue'), padding=1, selected=self.army.stance == ArmyStance.PACIFY)
+        raiding_icon = SelectableImage.using_name("fire.jpg", size=(17, 17), border_size=1, border_color=pygame.color.Color('black'), selected_size=1, select_color=pygame.color.Color('blue'), padding=1, selected=self.army.stance == ArmyStance.RAIDING)
+        guerilla_icon = SelectableImage.using_name("mask.jpg", size=(17, 17), border_size=1, border_color=pygame.color.Color('black'), selected_size=1, select_color=pygame.color.Color('blue'), padding=1, selected=self.army.stance == ArmyStance.GUERILLA)
+        move_icon = SelectableImage.using_name("move.jpg", size=(17, 17), border_size=1, border_color=pygame.color.Color('black'), selected_size=1, select_color=pygame.color.Color('blue'), padding=1, selected=self.army.stance == ArmyStance.MOVING)
 
         aggressive_icon.set_on_click(
            partial(self.update_army_stance, self.army, ArmyStance.AGGRESSIVE)
@@ -56,17 +61,19 @@ class ControlledArmyGui(SCContainer):
             partial(self.update_army_stance, self.army, ArmyStance.GUERILLA)
         )
 
-        icons_box = SCContainer([
+        stance_box = SCContainer([
                 aggressive_icon,
                 defensive_icon,
                 pacify_icon,
                 raiding_icon,
                 guerilla_icon],
             inner_padding=5)
-        self.children.append(icons_box)
+        stance_and_move_box = SCContainer([
+            stance_box,
+            move_icon
+        ], inner_padding=15)
+        self.children.append(stance_and_move_box)
         super().update()
-
-
 
 
 class MilitaryGui(SCContainer):

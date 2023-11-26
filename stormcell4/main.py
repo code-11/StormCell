@@ -71,7 +71,7 @@ if __name__ == "__main__":
                 pos = pygame.mouse.get_pos()
                 clicked_region = the_map.region_clicked(pos)
                 if clicked_region is not None:
-                    clicked_region.draw(screen, (255, 0, 0), (50, 50, 50))
+                    clicked_region.draw(screen, None, (50, 50, 50))
                     pygame.display.flip()
 
                     # the_widget = the_ui.get_selected_tile_widget()
