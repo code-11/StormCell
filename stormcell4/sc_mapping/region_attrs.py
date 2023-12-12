@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 from enum import Enum
 
 import pygame
@@ -131,7 +131,7 @@ class Region(object):
     def tile_num(self):
         return int(self.name.rsplit("L", 1)[1])
 
-    def draw(self, screen, fill_color: Optional[Tuple[float, float, float]], edge_color: Optional[Tuple[float, float, float]]):
+    def draw(self, screen, fill_color: Optional[Union[Tuple[float, float, float],str]], edge_color: Optional[Union[Tuple[float, float, float],str]]):
         for poly in self.geometry.polys:
             if edge_color:
                 pygame.draw.polygon(screen, edge_color, poly, width=5)

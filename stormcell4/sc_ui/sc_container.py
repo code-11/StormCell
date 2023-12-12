@@ -7,6 +7,9 @@ from .sc_widget import SCWidget
 
 
 # class syntax
+from .side_bar_state import SideBarState
+
+
 class ContainerOrientation(Enum):
     HORIZONTAL = 1  # left to right
     VERTICAL = 2  # top to bottom
@@ -76,8 +79,8 @@ class SCContainer(SCWidget):
         x_pos, y_pos = location
         screen.blit(self._surface, pygame.rect.Rect(x_pos, y_pos, self.get_width(), self.get_height()))
 
-    def on_click_propagation(self, pos):
-        should_refresh = False
-        for child in self.children:
-            should_refresh = should_refresh or child.on_click(pos)
-        return should_refresh
+    def on_click_propagation(self, pos) -> SideBarState:
+        return_state = SideBarState()
+
+        return_state = SideBarState.glom([return_state] + [child.on_click(pos) for child in self.children])
+        return return_state

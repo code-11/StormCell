@@ -2,6 +2,8 @@ from typing import Tuple, Optional
 
 from pygame import Rect
 
+from StormCell.stormCell4.sc_ui.side_bar_state import SideBarState
+
 
 class SCWidget(object):
 
@@ -9,6 +11,7 @@ class SCWidget(object):
         self.parent = None
         self.prev_location: Optional[Tuple[float, float]] = None
         self.callback = lambda *args: None
+        self.id = None
 
     def get_width(self):
         return 0
@@ -38,7 +41,7 @@ class SCWidget(object):
         pass
 
     def on_click(self, pos):
-        should_refresh = False
+        should_refresh = SideBarState()
         width = self.get_width()
         height = self.get_height()
         if width != 0 and height != 0:
@@ -46,6 +49,5 @@ class SCWidget(object):
                 x, y = self.prev_location
                 if Rect(x, y, width, height).collidepoint(pos):
                     # print(f"Clicked {self}, pos {pos}")
-                    should_refresh = should_refresh or self.callback()
-                    should_refresh = should_refresh or self.on_click_propagation((pos[0] - x, pos[1] - y))
+                    should_refresh = SideBarState.glom([should_refresh, self.callback(), self.on_click_propagation((pos[0] - x, pos[1] - y))])
         return should_refresh

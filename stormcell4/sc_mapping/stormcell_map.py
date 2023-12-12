@@ -683,7 +683,7 @@ class MapOne(object):
             region.terrain = self.terrain_map[region]
 
         self.armies = [
-            Army("am1",100, 1.0, 1.0, L22, north_east_empire),
+            Army("am1", 100, 1.0, 1.0, L22, north_east_empire),
             Army("am2", 100, 1.0, 1.0, L22, pinemar_keep)
         ]
 
@@ -775,12 +775,10 @@ class MapOne(object):
             edge_color_to_use = (200, 200, 200) if MapOne.l_val(fill_color) <= 20 else (50, 50, 50)
             region.draw(screen, fill_color=fill_color, edge_color=edge_color_to_use)
 
-
-
     def draw_army(self, army, screen, loc):
         army_color = self.national_colors[army.nation]
         pygame.draw.circle(screen, "black", loc, MapOne.ARMY_DRAW_RADIUS)
-        pygame.draw.circle(screen, army_color, loc, MapOne.ARMY_DRAW_RADIUS-2)
+        pygame.draw.circle(screen, army_color, loc, MapOne.ARMY_DRAW_RADIUS - 2)
 
     def draw_armies(self, screen):
         region_to_armies = self.make_region_to_armies_map()
@@ -788,9 +786,16 @@ class MapOne(object):
         for region, loc_armies in region_to_armies.items():
             region_draw_point = region.geometry.a_draw_point()
             army_line_draw_width = MapOne.ARMY_DRAW_RADIUS * 2 * len(loc_armies)
-            cur_army_draw_x = region_draw_point[0]-army_line_draw_width/2
+            cur_army_draw_x = region_draw_point[0] - army_line_draw_width / 2
             for army in loc_armies:
-                cur_army_draw_x += (MapOne.ARMY_DRAW_RADIUS+1)*2
+                cur_army_draw_x += (MapOne.ARMY_DRAW_RADIUS + 1) * 2
                 self.draw_army(army, screen, (cur_army_draw_x, region_draw_point[1]))
 
-
+    def get_adjacent_regions(self, region):
+        adjacent = set()
+        for start, end in self.region_graph:
+            if start == region:
+                adjacent.add(end)
+            if end == region:
+                adjacent.add(start)
+        return list(adjacent)

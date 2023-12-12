@@ -30,6 +30,8 @@ def lerp(v0, v1, t):
 def is_black(color):
     return color[0] < 10 and color[1] < 10 and color[2] < 10
 
+CLEAR_COLOR = "#80a8de"
+SELECT_COLOR = "#ffee58"
 
 if __name__ == "__main__":
     pygame.init()
@@ -37,7 +39,7 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode(size)
 
     pygame.display.set_caption(f"Stormcell 4")
-    screen.fill("#80a8de")
+    screen.fill(CLEAR_COLOR)
 
     clock = pygame.time.Clock()
 
@@ -60,7 +62,6 @@ if __name__ == "__main__":
     # the_map.color_according_to_terrain(screen)
 
     the_map.draw_armies(screen)
-
     while True:
         time_delta = clock.tick(60) / 1000.0
         for event in pygame.event.get():
@@ -71,16 +72,20 @@ if __name__ == "__main__":
                 pos = pygame.mouse.get_pos()
                 clicked_region = the_map.region_clicked(pos)
                 if clicked_region is not None:
-                    clicked_region.draw(screen, None, (50, 50, 50))
+                    clicked_region.draw(screen, None, SELECT_COLOR)
                     pygame.display.flip()
 
                     # the_widget = the_ui.get_selected_tile_widget()
                     # the_widget.txt = clicked_region.name
                     # the_widget.parent.update()
-                    ui_state = SideBarState(clicked_region)
+                    ui_state = SideBarState(clicked_region, True)
                     the_ui.draw(screen, the_game, ui_state)
-                should_refresh = the_ui.on_click(pos)
-                if should_refresh:
+                ui_state = SideBarState.glom([ui_state, the_ui.on_click(pos)])
+                if ui_state.should_refresh:
+                    screen.fill(CLEAR_COLOR)
+                    the_map.color_according_to_ownership(screen)
+                    the_map.draw_armies(screen)
+                    ui_state.selected_region.draw(screen, None, SELECT_COLOR)
                     the_ui.draw(screen, the_game, ui_state)
         pygame.display.flip()
 

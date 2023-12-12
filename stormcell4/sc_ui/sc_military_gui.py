@@ -12,6 +12,9 @@ from StormCell.stormCell4.sc_ui.sc_widget import SCWidget
 
 from functools import partial
 
+from StormCell.stormCell4.sc_ui.side_bar_state import SideBarState
+
+
 class ArmyGui(SCContainer):
     def __init__(self, army):
         self.army = army
@@ -33,7 +36,7 @@ class ControlledArmyGui(SCContainer):
 
     def update_army_stance(self, army, stance):
         army.stance = stance
-        return True
+        return SideBarState(should_refresh=True)
 
     def update(self):
         self.children = [ArmyGui(self.army)]
@@ -60,6 +63,9 @@ class ControlledArmyGui(SCContainer):
         guerilla_icon.set_on_click(
             partial(self.update_army_stance, self.army, ArmyStance.GUERILLA)
         )
+        # move_icon.set_on_click(
+        #     partial(self.update_army_stance, self.army, ArmyStance.MOVING)
+        # )
 
         stance_box = SCContainer([
                 aggressive_icon,
@@ -68,10 +74,12 @@ class ControlledArmyGui(SCContainer):
                 raiding_icon,
                 guerilla_icon],
             inner_padding=5)
+        stance_box.id = "stance_box"
         stance_and_move_box = SCContainer([
             stance_box,
             move_icon
         ], inner_padding=15)
+        stance_and_move_box.id = "stance_and_move_box"
         self.children.append(stance_and_move_box)
         super().update()
 
