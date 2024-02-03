@@ -16,28 +16,29 @@ class ContainerOrientation(Enum):
 
 
 class SCContainer(SCWidget):
-    def __init__(self, children: List[SCWidget], orientation=ContainerOrientation.HORIZONTAL, inner_padding=5):
+    def __init__(self, children: List[SCWidget], the_game, orientation=ContainerOrientation.HORIZONTAL, inner_padding=5, ):
         super().__init__()
         self.orientation = orientation
         self.children = []
         for child in children:
             self.add(child, update=False)
         self.inner_padding = inner_padding
-        self.update()
+        self.update(the_game)
+        self.the_game = the_game
 
     def add(self, widget, update=True):
         self.children.append(widget)
         widget.parent = self
         if update:
-            self.update()
+            self.update(self.the_game)
 
-    def update(self):
+    def update(self, the_game):
         sum_x = 0
         sum_y = 0
         max_x = 0
         max_y = 0
         for child in self.children:
-            child.update()
+            child.update(the_game)
             sum_x += child.get_width()
             sum_y += child.get_height()
             max_y = max(max_y, child.get_height())

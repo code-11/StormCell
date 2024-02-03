@@ -3,7 +3,7 @@ from enum import Enum
 
 import pygame
 
-from StormCell.stormCell4.sc_mapping.region_geometry import RegionGeometry
+from sc_mapping.region_geometry import RegionGeometry
 
 
 class Resource(object):

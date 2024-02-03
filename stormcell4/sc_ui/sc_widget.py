@@ -2,7 +2,7 @@ from typing import Tuple, Optional
 
 from pygame import Rect
 
-from StormCell.stormCell4.sc_ui.side_bar_state import SideBarState
+from sc_ui.side_bar_state import SideBarState
 
 
 class SCWidget(object):
@@ -25,7 +25,7 @@ class SCWidget(object):
     def draw(self, screen, location):
         pass
 
-    def update(self):
+    def update(self, the_game):
         pass
 
     def get_surface(self):

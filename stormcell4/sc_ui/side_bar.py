@@ -32,10 +32,10 @@ class SideBar():
 
         # country_title_text = Label(game.playing_as_country.name, font_size=20)
         country_title_text = Label("" if selected_nation is None else selected_nation.name, font_size=20)
-        country_title_text.update()
+        country_title_text.update(game)
 
         country_type_text = Label(NATION_GOV_TYPE, font_size=16)
-        country_type_text.update()
+        country_type_text.update(game)
 
         religion_icon = SCImage(
             image_path="C:/Users/brend/Documents/StormCell/StormCell/stormCell4/resources/images/censer.png",
@@ -43,14 +43,15 @@ class SideBar():
         )
 
         gov_type_and_religion_icon = SCContainer(
-            [country_type_text, religion_icon]
+            [country_type_text, religion_icon], game
         )
 
         country_title_and_else = SCContainer(
             [country_title_text, gov_type_and_religion_icon],
+            game,
             orientation=ContainerOrientation.VERTICAL
         )
-        emblem_and_else = SCContainer([emblem, country_title_and_else])
+        emblem_and_else = SCContainer([emblem, country_title_and_else], game)
 
         resources = ["a", "b", "c", "d", "e"]
         resource_boxes = []
@@ -60,20 +61,20 @@ class SideBar():
                 image_path=f"C:/Users/brend/Documents/StormCell/StormCell/stormCell4/resources/images/{resource}.png",
                 size=(20, 20)
             )
-            resource_and_icon = SCContainer([resource_amnt, resource_icon], inner_padding=5)
+            resource_and_icon = SCContainer([resource_amnt, resource_icon], game, inner_padding=5)
             resource_boxes.append(resource_and_icon)
 
-        resources = SCContainer(resource_boxes, inner_padding=15)
-        top_and_resources = SCContainer([emblem_and_else, resources], orientation=ContainerOrientation.VERTICAL,
+        resources = SCContainer(resource_boxes, game, inner_padding=15)
+        top_and_resources = SCContainer([emblem_and_else, resources], game, orientation=ContainerOrientation.VERTICAL,
                                         inner_padding=15)
 
         self.selected_tile_label = Label("" if sidebar_state.selected_region is None else sidebar_state.selected_region.name, font_size=20)
         terrain_label = Label("" if sidebar_state.selected_region is None else sidebar_state.selected_region.terrain.name)
         military_gui = MilitaryGui(screen, game, sidebar_state)
-        country_info_and_selected = SCContainer([top_and_resources, self.selected_tile_label, terrain_label,military_gui],
+        country_info_and_selected = SCContainer([top_and_resources, self.selected_tile_label, terrain_label,military_gui], game,
                                                 orientation=ContainerOrientation.VERTICAL, inner_padding=15)
         country_info_and_selected.set_last_location((800, 0))
-        country_info_and_selected.update()
+        country_info_and_selected.update(game)
         country_info_and_selected.draw(self.surface, (0, 0))
 
         self.last_top_level = country_info_and_selected

@@ -36,7 +36,7 @@ class Label(SCWidget):
         location_to_use = self.location if self.location else location
         screen.blit(self.surface, self.surface.get_rect(topleft=location_to_use))
 
-    def update(self):
+    def update(self, the_game):
         self.txt_surf = self.font.render(self.txt, 1, self.fg)
         this_size = self.txt_surf.get_size()
         self.txt_rect = self.txt_surf.get_rect(center=[s // 2 for s in this_size])

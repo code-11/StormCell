@@ -1,7 +1,7 @@
 import pygame
 
-from StormCell.stormCell4.sc_ui.sc_image import SCImage
-from StormCell.stormCell4.sc_ui.sc_widget import SCWidget
+from sc_ui.sc_image import SCImage
+from sc_ui.sc_widget import SCWidget
 
 
 class SelectableImage(SCWidget):
@@ -22,8 +22,8 @@ class SelectableImage(SCWidget):
     def get_height(self):
         return self._height
 
-    def update(self):
-        self._image.update()
+    def update(self, the_game):
+        self._image.update(the_game)
         extra_size = self.padding + self.select_size
         self._height = self._image.get_height() + (extra_size * 2)
         self._width = self._image.get_width() + (extra_size * 2)

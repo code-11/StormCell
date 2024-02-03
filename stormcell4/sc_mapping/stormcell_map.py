@@ -4,7 +4,7 @@ import pygame
 
 from .region_attrs import People, Culture, Religion, Region, Nation, Terrain
 from .region_geometry import RegionGeometry
-from StormCell.stormCell4.sc_game.military.army import Army
+from sc_game.military.army import Army
 
 
 class MapOne(object):

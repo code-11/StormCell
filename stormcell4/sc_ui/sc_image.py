@@ -24,7 +24,7 @@ class SCImage(SCWidget):
         pygame.draw.rect(self._surface, border_color, pygame.Rect(0, 0, self.get_width(), self.get_height()))
         self._surface.blit(img, (border_size, border_size))
 
-    def update(self):
+    def update(self, the_game):
         pass
 
     def draw(self, surface, location):

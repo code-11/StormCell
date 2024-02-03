@@ -32,6 +32,7 @@ def is_black(color):
 
 CLEAR_COLOR = "#80a8de"
 SELECT_COLOR = "#ffee58"
+OTHER_REGIONS_COLOR = "#00f2ff"
 
 if __name__ == "__main__":
     pygame.init()
@@ -85,6 +86,9 @@ if __name__ == "__main__":
                     screen.fill(CLEAR_COLOR)
                     the_map.color_according_to_ownership(screen)
                     the_map.draw_armies(screen)
+                    if len(ui_state.other_regions)>0:
+                        for region in ui_state.other_regions:
+                            region.draw(screen, None, OTHER_REGIONS_COLOR)
                     ui_state.selected_region.draw(screen, None, SELECT_COLOR)
                     the_ui.draw(screen, the_game, ui_state)
         pygame.display.flip()

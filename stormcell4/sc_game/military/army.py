@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Optional
 
-from StormCell.stormCell4.sc_mapping.region_attrs import Region, Nation
+from sc_mapping.region_attrs import Region, Nation
 
 
 class ArmyStance(Enum):

@@ -3,7 +3,7 @@ import functools
 from dataclasses import dataclass, field
 from typing import Optional, List
 
-from StormCell.stormCell4.sc_mapping.region_attrs import Region
+from sc_mapping.region_attrs import Region
 
 
 def custom_or(a, b):

@@ -1,7 +1,7 @@
 from .army import ArmyStance, Army
 
 
-from StormCell.stormCell4.sc_mapping.region_attrs import Terrain, Region
+from sc_mapping.region_attrs import Terrain, Region
 
 ATK_II = 5
 ATK_I = 4
