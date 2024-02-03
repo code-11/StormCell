@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkig2brdby8it"]
+
+[ext_resource type="Script" path="res://RegionGeoLoader.gd" id="1_fbgei"]
+[ext_resource type="Script" path="res://MapLoader.gd" id="1_xrwsu"]
+[ext_resource type="Script" path="res://NationLoader.gd" id="2_lhp44"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TheGame" type="Node2D" parent="."]
+
+[node name="TheMap" type="Node2D" parent="TheGame"]
+script = ExtResource("1_xrwsu")
+
+[node name="regions" type="Node2D" parent="TheGame/TheMap"]
+script = ExtResource("1_fbgei")
+
+[node name="nations" type="Node" parent="TheGame/TheMap"]
+script = ExtResource("2_lhp44")

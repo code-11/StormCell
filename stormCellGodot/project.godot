@@ -1,0 +1,32 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Storm Cell Godot"
+run/main_scene="res://testing.tscn"
+config/features=PackedStringArray("4.2")
+config/icon="res://icon.png"
+
+[display]
+
+window/size/viewport_width=1100
+window/size/viewport_height=950
+window/size/resizable=false
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/defaults/default_environment="res://default_env.tres"
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
