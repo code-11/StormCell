@@ -11,8 +11,16 @@
 [node name="TheMap" type="Node2D" parent="TheGame"]
 script = ExtResource("1_xrwsu")
 
+[node name="background" type="Polygon2D" parent="TheGame/TheMap"]
+position = Vector2(-558.147, -496.305)
+scale = Vector2(8.66912, 7.19858)
+color = Color(0.501961, 0.658824, 0.870588, 1)
+polygon = PackedVector2Array(60, 67, 196, 67, 196, 208, 60, 208)
+
 [node name="regions" type="Node2D" parent="TheGame/TheMap"]
 script = ExtResource("1_fbgei")
 
 [node name="nations" type="Node" parent="TheGame/TheMap"]
 script = ExtResource("2_lhp44")
+
+[node name="Line2D" type="Line2D" parent="TheGame/TheMap"]

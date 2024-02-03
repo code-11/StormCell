@@ -20,8 +20,15 @@ func create_region_geometry(region_id, polygon_list):
 	
 	for polygon in polygon_list:
 		var single_poly=Polygon2D.new()
-		single_poly.polygon=array_to_packed_vec2(polygon)
+		var poly_points=array_to_packed_vec2(polygon)
+		single_poly.polygon=poly_points
 		region_geometry.add_child(single_poly)
+		
+		var border = Line2D.new()
+		border.points=poly_points
+		border.width=3
+		border.default_color=Color(0,0,0)
+		region_geometry.add_child(border)
 	return region_geometry
 	
 func read_regions():
@@ -42,7 +49,8 @@ func create_regions():
 func color_region(region,color_hex):
 	var polys=region.get_children()
 	for poly in polys:
-		poly.color=Color.html(color_hex)
+		if poly is Polygon2D:
+			poly.color=Color.html(color_hex)
 
 func color_regions(region_color_dict):
 	print(region_color_dict)
