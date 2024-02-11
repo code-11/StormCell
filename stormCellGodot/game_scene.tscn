@@ -1,48 +1,83 @@
-[gd_scene load_steps=5 format=3 uid="uid://bkig2brdby8it"]
+[gd_scene load_steps=10 format=3 uid="uid://bkig2brdby8it"]
 
 [ext_resource type="Script" path="res://RegionGeoLoader.gd" id="1_fbgei"]
+[ext_resource type="Script" path="res://TheGame.gd" id="1_md1hw"]
 [ext_resource type="Script" path="res://MapLoader.gd" id="1_xrwsu"]
 [ext_resource type="Script" path="res://NationLoader.gd" id="2_lhp44"]
+[ext_resource type="Script" path="res://GuiCtrl.gd" id="2_y221t"]
 [ext_resource type="Texture2D" uid="uid://bltthd43fdmfq" path="res://images/spearhead.jpeg" id="4_n7rf5"]
+[ext_resource type="Script" path="res://PolMapModeBtn.gd" id="6_48i3s"]
+[ext_resource type="Script" path="res://PanelCtrl.gd" id="6_negt1"]
+[ext_resource type="Script" path="res://TerrainMapModeBtn.gd" id="7_mcrfv"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="TheGame" type="Node2D" parent="."]
+script = ExtResource("1_md1hw")
 
-[node name="TheMap" type="Node2D" parent="TheGame"]
+[node name="GuiCtrl" type="Node" parent="TheGame"]
+script = ExtResource("2_y221t")
+
+[node name="TheMap" type="Node2D" parent="TheGame/GuiCtrl"]
 script = ExtResource("1_xrwsu")
 
-[node name="background" type="Polygon2D" parent="TheGame/TheMap"]
+[node name="background" type="Polygon2D" parent="TheGame/GuiCtrl/TheMap"]
 position = Vector2(-620.971, -474.177)
 scale = Vector2(10.3162, 7.0922)
 color = Color(0.501961, 0.658824, 0.870588, 1)
 polygon = PackedVector2Array(60, 67, 196, 67, 196, 136.32, 196, 208, 60, 208)
 
-[node name="regions" type="Node2D" parent="TheGame/TheMap"]
+[node name="regions" type="Node2D" parent="TheGame/GuiCtrl/TheMap"]
 script = ExtResource("1_fbgei")
 
-[node name="nations" type="Node" parent="TheGame/TheMap"]
+[node name="nations" type="Node" parent="TheGame/GuiCtrl/TheMap"]
 script = ExtResource("2_lhp44")
 
-[node name="Line2D" type="Line2D" parent="TheGame/TheMap"]
+[node name="Line2D" type="Line2D" parent="TheGame/GuiCtrl/TheMap"]
 
-[node name="PanelContainer" type="PanelContainer" parent="TheGame"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TheGame/GuiCtrl/TheMap"]
+offset_left = 908.0
+offset_top = 902.0
+offset_right = 1088.0
+offset_bottom = 942.0
+
+[node name="PolMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
+layout_mode = 2
+text = "Political"
+script = ExtResource("6_48i3s")
+
+[node name="TerrainMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
+layout_mode = 2
+text = "Terrain"
+script = ExtResource("7_mcrfv")
+
+[node name="ThePanel" type="PanelContainer" parent="TheGame/GuiCtrl"]
 offset_left = 1101.0
 offset_top = 1.0
 offset_right = 1401.0
 offset_bottom = 1002.0
+script = ExtResource("6_negt1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="TheGame/PanelContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="TheGame/GuiCtrl/ThePanel"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="TheGame/PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="sigil" type="TextureRect" parent="TheGame/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="sigil" type="TextureRect" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("4_n7rf5")
 
-[node name="gov_type" type="Label" parent="TheGame/PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="gov_type" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Imperial Despotism"
+
+[node name="RegionInfoBox" type="VBoxContainer" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="RegionDisplayLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
+layout_mode = 2
+
+[node name="TerrainTypeLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
+layout_mode = 2

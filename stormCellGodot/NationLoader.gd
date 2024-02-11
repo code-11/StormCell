@@ -15,6 +15,7 @@ func read_national_colors():
 	var national_colors_data = JSON.parse_string(national_colors_file.get_as_text())
 	return national_colors_data
 
+
 func create_region_color_dict(starting_region_dict,national_colors_dict):
 	var to_return={}
 	for nation in starting_region_dict:

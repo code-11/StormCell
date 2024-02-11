@@ -3,6 +3,9 @@ extends Node2D
 var SCALE=1
 var LONGEST_EXTENT=null
 
+func get_the_map():
+	return get_parent()
+
 func get_clicked_region(clicked_point):
 	for region in get_children():
 		for poly in get_polys(region):
@@ -85,6 +88,7 @@ func array_to_packed_vec2(array):
 func create_region_geometry(region_id, polygon_list):
 	var region_geometry=Node2D.new()
 	region_geometry.name=region_id
+	region_geometry.set_script(load("res://region_data.gd"));
 	
 	var i=0
 	for polygon in polygon_list:
@@ -97,7 +101,7 @@ func create_region_geometry(region_id, polygon_list):
 		var border = Line2D.new()
 		border.points=poly_points
 		border.width=2
-		border.default_color=Color.html("#333333")
+		border.default_color=Color.html(get_the_map().DEFAULT_BORDER_COLOR)
 		border.name="border-%s" % i
 		region_geometry.add_child(border)
 		i+=1
@@ -111,12 +115,19 @@ func read_regions():
 		var region_geometry=create_region_geometry(region_id, data[region_id])
 		regions.append(region_geometry)
 	return regions
+	
+func read_regional_terrain():
+	var region_terrain_file = FileAccess.open("res://region_terrain.json", FileAccess.READ)
+	var region_terrain_data = JSON.parse_string(region_terrain_file.get_as_text())
+	return region_terrain_data
 
 func create_regions():
 	var regions=read_regions()
+	var terrain_data=read_regional_terrain()
 	print("Num Regions: %s" % regions.size())
 	var greatest_extent=0
 	for region in regions:
+		region.terrain = terrain_data[region.name]
 		var long_extent=long_extent(region)
 		if greatest_extent < long_extent:
 			greatest_extent = long_extent
@@ -132,7 +143,7 @@ func color_region(region,color_hex):
 
 func color_regions(region_color_dict):
 	for region in get_children():
-		var region_color_hex=region_color_dict.get(region.name,"#D5CEAB")
+		var region_color_hex=region_color_dict.get(region.name,get_the_map().UNOCCUPIED_REGION_COLOR)
 		color_region(region,region_color_hex)
 
 func color_border(region,color_hex):
