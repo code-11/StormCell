@@ -81,3 +81,6 @@ layout_mode = 2
 
 [node name="TerrainTypeLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
 layout_mode = 2
+
+[node name="NationOwnerLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
+layout_mode = 2

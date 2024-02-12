@@ -10,6 +10,14 @@ func read_starting_regions():
 	var starting_regions_data = JSON.parse_string(starting_regions_file.get_as_text())
 	return starting_regions_data
 	
+func get_region_to_starting_nation():
+	var starting_nation_data = read_starting_regions()
+	var to_return = {}
+	for nation in starting_nation_data:
+		for region_id in starting_nation_data[nation]:
+			to_return[region_id] = nation
+	return to_return
+	
 func read_national_colors():
 	var national_colors_file = FileAccess.open("res://national_colors.json", FileAccess.READ)
 	var national_colors_data = JSON.parse_string(national_colors_file.get_as_text())

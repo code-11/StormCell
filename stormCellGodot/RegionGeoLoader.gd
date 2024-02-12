@@ -121,13 +121,14 @@ func read_regional_terrain():
 	var region_terrain_data = JSON.parse_string(region_terrain_file.get_as_text())
 	return region_terrain_data
 
-func create_regions():
+func create_regions(regions_to_nations_dict):
 	var regions=read_regions()
 	var terrain_data=read_regional_terrain()
 	print("Num Regions: %s" % regions.size())
 	var greatest_extent=0
 	for region in regions:
 		region.terrain = terrain_data[region.name]
+		region.nation = regions_to_nations_dict.get(region.name,null)
 		var long_extent=long_extent(region)
 		if greatest_extent < long_extent:
 			greatest_extent = long_extent

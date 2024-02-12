@@ -59,7 +59,7 @@ func _ready():
 		#$nations.read_starting_regions(),
 		#$nations.read_national_colors()
 	#)
-	$regions.create_regions()
+	$regions.create_regions($nations.get_region_to_starting_nation())
 
 	#$regions.color_regions(region_color_dict)
 	#print(get_node("regions/41/poly-0"))
