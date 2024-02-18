@@ -19,6 +19,9 @@ func set_map_mode(new_mode):
 func set_player_nation(player_nation):
 	$ThePanel.set_player_nation(player_nation)
 
+func attach_army(army_node,region):
+	$TheMap.attach_army(army_node,region)
+
 func load_map():
 	$TheMap.load_map()
 	set_map_mode("pol")

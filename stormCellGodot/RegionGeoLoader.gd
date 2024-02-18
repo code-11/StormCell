@@ -155,6 +155,15 @@ func color_border(region,color_hex):
 	for border in borders:
 		border.default_color=Color.html(color_hex)
 
+func attach_army(army_node,region):
+	for child_region in get_children():
+		if child_region.name == region:
+			var bb_center=get_bb_center(get_region_bb(child_region))
+			army_node.position=Vector2(bb_center[0],bb_center[1])
+			child_region.add_child(army_node)
+			return
+	push_error("Could not find region for "+army_node.name+" "+region)
+
 func _ready():
 	pass
 func _process(delta):
