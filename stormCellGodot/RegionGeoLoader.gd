@@ -3,6 +3,9 @@ extends Node2D
 var SCALE=1
 var LONGEST_EXTENT=null
 
+var REGION_LIST_PATH="res://data/region_list.txt"
+var REGION_TERRAIN_PATH="res://data/region_terrain.json"
+
 func get_the_map():
 	return get_parent()
 
@@ -108,7 +111,7 @@ func create_region_geometry(region_id, polygon_list):
 	return region_geometry
 	
 func read_regions():
-	var region_list_file = FileAccess.open("res://region_list.txt", FileAccess.READ)
+	var region_list_file = FileAccess.open(REGION_LIST_PATH, FileAccess.READ)
 	var data = JSON.parse_string(region_list_file.get_as_text())
 	var regions=Array()
 	for region_id in data:
@@ -117,7 +120,7 @@ func read_regions():
 	return regions
 	
 func read_regional_terrain():
-	var region_terrain_file = FileAccess.open("res://region_terrain.json", FileAccess.READ)
+	var region_terrain_file = FileAccess.open(REGION_TERRAIN_PATH, FileAccess.READ)
 	var region_terrain_data = JSON.parse_string(region_terrain_file.get_as_text())
 	return region_terrain_data
 

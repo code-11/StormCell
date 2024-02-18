@@ -4,11 +4,11 @@
 [ext_resource type="Script" path="res://TheGame.gd" id="1_md1hw"]
 [ext_resource type="Script" path="res://MapLoader.gd" id="1_xrwsu"]
 [ext_resource type="Script" path="res://NationLoader.gd" id="2_lhp44"]
-[ext_resource type="Script" path="res://GuiCtrl.gd" id="2_y221t"]
+[ext_resource type="Script" path="res://sc_ui/GuiCtrl.gd" id="2_y221t"]
 [ext_resource type="Texture2D" uid="uid://bltthd43fdmfq" path="res://images/spearhead.jpeg" id="4_n7rf5"]
-[ext_resource type="Script" path="res://PolMapModeBtn.gd" id="6_48i3s"]
-[ext_resource type="Script" path="res://PanelCtrl.gd" id="6_negt1"]
-[ext_resource type="Script" path="res://TerrainMapModeBtn.gd" id="7_mcrfv"]
+[ext_resource type="Script" path="res://sc_ui/PolMapModeBtn.gd" id="6_48i3s"]
+[ext_resource type="Script" path="res://sc_ui/PanelCtrl.gd" id="6_negt1"]
+[ext_resource type="Script" path="res://sc_ui/TerrainMapModeBtn.gd" id="7_mcrfv"]
 
 [node name="Node2D" type="Node2D"]
 

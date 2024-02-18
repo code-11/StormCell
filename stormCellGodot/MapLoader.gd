@@ -5,6 +5,7 @@ var UNOCCUPIED_REGION_COLOR="#D5CEAB"
 var DEFAULT_BORDER_COLOR="#333333"
 var SELECTED_BORDER_COLOR="#FF0000"
 
+var TERRAIN_COLORS_PATH="res://data/terrain_colors.json"
 #func get_clicked_region(point):
 	#
 	#print(Geometry2D.is_point_in_polygon(point,poly))
@@ -38,7 +39,7 @@ func create_terrain_color_dict():
 	
 
 func read_terrain_color_data():
-	var terrain_color_file = FileAccess.open("res://terrain_colors.json", FileAccess.READ)
+	var terrain_color_file = FileAccess.open(TERRAIN_COLORS_PATH, FileAccess.READ)
 	var terrain_color_data = JSON.parse_string(terrain_color_file.get_as_text())
 	return terrain_color_data
 

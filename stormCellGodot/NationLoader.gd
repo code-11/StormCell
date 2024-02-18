@@ -1,12 +1,14 @@
 extends Node
 
+var STARTING_REGIONS_PATH="res://data/starting_regions.json"
+var NATION_COLORS_PATH="res://data/national_colors.json"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
 func read_starting_regions():
-	var starting_regions_file = FileAccess.open("res://starting_regions.json", FileAccess.READ)
+	var starting_regions_file = FileAccess.open(STARTING_REGIONS_PATH, FileAccess.READ)
 	var starting_regions_data = JSON.parse_string(starting_regions_file.get_as_text())
 	return starting_regions_data
 	
@@ -19,7 +21,7 @@ func get_region_to_starting_nation():
 	return to_return
 	
 func read_national_colors():
-	var national_colors_file = FileAccess.open("res://national_colors.json", FileAccess.READ)
+	var national_colors_file = FileAccess.open(NATION_COLORS_PATH, FileAccess.READ)
 	var national_colors_data = JSON.parse_string(national_colors_file.get_as_text())
 	return national_colors_data
 
