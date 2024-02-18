@@ -53,14 +53,17 @@ func _input(event):
 			if clicked_region!=null:
 				get_parent().set_selected_region(clicked_region)
 
+func load_map():
+	$regions.create_regions($nations.get_region_to_starting_nation())
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	pass
 	#var region_color_dict=$nations.create_region_color_dict(
 		#$nations.read_starting_regions(),
 		#$nations.read_national_colors()
 	#)
-	$regions.create_regions($nations.get_region_to_starting_nation())
+	#$regions.create_regions($nations.get_region_to_starting_nation())
 
 	#$regions.color_regions(region_color_dict)
 	#print(get_node("regions/41/poly-0"))

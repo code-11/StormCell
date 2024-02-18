@@ -16,6 +16,9 @@ func set_map_mode(new_mode):
 	map_mode=new_mode
 	$TheMap.set_color_mode(new_mode)
 
+func set_player_nation(player_nation):
+	$ThePanel.set_player_nation(player_nation)
 
-func _ready():
-	set_map_mode(map_mode)
+func load_map():
+	$TheMap.load_map()
+	set_map_mode("pol")
