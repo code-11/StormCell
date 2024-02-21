@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bkig2brdby8it"]
+[gd_scene load_steps=11 format=3 uid="uid://bkig2brdby8it"]
 
 [ext_resource type="Script" path="res://RegionGeoLoader.gd" id="1_fbgei"]
 [ext_resource type="Script" path="res://TheGame.gd" id="1_md1hw"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://sc_ui/PolMapModeBtn.gd" id="6_48i3s"]
 [ext_resource type="Script" path="res://sc_ui/PanelCtrl.gd" id="6_negt1"]
 [ext_resource type="Script" path="res://sc_ui/TerrainMapModeBtn.gd" id="7_mcrfv"]
+[ext_resource type="Script" path="res://ArmyInfoCtrl.gd" id="10_k38sl"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -91,3 +92,11 @@ layout_mode = 2
 
 [node name="NationOwnerLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
 layout_mode = 2
+
+[node name="ArmyInfoBox" type="VBoxContainer" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
+layout_mode = 2
+script = ExtResource("10_k38sl")
+
+[node name="ArmyHeaderLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox/ArmyInfoBox"]
+layout_mode = 2
+text = "Armies:"

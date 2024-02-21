@@ -65,14 +65,21 @@ func get_bb_center(bb):
 func get_polys(region):
 	var to_return=[]
 	for child in region.get_children():
-		if child is Polygon2D:
+		if child.is_in_group("Polys"):
 			to_return.append(child)
 	return to_return
 	
 func get_borders(region):
 	var to_return=[]
 	for child in region.get_children():
-		if child is Line2D:
+		if child.is_in_group("Borders"):
+			to_return.append(child)
+	return to_return
+
+func get_armies(region):
+	var to_return=[]
+	for child in region.get_children():
+		if child.is_in_group("Armies"):
 			to_return.append(child)
 	return to_return
 
@@ -97,11 +104,13 @@ func create_region_geometry(region_id, polygon_list):
 	for polygon in polygon_list:
 		var single_poly=Polygon2D.new()
 		var poly_points=array_to_packed_vec2(polygon)
+		single_poly.add_to_group("Polys")
 		single_poly.polygon=poly_points
 		single_poly.name="poly-%s" % i
 		region_geometry.add_child(single_poly)
 		
 		var border = Line2D.new()
+		border.add_to_group("Borders")
 		border.points=poly_points
 		border.width=2
 		border.default_color=Color.html(get_the_map().DEFAULT_BORDER_COLOR)
@@ -163,6 +172,7 @@ func attach_army(army_node,region):
 			child_region.add_child(army_node)
 			return
 	push_error("Could not find region for "+army_node.name+" "+region)
+
 
 func _ready():
 	pass

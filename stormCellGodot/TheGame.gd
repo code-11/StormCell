@@ -11,7 +11,7 @@ func read_player_nation():
 	return player_info["nation"]
 
 func spawn_army(nation, region):
-	var army_node=Polygon2D.new()
+	var army_node=Army.new()
 	army_node.name="army"+str(army_uid)
 	army_uid+=1
 	
@@ -26,6 +26,9 @@ func spawn_army(nation, region):
 	army_node.color="black"
 	
 	$GuiCtrl.attach_army(army_node, region)
+
+func get_armies(region):
+	return $GuiCtrl.get_armies(region)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

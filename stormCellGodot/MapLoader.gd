@@ -59,6 +59,9 @@ func load_map():
 func attach_army(army_node,region):
 	$regions.attach_army(army_node,region)
 
+func get_armies(region):
+	return $regions.get_armies(region)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
