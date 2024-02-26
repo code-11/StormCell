@@ -1,22 +1,21 @@
 extends VBoxContainer
 
 var cur_armies=[]
-var cur_army_lbls=[]
+var cur_army_items=[]
 
 func add_army(army):
 	cur_armies.append(army)
 	
-	var army_lbl=Label.new()
-	army_lbl.text=army.name
-	add_child(army_lbl)
+	var army_item= ArmyGuiItem.new(army)
+	add_child(army_item)
 	
-	cur_army_lbls.append(army_lbl)
+	cur_army_items.append(army_item)
 
 func reset_armies():
-	for army_lbl in cur_army_lbls: 
-		remove_child(army_lbl)
+	for army_item in cur_army_items: 
+		remove_child(army_item)
 	cur_armies.clear()
-	cur_army_lbls.clear()
+	cur_army_items.clear()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
