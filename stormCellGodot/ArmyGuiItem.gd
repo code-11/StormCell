@@ -43,12 +43,12 @@ func _init(a_army):
 	actions_box = HBoxContainer.new()
 	var btn_group = ButtonGroup.new()
 	
-	var aggressive_btn = StanceButton.new(Constants.Stance.AGGRESSIVE,btn_group,Vector2(30,30),"res://images/sword.jpg")
-	var defensive_btn = StanceButton.new(Constants.Stance.DEFENSIVE,btn_group,Vector2(30,30),"res://images/shield.jpg")
-	var pacify_btn = StanceButton.new(Constants.Stance.PACIFY,btn_group,Vector2(30,30),"res://images/fist-down.jpg")
-	var raiding_btn = StanceButton.new(Constants.Stance.RAIDING,btn_group,Vector2(30,30),"res://images/fire.jpg")
-	var guerilla_btn = StanceButton.new(Constants.Stance.GUERILLA,btn_group,Vector2(30,30),"res://images/mask.jpg")
-	var move_btn = StanceButton.new(Constants.Stance.MOVING,btn_group,Vector2(30,30),"res://images/move.jpg")
+	var aggressive_btn = StanceButton.new(SCConstants.Stance.AGGRESSIVE,btn_group,Vector2(30,30),"res://images/sword.jpg")
+	var defensive_btn = StanceButton.new(SCConstants.Stance.DEFENSIVE,btn_group,Vector2(30,30),"res://images/shield.jpg")
+	var pacify_btn = StanceButton.new(SCConstants.Stance.PACIFY,btn_group,Vector2(30,30),"res://images/fist-down.jpg")
+	var raiding_btn = StanceButton.new(SCConstants.Stance.RAIDING,btn_group,Vector2(30,30),"res://images/fire.jpg")
+	var guerilla_btn = StanceButton.new(SCConstants.Stance.GUERILLA,btn_group,Vector2(30,30),"res://images/mask.jpg")
+	var move_btn = StanceButton.new(SCConstants.Stance.MOVING,btn_group,Vector2(30,30),"res://images/move.jpg")
 	
 	aggressive_btn.pressed.connect(func():set_army_stance(the_army,aggressive_btn.stance,stance_lbl))
 	defensive_btn.pressed.connect(func():set_army_stance(the_army,defensive_btn.stance,stance_lbl))

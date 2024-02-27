@@ -1,5 +1,7 @@
 extends Node
 
-class_name Constants
+class_name SCConstants
 
 enum Stance {AGGRESSIVE,DEFENSIVE,PACIFY,RAIDING,GUERILLA,MOVING}
+
+

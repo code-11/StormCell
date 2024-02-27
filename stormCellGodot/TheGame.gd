@@ -15,7 +15,6 @@ func spawn_army(nation, region):
 	army_node.name="army"+str(army_uid)
 	army_uid+=1
 	
-	army_node.set_script(load("res://army_data.gd"));
 	army_node.nation=nation
 	army_node.polygon=PackedVector2Array([
 		Vector2(0,0),

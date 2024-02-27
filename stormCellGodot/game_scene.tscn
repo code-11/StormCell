@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bkig2brdby8it"]
+[gd_scene load_steps=20 format=3 uid="uid://bkig2brdby8it"]
 
 [ext_resource type="Script" path="res://RegionGeoLoader.gd" id="1_fbgei"]
 [ext_resource type="Script" path="res://TheGame.gd" id="1_md1hw"]
@@ -9,7 +9,16 @@
 [ext_resource type="Script" path="res://sc_ui/PolMapModeBtn.gd" id="6_48i3s"]
 [ext_resource type="Script" path="res://sc_ui/PanelCtrl.gd" id="6_negt1"]
 [ext_resource type="Script" path="res://sc_ui/TerrainMapModeBtn.gd" id="7_mcrfv"]
+[ext_resource type="Script" path="res://TimeControls.gd" id="9_lrl64"]
+[ext_resource type="Texture2D" uid="uid://bfan537pbqvw" path="res://images/pause.png" id="9_poc42"]
+[ext_resource type="Texture2D" uid="uid://c1lkpx5qbsjnj" path="res://images/play_1.png" id="10_1w1la"]
 [ext_resource type="Script" path="res://ArmyInfoCtrl.gd" id="10_k38sl"]
+[ext_resource type="Texture2D" uid="uid://cbhfuwi446jtx" path="res://images/play_2.png" id="11_6hv44"]
+[ext_resource type="Script" path="res://PauseBtn.gd" id="11_l2caw"]
+[ext_resource type="Texture2D" uid="uid://kd6abwirah2y" path="res://images/play_3.png" id="12_lp14h"]
+[ext_resource type="Script" path="res://Play.gd" id="13_70o87"]
+[ext_resource type="Script" path="res://Play_2.gd" id="15_ir76w"]
+[ext_resource type="Script" path="res://Play_3.gd" id="17_i1atk"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -62,6 +71,51 @@ script = ExtResource("6_negt1")
 [node name="VBoxContainer" type="VBoxContainer" parent="TheGame/GuiCtrl/ThePanel"]
 layout_mode = 2
 
+[node name="TimeControls" type="HBoxContainer" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("9_lrl64")
+
+[node name="Pause" type="Button" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/TimeControls"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+icon = ExtResource("9_poc42")
+expand_icon = true
+script = ExtResource("11_l2caw")
+
+[node name="Play" type="Button" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/TimeControls"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+icon = ExtResource("10_1w1la")
+expand_icon = true
+script = ExtResource("13_70o87")
+
+[node name="Play_2" type="Button" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/TimeControls"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+icon = ExtResource("11_6hv44")
+expand_icon = true
+script = ExtResource("15_ir76w")
+
+[node name="Play_3" type="Button" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/TimeControls"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+disabled = true
+icon = ExtResource("12_lp14h")
+expand_icon = true
+script = ExtResource("17_i1atk")
+
+[node name="Label" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/TimeControls"]
+layout_mode = 2
+text = "1020.30.01"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer"]
 layout_mode = 2
 
@@ -100,3 +154,5 @@ script = ExtResource("10_k38sl")
 [node name="ArmyHeaderLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox/ArmyInfoBox"]
 layout_mode = 2
 text = "Armies:"
+
+[connection signal="speed_changed" from="TheGame/GuiCtrl/ThePanel/VBoxContainer/TimeControls/Pause" to="TheGame/GuiCtrl/ThePanel/VBoxContainer/TimeControls" method="_on_pause_speed_changed"]
