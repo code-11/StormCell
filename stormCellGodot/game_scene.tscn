@@ -107,14 +107,13 @@ custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 4
-disabled = true
 icon = ExtResource("12_lp14h")
 expand_icon = true
 script = ExtResource("17_i1atk")
 
 [node name="Label" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/TimeControls"]
 layout_mode = 2
-text = "1020.30.01"
+text = "0000.00.00"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer"]
 layout_mode = 2
@@ -154,5 +153,3 @@ script = ExtResource("10_k38sl")
 [node name="ArmyHeaderLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox/ArmyInfoBox"]
 layout_mode = 2
 text = "Armies:"
-
-[connection signal="speed_changed" from="TheGame/GuiCtrl/ThePanel/VBoxContainer/TimeControls/Pause" to="TheGame/GuiCtrl/ThePanel/VBoxContainer/TimeControls" method="_on_pause_speed_changed"]

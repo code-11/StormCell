@@ -1,5 +1,6 @@
 extends Button
 
+signal set_speed_paused
 
 func _pressed():
-	speed_changed.emit(0)
+	set_speed_paused.emit()

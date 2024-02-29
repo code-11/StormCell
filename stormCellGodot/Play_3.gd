@@ -1,6 +1,6 @@
 extends Button
 
-signal speed_changed(new_speed)
+signal set_speed_play_3
 
 func _pressed():
-	speed_changed.emit(4)
+	set_speed_play_3.emit()
