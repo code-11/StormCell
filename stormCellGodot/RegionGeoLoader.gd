@@ -164,6 +164,17 @@ func color_border(region,color_hex):
 	for border in borders:
 		border.default_color=Color.html(color_hex)
 
+func find_army_region(army_node):
+	#TODO HMMMM
+	return army_node.get_parent()
+
+func move_army(army,destination_region):
+	var army_cur_region = find_army_region(army)
+	army_cur_region.remove_child(army)
+	var bb_center=get_bb_center(get_region_bb(destination_region))
+	army.position=Vector2(bb_center[0],bb_center[1])
+	destination_region.add_child(army)
+
 func attach_army(army_node,region):
 	for child_region in get_children():
 		if child_region.name == region:

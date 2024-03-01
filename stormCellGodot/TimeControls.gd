@@ -56,3 +56,5 @@ func _ready():
 	$Play.set_speed_play.connect(_on_speed_set_play)
 	$Play_2.set_speed_play_2.connect(_on_speed_set_play_2)
 	$Play_3.set_speed_play_3.connect(_on_speed_set_play_3)
+	$Pause.button_pressed=true
+	$Pause.grab_focus()

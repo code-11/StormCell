@@ -10,9 +10,18 @@ var quality_lbl=null
 var stance_lbl=null
 var actions_box=null
 
+var move_btn=null
+
+var the_map=null
+
+signal moving_army(army)
+
 func set_army_stance(army,stance,lbl):
 	army.stance=stance
 	lbl.text=the_army.get_stance_as_str()
+
+func set_army_as_moving(army, the_map):
+	the_map.set_map_click_mode_to_move_army(army)
 
 func _init(a_army):
 	the_army=a_army
@@ -48,7 +57,7 @@ func _init(a_army):
 	var pacify_btn = StanceButton.new(SCConstants.Stance.PACIFY,btn_group,Vector2(30,30),"res://images/fist-down.jpg")
 	var raiding_btn = StanceButton.new(SCConstants.Stance.RAIDING,btn_group,Vector2(30,30),"res://images/fire.jpg")
 	var guerilla_btn = StanceButton.new(SCConstants.Stance.GUERILLA,btn_group,Vector2(30,30),"res://images/mask.jpg")
-	var move_btn = StanceButton.new(SCConstants.Stance.MOVING,btn_group,Vector2(30,30),"res://images/move.jpg")
+	move_btn = StanceButton.new(SCConstants.Stance.MOVING,btn_group,Vector2(30,30),"res://images/move.jpg")
 	
 	aggressive_btn.pressed.connect(func():set_army_stance(the_army,aggressive_btn.stance,stance_lbl))
 	defensive_btn.pressed.connect(func():set_army_stance(the_army,defensive_btn.stance,stance_lbl))
@@ -70,9 +79,13 @@ func _init(a_army):
 	add_child(actions_box)
 
 func _ready():
+	the_map=get_node("root/TheGame/GuiCtrl/TheMap")
+	move_btn.pressed.connect(func():set_army_as_moving(the_army,the_map))
+	
+	
 	for child in actions_box.get_children():
 		if child.stance==the_army.stance:
-			#This doesn't work for some reason...
 			child.button_pressed=true
-			#child.emit_signal("pressed")
 			child.grab_focus()
+			
+		

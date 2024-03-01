@@ -29,6 +29,9 @@ func spawn_army(nation, region):
 func get_armies(region):
 	return $GuiCtrl.get_armies(region)
 
+func move_army_to(army, region):
+	pass
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	player_nation=read_player_nation()
