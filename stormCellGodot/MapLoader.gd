@@ -66,7 +66,7 @@ func _input(event):
 				if clicked_region!=null:
 					#TODO Also set army as locked for a bit
 					$regions.move_army(move_army_selected_army,clicked_region)
-					cur_map_click_mode==MAP_CLICK_MODE.INFO
+					cur_map_click_mode=MAP_CLICK_MODE.INFO
 
 func load_map():
 	$regions.create_regions($nations.get_region_to_starting_nation())

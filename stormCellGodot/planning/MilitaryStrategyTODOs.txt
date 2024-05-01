@@ -1,0 +1,11 @@
+Initial Armies
+Value for land -> to be replaced by resource system
+Diplo graph
+Army val estimator
+Hostility estimator
+Army Cost
+Dejure land checker
+
+
+
+Strategic level determination-> estimations for military vals for all, and liklihood of hostility.

@@ -79,7 +79,7 @@ func _init(a_army):
 	add_child(actions_box)
 
 func _ready():
-	the_map=get_node("root/TheGame/GuiCtrl/TheMap")
+	the_map=get_node("/root/Node2D/TheGame/GuiCtrl/TheMap")
 	move_btn.pressed.connect(func():set_army_as_moving(the_army,the_map))
 	
 	

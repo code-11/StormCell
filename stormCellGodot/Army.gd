@@ -5,8 +5,11 @@ class_name Army
 
 var nation=null 
 var stance=SCConstants.Stance.AGGRESSIVE 
-var size=0
-var quality=1 #1-100
+var size=50 #1-99
+var quality=1 #1-99
+
+var size_lbl=Label.new()
+
 
 func get_stance_as_str():
 	return {
@@ -19,4 +22,10 @@ func get_stance_as_str():
 	}.get(stance,"UNDEFINED_STANCE")
 
 func _ready():
+	self.add_child(size_lbl)
+	size_lbl.z_index=1
+	size_lbl.set("theme_override_font_sizes/font_size", 10)
 	add_to_group("Armies")
+
+func _process(delta):
+	self.size_lbl.text=str(self.size)

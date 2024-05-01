@@ -18,9 +18,9 @@ func spawn_army(nation, region):
 	army_node.nation=nation
 	army_node.polygon=PackedVector2Array([
 		Vector2(0,0),
-		Vector2(10,0),
-		Vector2(10,10),
-		Vector2(0,10)
+		Vector2(15,0),
+		Vector2(15,15),
+		Vector2(0,15)
 	])
 	army_node.color="black"
 	
