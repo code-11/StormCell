@@ -11,18 +11,13 @@ func read_player_nation():
 	return player_info["nation"]
 
 func spawn_army(nation, region):
-	var army_node=Army.new()
-	army_node.name="army"+str(army_uid)
+	var army_node=Army.new(
+		"army"+str(army_uid),
+		nation,
+		"black",
+		15
+	)
 	army_uid+=1
-	
-	army_node.nation=nation
-	army_node.polygon=PackedVector2Array([
-		Vector2(0,0),
-		Vector2(15,0),
-		Vector2(15,15),
-		Vector2(0,15)
-	])
-	army_node.color="black"
 	
 	$GuiCtrl.attach_army(army_node, region)
 
@@ -37,8 +32,24 @@ func _ready():
 	player_nation=read_player_nation()
 	$GuiCtrl.set_player_nation(player_nation)
 	$GuiCtrl.load_map()
-	spawn_army("test","29")
+	spawn_initial_armies()
 
+func spawn_initial_armies():
+	spawn_army("pinemar_keep","18")
+	spawn_army("pinemar_keep","21")
+	spawn_army("amonhold","15")
+	spawn_army("northumber","76")
+	spawn_army("northumber","77")
+	spawn_army("seluceria","54")
+	spawn_army("north_east_empire","27")
+	spawn_army("north_east_empire","29")
+	spawn_army("north_west_empire","10")
+	spawn_army("central_empire","33")
+	spawn_army("south_west_empire","26")
+	spawn_army("maniabon","84")
+	spawn_army("south_east_empire","39")
+	spawn_army("havernia","48")
+	spawn_army("naguabo","60")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

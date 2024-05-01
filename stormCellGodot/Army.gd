@@ -21,6 +21,18 @@ func get_stance_as_str():
 		SCConstants.Stance.MOVING:"Moving"
 	}.get(stance,"UNDEFINED_STANCE")
 
+
+func _init(name, nation, color, size):
+	self.name=name
+	self.nation=nation
+	self.color=color
+	self.polygon=PackedVector2Array([
+		Vector2(0,0),
+		Vector2(size,0),
+		Vector2(size,size),
+		Vector2(0,size)
+	])
+
 func _ready():
 	self.add_child(size_lbl)
 	size_lbl.z_index=1
