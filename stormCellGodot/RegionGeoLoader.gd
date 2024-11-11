@@ -5,6 +5,7 @@ var LONGEST_EXTENT=null
 
 var REGION_LIST_PATH="res://data/region_list.txt"
 var REGION_TERRAIN_PATH="res://data/region_terrain.json"
+var TERRAIN_DATA_PATH="res://data/terrain_data.json"
 
 func get_the_map():
 	return get_parent()
@@ -128,6 +129,12 @@ func read_regions():
 		regions.append(region_geometry)
 	return regions
 	
+	
+func read_terrain_data():
+	var terrain_data_file = FileAccess.open(TERRAIN_DATA_PATH, FileAccess.READ)
+	var terrain_data = JSON.parse_string(terrain_data_file.get_as_text())
+	return terrain_data	
+	
 func read_regional_terrain():
 	var region_terrain_file = FileAccess.open(REGION_TERRAIN_PATH, FileAccess.READ)
 	var region_terrain_data = JSON.parse_string(region_terrain_file.get_as_text())
@@ -135,11 +142,13 @@ func read_regional_terrain():
 
 func create_regions(regions_to_nations_dict):
 	var regions=read_regions()
-	var terrain_data=read_regional_terrain()
+	var regional_terrain_data=read_regional_terrain()
+	var terrain_data=read_terrain_data()
 	print("Num Regions: %s" % regions.size())
 	var greatest_extent=0
 	for region in regions:
-		region.terrain = terrain_data[region.name]
+		var terrain_type_for_region=regional_terrain_data[region.name]
+		region.terrain = Terrain.from_json_dict(terrain_type_for_region,terrain_data[terrain_type_for_region])
 		region.nation = regions_to_nations_dict.get(region.name,null)
 		var long_extent=long_extent(region)
 		if greatest_extent < long_extent:

@@ -5,8 +5,6 @@ var UNOCCUPIED_REGION_COLOR="#D5CEAB"
 var DEFAULT_BORDER_COLOR="#333333"
 var SELECTED_BORDER_COLOR="#FF0000"
 
-var TERRAIN_COLORS_PATH="res://data/terrain_colors.json"
-
 enum MAP_CLICK_MODE{INFO, MOVE_ARMY}
 var cur_map_click_mode=MAP_CLICK_MODE.INFO
 
@@ -39,16 +37,9 @@ func set_color_mode(mode):
 func create_terrain_color_dict():
 	var to_return={}
 	var all_regions=$regions.get_children()
-	var terrain_colors=read_terrain_color_data()
 	for region in all_regions:
-		to_return[region.name]=terrain_colors[region.terrain]
+		to_return[region.name]=region.terrain.color
 	return to_return
-	
-
-func read_terrain_color_data():
-	var terrain_color_file = FileAccess.open(TERRAIN_COLORS_PATH, FileAccess.READ)
-	var terrain_color_data = JSON.parse_string(terrain_color_file.get_as_text())
-	return terrain_color_data
 
 func _input(event):
 	if event is InputEventMouseButton and event.pressed:

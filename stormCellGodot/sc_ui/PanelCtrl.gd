@@ -24,7 +24,7 @@ func set_selected_region(region):
 	region_lbl.text="Name: "+region.name
 	
 	var terrain_lbl=get_terrain_label()
-	terrain_lbl.text="Terrain: "+region.terrain
+	terrain_lbl.text="Terrain: "+region.terrain.name
 	
 	var nation_lbl = get_nation_label()
 	nation_lbl.text="Nation: "+str(region.nation)

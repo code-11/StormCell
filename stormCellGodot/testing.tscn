@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://gis068qtammp"]
+[gd_scene load_steps=6 format=3 uid="uid://gis068qtammp"]
 
 [ext_resource type="Script" path="res://sc_ui/NewGameCtrl.gd" id="2"]
+[ext_resource type="Script" path="res://test/TestRunnerManager.gd" id="2_0xy5b"]
 [ext_resource type="Script" path="res://sc_ui/MainMenu.gd" id="3"]
 
 [sub_resource type="Theme" id="1"]
@@ -36,6 +37,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 1
 theme = SubResource("1")
 text = "StormCellGodot"
+
+[node name="TestGameBtn" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Test Game"
+script = ExtResource("2_0xy5b")
 
 [node name="NewGameBtn" type="Button" parent="VBoxContainer"]
 layout_mode = 2
