@@ -47,9 +47,12 @@ func _process(delta):
 	var cur_tup=days_to_tup(cumulative_time)
 	if cur_tup!=last_tup:
 		update_lbl(cur_tup)
+		every_day()
 	last_time = cur_time
 	last_tup=cur_tup
 	
+func every_day():
+	print("Day!")
 				
 func _ready():
 	$Pause.set_speed_paused.connect(_on_speed_set_pause)

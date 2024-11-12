@@ -8,7 +8,7 @@ const DEF = .33  # atk needs 3:1
 const DEF_I = .25  # atk needs 4:1
 const DEF_II = .2  # atk needs 5:1
 
-const BASE_DISCOVER_CHANCE =.1 #Given two armies w/ no other modifiers, find each other average within 10 ticks
+const BASE_DISCOVER_CHANCE =.05 #Given two armies w/ no other modifiers, find each other average within 20 ticks
 
 # Outer layer is attacker
 var STANCE_MULT_TABLE = {
@@ -21,11 +21,11 @@ var STANCE_MULT_TABLE = {
 		SCConstants.Stance.MOVING: ATK_I,
 	},
 	SCConstants.Stance.DEFENSIVE: {
-		SCConstants.Stance.AGGRESSIVE: DEF,
+		SCConstants.Stance.AGGRESSIVE: NEUTRAL,
 		SCConstants.Stance.DEFENSIVE: NEUTRAL,
 		SCConstants.Stance.PACIFY: NEUTRAL,
-		SCConstants.Stance.RAIDING: NEUTRAL,
-		SCConstants.Stance.GUERILLA: DEF,
+		SCConstants.Stance.RAIDING: DEF,
+		SCConstants.Stance.GUERILLA: NEUTRAL,
 		SCConstants.Stance.MOVING: NEUTRAL,
 	},
 	SCConstants.Stance.PACIFY: {
@@ -74,6 +74,10 @@ func calculate_full_multiplier(attacker: Army, defender: Army, region):
 	var stance_mult = calculate_stance_multiplier(attacker, defender)
 	var terrain_mult = calculate_terrain_multiplier(region)
 	return stance_mult * terrain_mult
+
+func calculate_discover_multiplier(attacker: Army, defender: Army, region):
+	#TODO: Make it vary on stance
+	return (1/float(region.terrain.defensiveness)) * BASE_DISCOVER_CHANCE
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

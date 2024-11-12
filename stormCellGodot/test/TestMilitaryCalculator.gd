@@ -66,6 +66,26 @@ func test_full_mult_3():
 	var expected_mult=mil_calc.ATK_II * 2 #10
 	assert(mult==expected_mult)
 
+func test_discover_mult_1():
+	print("	Testing test_discover_mult_1")
+	var attacker = Army.new("attacker",null,"black",1)
+	var defender = Army.new("defender",null,"black",1)
+	var region=Region.new();
+	region.terrain= Terrain.new("Desert", "#d08f55", .5, 1.6, 5)
+	var mult=mil_calc.calculate_discover_multiplier(attacker,defender,region)
+	var expected_mult=mil_calc.BASE_DISCOVER_CHANCE * 2
+	assert(mult==expected_mult) #.1, discovering on a desert is fast, expected in 10 turns
+
+func test_discover_mult_2():
+	print("	Testing test_discover_mult_2")
+	var attacker = Army.new("attacker",null,"black",1)
+	var defender = Army.new("defender",null,"black",1)
+	var region=Region.new();
+	region.terrain= Terrain.new("Mountains", "#362910", 2, .1, 1.3)
+	var mult=mil_calc.calculate_discover_multiplier(attacker,defender,region)
+	var expected_mult=mil_calc.BASE_DISCOVER_CHANCE * .5
+	assert(mult==expected_mult) #.025, discovering on mountains is slow, expected in 40 turns
+
 func test_all():
 	print("Testing Military Calculator")
 	test_stance_mult_1()
@@ -74,3 +94,5 @@ func test_all():
 	test_full_mult_1()
 	test_full_mult_2()
 	test_full_mult_3()
+	test_discover_mult_1()
+	test_discover_mult_2()
