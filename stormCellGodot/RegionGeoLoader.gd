@@ -97,9 +97,11 @@ func array_to_packed_vec2(array):
 	#return the_poly
 
 func create_region_geometry(region_id, polygon_list):
-	var region_geometry=Node2D.new()
-	region_geometry.name=region_id
-	region_geometry.set_script(load("res://region_data.gd"));
+	#var region_geometry=Node2D.new()
+	#region_geometry.name=region_id
+	#region_geometry.set_script(load("res://region_data.gd"));
+	var region_geometry = Region.new()
+	region_geometry.name = region_id
 	
 	var i=0
 	for polygon in polygon_list:

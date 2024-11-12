@@ -1,12 +1,14 @@
 extends Node
 
-var ATK_II = 5
-var ATK_I = 4
-var ATK = 3
-var NEUTRAL = 1  # atk needs 1:1
-var DEF = .33  # atk needs 3:1
-var DEF_I = .25  # atk needs 4:1
-var DEF_II = .2  # atk needs 5:1
+const ATK_II = 5
+const ATK_I = 4
+const ATK = 3
+const NEUTRAL = 1  # atk needs 1:1
+const DEF = .33  # atk needs 3:1
+const DEF_I = .25  # atk needs 4:1
+const DEF_II = .2  # atk needs 5:1
+
+const BASE_DISCOVER_CHANCE =.1 #Given two armies w/ no other modifiers, find each other average within 10 ticks
 
 # Outer layer is attacker
 var STANCE_MULT_TABLE = {
@@ -63,6 +65,15 @@ var STANCE_MULT_TABLE = {
 func calculate_stance_multiplier(attacker:Army, defender:Army):
 		return STANCE_MULT_TABLE[attacker.stance][defender.stance]
 		
+func calculate_terrain_multiplier(region):
+	var defensiveness = region.terrain.defensiveness
+	var mult=1/float(defensiveness)
+	return mult
+
+func calculate_full_multiplier(attacker: Army, defender: Army, region):
+	var stance_mult = calculate_stance_multiplier(attacker, defender)
+	var terrain_mult = calculate_terrain_multiplier(region)
+	return stance_mult * terrain_mult
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
