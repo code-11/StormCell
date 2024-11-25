@@ -11,6 +11,7 @@ var PLAY_3_MULTIPLIER=2.0/1000
 var cur_time_multiplier=PAUSE_MULTIPLIER
 
 var	last_time=0	
+var last_tup=[0,0,0]
 	
 func _on_speed_set_pause():
 	cur_time_multiplier=PAUSE_MULTIPLIER
@@ -40,7 +41,6 @@ func update_lbl(time_tup):
 
 func _process(delta):
 	#TODO This sucks, optimize it.
-	var last_tup=[0,0,0]
 	var cur_time=Time.get_ticks_msec()
 	var diff = (cur_time-last_time) * cur_time_multiplier	
 	cumulative_time += diff
@@ -51,7 +51,16 @@ func _process(delta):
 	last_time = cur_time
 	last_tup=cur_tup
 	
+	
+func check_and_initiate_battle():
+	var regions=get_node("/root/Node2D/TheGame/GuiCtrl/TheMap/regions")
+	var region_armies_multimap = regions.get_armies_and_their_regions()
+	var possible_battle_init_func = Callable(regions, "possible_battle_init")
+	region_armies_multimap.map(possible_battle_init_func)
+		
+	
 func every_day():
+	check_and_initiate_battle()
 	print("Day!")
 				
 func _ready():

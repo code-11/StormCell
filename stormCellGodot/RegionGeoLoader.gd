@@ -77,6 +77,14 @@ func get_borders(region):
 			to_return.append(child)
 	return to_return
 
+func get_armies_and_their_regions()-> MultiMap:
+	var to_return=MultiMap.new()
+	for region in get_children():
+		for child in region.get_children():
+			if child.is_in_group("Armies"):
+				to_return.add(region,child)
+	return to_return
+
 func get_armies(region):
 	var to_return=[]
 	for child in region.get_children():
@@ -195,6 +203,19 @@ func attach_army(army_node,region):
 			return
 	push_error("Could not find region for "+army_node.name+" "+region)
 
+#TODO: this doens't belong here!
+func battle_init(armies_multimap):	
+	print("Doing battle!")
+	print(armies_multimap)
+	
+func possible_battle_init(armies):
+	if len(armies)>=2:
+		#TODO ERROR: Armies here are taking on the nation of the region somehow
+		var nations_armies_multimap = MultiMap.new()
+		for army in armies:
+			nations_armies_multimap.add(army.nation, army)
+		#TODO: check if they're actually hostile!
+		battle_init(nations_armies_multimap)
 
 func _ready():
 	pass
