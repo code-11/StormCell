@@ -4,13 +4,13 @@ var _data={}
 	
 func add(new_key, new_value):
 	var inner_list=self._data.get(new_key,[])
-	inner_list.append(new_key)
+	inner_list.append(new_value)
 	self._data[new_key]=inner_list
 	
 func map(func_ref):
 	for key in self._data:
 		var value=self._data[key]
-		func_ref.call(value)
+		func_ref.call(key, value)
 	
 func _to_string():
 	var to_return="{\n"

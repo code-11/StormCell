@@ -204,18 +204,24 @@ func attach_army(army_node,region):
 	push_error("Could not find region for "+army_node.name+" "+region)
 
 #TODO: this doens't belong here!
-func battle_init(armies_multimap):	
+func battle_init(region, armies):
+	# armies must be co-located
+	var army1=armies[0]
+	var army2=armies[1]
+	var attacker_defender=MilitaryCalculator.determine_attacker(region, army1, army2)
 	print("Doing battle!")
-	print(armies_multimap)
+	print(armies)
+	print(attacker_defender)
 	
-func possible_battle_init(armies):
-	if len(armies)>=2:
-		#TODO ERROR: Armies here are taking on the nation of the region somehow
-		var nations_armies_multimap = MultiMap.new()
-		for army in armies:
-			nations_armies_multimap.add(army.nation, army)
+func possible_battle_init(region, armies):
+	if len(armies)<2:
+		return
+	# armies must be co-located
+	if len(armies)==2:
 		#TODO: check if they're actually hostile!
-		battle_init(nations_armies_multimap)
+		battle_init(region, armies)
+	else:
+		print("Multi battle not implemented!")		
 
 func _ready():
 	pass

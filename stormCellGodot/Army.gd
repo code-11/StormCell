@@ -41,3 +41,6 @@ func _ready():
 
 func _process(delta):
 	self.size_lbl.text=str(self.size)
+	
+func _to_string():	
+	return "<Army "+self.name+","+self.nation+","+get_stance_as_str()+","+str(self.size)+">"
