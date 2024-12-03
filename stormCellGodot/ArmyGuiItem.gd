@@ -35,7 +35,7 @@ func _init(a_army):
 	nation_lbl.text=the_army.nation
 	
 	size_lbl=Label.new()
-	size_lbl.text=str(the_army.size)
+	size_lbl.text=str(int(the_army.size))
 	
 	quality_lbl=Label.new()
 	quality_lbl.text=str(the_army.quality)
@@ -88,4 +88,6 @@ func _ready():
 			child.button_pressed=true
 			child.grab_focus()
 			
-		
+func _process(delta):
+	if the_army:
+		size_lbl.text=str(int(the_army.size))		

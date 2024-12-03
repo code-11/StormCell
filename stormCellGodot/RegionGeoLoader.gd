@@ -208,10 +208,20 @@ func battle_init(region, armies):
 	# armies must be co-located
 	var army1=armies[0]
 	var army2=armies[1]
-	var attacker_defender=MilitaryCalculator.determine_attacker(region, army1, army2)
-	print("Doing battle!")
-	print(armies)
+	var attacker_defender=MilitaryCalculator.determine_attacker(army1, army2, region)
 	print(attacker_defender)
+	var dmgs=MilitaryCalculator.calculate_one_day_battle(attacker_defender[0],attacker_defender[1], region)
+	# Assign Damage
+	if army1.size-dmgs[1]<=1:
+		army1.queue_free()
+	else:
+		army1.size-=dmgs[1]
+		
+	if army2.size-dmgs[0]<=1:
+		army2.queue_free()
+	else:
+		army2.size-=dmgs[0]	
+	
 	
 func possible_battle_init(region, armies):
 	if len(armies)<2:
