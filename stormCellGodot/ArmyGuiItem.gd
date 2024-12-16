@@ -89,5 +89,5 @@ func _ready():
 			child.grab_focus()
 			
 func _process(delta):
-	if the_army:
+	if the_army and is_instance_valid(the_army):
 		size_lbl.text=str(int(the_army.size))		

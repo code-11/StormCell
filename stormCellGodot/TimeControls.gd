@@ -51,12 +51,26 @@ func _process(delta):
 	last_time = cur_time
 	last_tup=cur_tup
 	
+func remove_army(region, army):
+	region.remove_child(army)
+	army.queue_free()		
 	
+#TODO: Wrong location
 func check_and_initiate_battle():
 	var regions=get_node("/root/Node2D/TheGame/GuiCtrl/TheMap/regions")
 	var region_armies_multimap = regions.get_armies_and_their_regions()
 	var possible_battle_init_func = Callable(regions, "possible_battle_init")
-	region_armies_multimap.map(possible_battle_init_func)
+	var dead_armies_by_region=region_armies_multimap.map(possible_battle_init_func)
+	dead_armies_by_region.apply(remove_army)
+	
+	var gui_ctrls=get_node("/root/Node2D/TheGame/GuiCtrl")	
+	var panel_ctrls=get_node("/root/Node2D/TheGame/GuiCtrl/ThePanel")
+	if gui_ctrls and gui_ctrls.selected_region and dead_armies_by_region.get_size()>=1 and gui_ctrls.selected_region in dead_armies_by_region.keys():
+		#essentially a refresh
+		gui_ctrls.set_selected_region(gui_ctrls.selected_region)
+	
+#TODO: Wrong location
+	
 		
 	
 func every_day():

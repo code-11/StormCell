@@ -208,28 +208,35 @@ func battle_init(region, armies):
 	# armies must be co-located
 	var army1=armies[0]
 	var army2=armies[1]
-	var attacker_defender=MilitaryCalculator.determine_attacker(army1, army2, region)
-	print(attacker_defender)
-	var dmgs=MilitaryCalculator.calculate_one_day_battle(attacker_defender[0],attacker_defender[1], region)
+	
+	var attacker_and_defender =MilitaryCalculator.determine_attacker(army1, army2, region)
+	var attacker=attacker_and_defender[0]
+	var defender=attacker_and_defender[1]
+	print(attacker_and_defender)
+	var dmgs=MilitaryCalculator.calculate_one_day_battle(attacker,defender, region)
+	var dead_armies=[]
 	# Assign Damage
-	if army1.size-dmgs[1]<=1:
-		army1.queue_free()
+	if attacker.size-dmgs[0]<=1:
+		dead_armies.append(attacker)
 	else:
-		army1.size-=dmgs[1]
+		attacker.size-=dmgs[0]
 		
-	if army2.size-dmgs[0]<=1:
-		army2.queue_free()
+	if defender.size-dmgs[1]<=1:
+		# You can have a simultaneous kill I think.
+		dead_armies.append(defender)
 	else:
-		army2.size-=dmgs[0]	
+		defender.size-=dmgs[1]	
+	return dead_armies
 	
 	
 func possible_battle_init(region, armies):
+	# Returns a list of armies that have been destroyed
 	if len(armies)<2:
-		return
+		return []
 	# armies must be co-located
 	if len(armies)==2:
 		#TODO: check if they're actually hostile!
-		battle_init(region, armies)
+		return battle_init(region, armies)
 	else:
 		print("Multi battle not implemented!")		
 
