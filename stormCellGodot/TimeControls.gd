@@ -1,7 +1,5 @@
 extends HBoxContainer
 
-signal speed_changed(new_value)
-
 var cumulative_time=0
 var PAUSE_MULTIPLIER=0
 var PLAY_MULTIPLIER=1.0/2000

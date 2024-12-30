@@ -7,6 +7,7 @@ var nation=null
 var stance=SCConstants.Stance.AGGRESSIVE 
 var size=50 #1-99
 var quality=1 #1-99
+var stance_lock=0 #Days as a number, after passed, can change stance.
 
 var size_lbl=Label.new()
 

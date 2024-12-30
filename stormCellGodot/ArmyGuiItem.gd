@@ -14,11 +14,12 @@ var move_btn=null
 
 var the_map=null
 
-signal moving_army(army)
+signal army_gui_item_stance_change_attempt(army,new_stance,stance_lbl)
 
-func set_army_stance(army,stance,lbl):
-	army.stance=stance
-	lbl.text=the_army.get_stance_as_str()
+func signal_army_stance_change_attempt(army,stance,lbl):
+	army_gui_item_stance_change_attempt.emit(army,stance,lbl)
+	#army.stance=stance
+	#lbl.text=the_army.get_stance_as_str()
 
 func set_army_as_moving(army, the_map):
 	the_map.set_map_click_mode_to_move_army(army)
@@ -59,12 +60,12 @@ func _init(a_army):
 	var guerilla_btn = StanceButton.new(SCConstants.Stance.GUERILLA,btn_group,Vector2(30,30),"res://images/mask.jpg")
 	move_btn = StanceButton.new(SCConstants.Stance.MOVING,btn_group,Vector2(30,30),"res://images/move.jpg")
 	
-	aggressive_btn.pressed.connect(func():set_army_stance(the_army,aggressive_btn.stance,stance_lbl))
-	defensive_btn.pressed.connect(func():set_army_stance(the_army,defensive_btn.stance,stance_lbl))
-	pacify_btn.pressed.connect(func():set_army_stance(the_army,pacify_btn.stance,stance_lbl))
-	raiding_btn.pressed.connect(func():set_army_stance(the_army,raiding_btn.stance,stance_lbl))
-	guerilla_btn.pressed.connect(func():set_army_stance(the_army,guerilla_btn.stance,stance_lbl))
-	move_btn.pressed.connect(func():set_army_stance(the_army,move_btn.stance,stance_lbl))
+	aggressive_btn.pressed.connect(func():signal_army_stance_change_attempt(the_army,aggressive_btn.stance,stance_lbl))
+	defensive_btn.pressed.connect(func():signal_army_stance_change_attempt(the_army,defensive_btn.stance,stance_lbl))
+	pacify_btn.pressed.connect(func():signal_army_stance_change_attempt(the_army,pacify_btn.stance,stance_lbl))
+	raiding_btn.pressed.connect(func():signal_army_stance_change_attempt(the_army,raiding_btn.stance,stance_lbl))
+	guerilla_btn.pressed.connect(func():signal_army_stance_change_attempt(the_army,guerilla_btn.stance,stance_lbl))
+	move_btn.pressed.connect(func():signal_army_stance_change_attempt(the_army,move_btn.stance,stance_lbl))
 	
 	
 	actions_box.add_child(aggressive_btn)

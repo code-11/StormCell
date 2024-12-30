@@ -3,11 +3,15 @@ extends VBoxContainer
 var cur_armies=[]
 var cur_army_items=[]
 
+func _handle_army_gui_item_stance_change_attempt(army,new_stance,stance_lbl):
+	print("Got: ",army,new_stance,stance_lbl)
+
 func add_army(army):
 	cur_armies.append(army)
 	
 	var army_item= ArmyGuiItem.new(army)
 	add_child(army_item)
+	self.connect("army_gui_item_stance_change_attempt",_handle_army_gui_item_stance_change_attempt)
 	
 	cur_army_items.append(army_item)
 

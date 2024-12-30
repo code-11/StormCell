@@ -4,6 +4,7 @@ var player_nation = null
 var PLAYER_INFO_PATH="res://data/player_info.json"
 
 var army_uid=0
+var current_time=0
 
 func read_player_nation():
 	var player_info_file = FileAccess.open(PLAYER_INFO_PATH, FileAccess.READ)
