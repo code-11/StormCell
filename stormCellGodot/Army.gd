@@ -15,8 +15,8 @@ func handle_stance_unlock(cur_days):
 	if stance_lock and stance_lock < cur_days:
 		stance_lock=null
 
-func can_move():
-	return stance_lock!=null
+func can_change_stance():
+	return stance_lock==null
 
 func get_stance_as_str():
 	return {
