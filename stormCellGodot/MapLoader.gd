@@ -10,6 +10,7 @@ var cur_map_click_mode=MAP_CLICK_MODE.INFO
 
 var move_army_selected_army=null
 
+signal move_army_msg(army,destination_region)
 
 func set_map_click_mode_to_move_army(army):
 	cur_map_click_mode=MAP_CLICK_MODE.MOVE_ARMY
@@ -55,8 +56,7 @@ func _input(event):
 				var click_position: Vector2 = event.position
 				var clicked_region=$regions.get_clicked_region(click_position)
 				if clicked_region!=null:
-					#TODO Also set army as locked for a bit
-					$regions.move_army(move_army_selected_army,clicked_region)
+					move_army_msg.emit(move_army_selected_army,clicked_region)
 					cur_map_click_mode=MAP_CLICK_MODE.INFO
 
 func load_map():

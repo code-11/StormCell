@@ -8,6 +8,7 @@ var nation_lbl=null
 var size_lbl=null
 var quality_lbl=null
 var stance_lbl=null
+var stance_lock_lbl=null
 var actions_box=null
 
 var move_btn=null
@@ -17,9 +18,10 @@ var the_map=null
 signal army_gui_item_stance_change_attempt(army,new_stance,stance_lbl)
 
 func signal_army_stance_change_attempt(army,stance,lbl):
-	army_gui_item_stance_change_attempt.emit(army,stance,lbl)
-	#army.stance=stance
-	#lbl.text=the_army.get_stance_as_str()
+	#TODO: Still need to fix this. 
+	#army_gui_item_stance_change_attempt.emit(army,stance,lbl)
+	army.stance=stance
+	lbl.text=the_army.get_stance_as_str()
 
 func set_army_as_moving(army, the_map):
 	the_map.set_map_click_mode_to_move_army(army)
@@ -44,11 +46,14 @@ func _init(a_army):
 	stance_lbl=Label.new()
 	stance_lbl.text=the_army.get_stance_as_str()
 	
+	stance_lock_lbl = Label.new()
+	
 	lbls_box.add_child(nation_lbl)
 	lbls_box.add_child(name_lbl)
 	lbls_box.add_child(size_lbl)
 	lbls_box.add_child(quality_lbl)
 	lbls_box.add_child(stance_lbl)
+	lbls_box.add_child(stance_lock_lbl)
 	
 	actions_box = HBoxContainer.new()
 	var btn_group = ButtonGroup.new()
@@ -91,4 +96,7 @@ func _ready():
 			
 func _process(delta):
 	if the_army and is_instance_valid(the_army):
-		size_lbl.text=str(int(the_army.size))		
+		size_lbl.text=str(int(the_army.size))
+	if the_army and is_instance_valid(the_army) and the_army.stance_lock:
+		stance_lock_lbl.text=str(int(the_army.stance_lock))
+				

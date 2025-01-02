@@ -81,14 +81,14 @@ func get_armies_and_their_regions()-> MultiMap:
 	var to_return=MultiMap.new()
 	for region in get_children():
 		for child in region.get_children():
-			if child.is_in_group("Armies"):
+			if child.is_in_group(SCConstants.ARMY_GROUP):
 				to_return.add(region,child)
 	return to_return
 
 func get_armies(region):
 	var to_return=[]
 	for child in region.get_children():
-		if child.is_in_group("Armies"):
+		if child.is_in_group(SCConstants.ARMY_GROUP):
 			to_return.append(child)
 	return to_return
 
@@ -107,7 +107,7 @@ func array_to_packed_vec2(array):
 func create_region_geometry(region_id, polygon_list):
 	#var region_geometry=Node2D.new()
 	#region_geometry.name=region_id
-	#region_geometry.set_script(load("res://region_data.gd"));
+	#region_geometry.set_script(load("res://region_data.gd"))
 	var region_geometry = Region.new()
 	region_geometry.name = region_id
 	
@@ -187,13 +187,26 @@ func find_army_region(army_node):
 	#TODO HMMMM
 	return army_node.get_parent()
 
-func move_army(army,destination_region):
+func move_army(army,destination_region, cur_day):
+	#Find and remove army from starting location
 	var army_cur_region = find_army_region(army)
 	army_cur_region.remove_child(army)
+	
+	#Set stance timeout
+	var move_duration=army_movement_day_cost(destination_region)
+	army.stance_lock=cur_day + move_duration
+	
+	#Find and set destination location
 	var bb_center=get_bb_center(get_region_bb(destination_region))
 	army.position=Vector2(bb_center[0],bb_center[1])
 	destination_region.add_child(army)
+	
 
+func army_movement_day_cost(region):
+	var mobility_mult=(1-region.terrain.mobility)*10+1
+	var days = mobility_mult * SCConstants.BASE_MOVE_MULT
+	return days
+ 
 func attach_army(army_node,region):
 	for child_region in get_children():
 		if child_region.name == region:

@@ -25,8 +25,13 @@ func spawn_army(nation, region):
 func get_armies(region):
 	return $GuiCtrl.get_armies(region)
 
-func move_army_to(army, region):
-	pass
+func get_cur_day():
+	return $GuiCtrl/ThePanel.get_children()[0].get_node('TimeControls').cumulative_time
+
+func move_army(army, destination_region):
+	var cur_day=get_cur_day()
+	$GuiCtrl/TheMap/regions.move_army(army, destination_region, cur_day)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -34,6 +39,8 @@ func _ready():
 	$GuiCtrl.set_player_nation(player_nation)
 	$GuiCtrl.load_map()
 	spawn_initial_armies()
+	
+	$GuiCtrl/TheMap.move_army_msg.connect(move_army)
 
 func spawn_initial_armies():
 	spawn_army("pinemar_keep","18")

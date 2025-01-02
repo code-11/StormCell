@@ -7,10 +7,16 @@ var nation=null
 var stance=SCConstants.Stance.AGGRESSIVE 
 var size=50 #1-99
 var quality=1 #1-99
-var stance_lock=0 #Days as a number, after passed, can change stance.
+var stance_lock=null #Null for no lock, or Days as a number, after passed, can change stance.
 
 var size_lbl=Label.new()
 
+func handle_stance_unlock(cur_days):
+	if stance_lock and stance_lock < cur_days:
+		stance_lock=null
+
+func can_move():
+	return stance_lock!=null
 
 func get_stance_as_str():
 	return {
@@ -38,7 +44,7 @@ func _ready():
 	self.add_child(size_lbl)
 	size_lbl.z_index=1
 	size_lbl.set("theme_override_font_sizes/font_size", 10)
-	add_to_group("Armies")
+	add_to_group(SCConstants.ARMY_GROUP)
 
 func _process(delta):
 	self.size_lbl.text=str(int(self.size))

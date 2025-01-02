@@ -34,8 +34,8 @@ func days_to_tup(input_days):
 	var days = remaining_days
 	return [years, months, days]
 
-func update_lbl(time_tup):
-	$Label.text=str(time_tup[0])+":"+str(time_tup[1])+":"+str(time_tup[2])
+func update_lbl(time_tup, cumulative_time):
+	$Label.text=str(time_tup[0])+":"+str(time_tup[1])+":"+str(time_tup[2])+" ("+str(int(cumulative_time))+")"
 
 func _process(delta):
 	#TODO This sucks, optimize it.
@@ -44,7 +44,7 @@ func _process(delta):
 	cumulative_time += diff
 	var cur_tup=days_to_tup(cumulative_time)
 	if cur_tup!=last_tup:
-		update_lbl(cur_tup)
+		update_lbl(cur_tup, cumulative_time)
 		every_day()
 	last_time = cur_time
 	last_tup=cur_tup
@@ -69,11 +69,13 @@ func check_and_initiate_battle():
 	
 #TODO: Wrong location
 	
-		
+func send_possible_stance_unlock_msg():
+	get_tree().call_group(SCConstants.ARMY_GROUP, "handle_stance_unlock", cumulative_time)		
 	
 func every_day():
 	check_and_initiate_battle()
-	print("Day!")
+	send_possible_stance_unlock_msg()
+	#print("Day!")
 				
 func _ready():
 	$Pause.set_speed_paused.connect(_on_speed_set_pause)
