@@ -97,6 +97,8 @@ static func calculate_discover_multiplier(attacker: Army, defender: Army, region
 	return (1/float(region.terrain.defensiveness)) * BASE_DISCOVER_CHANCE
 
 static func determine_attacker(army1, army2, region):
+	#Returns [attacker_army, defender_army]
+	
 	#First check stance
 	var army1_attky= ATTACKYNESS_TABLE[army1.stance]
 	var army2_attky= ATTACKYNESS_TABLE[army2.stance]
@@ -107,9 +109,9 @@ static func determine_attacker(army1, army2, region):
 	else:
 	#On a tie, defer to Dejure control 
 		if army1.nation==region.nation:
-			return [army1,army2]
-		elif army2.nation==region.nation:
 			return [army2,army1]
+		elif army2.nation==region.nation:
+			return [army1,army2]
 		#TODO: If neither involved, defer to defacto control
 		#SKIPPED FOR NOW
 		#TODO: Break further ties by how long the army has been on the tile

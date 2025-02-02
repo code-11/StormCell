@@ -86,6 +86,61 @@ func test_discover_mult_2():
 	var expected_mult=mil_calc.BASE_DISCOVER_CHANCE * .5
 	assert(mult==expected_mult) #.025, discovering on mountains is slow, expected in 40 turns
 
+
+func test_determine_attacker():
+	print("	Testing test_determine_attacker")
+	const nation1="nation1"
+	const nation2="nation2"
+	var army1 = Army.new("army1",nation1,"black",1)
+	var army2 = Army.new("army2",nation2,"black",1)
+	var region=Region.new();
+	region.nation=nation2
+	
+	army1.stance=SCConstants.Stance.AGGRESSIVE
+	army2.stance=SCConstants.Stance.DEFENSIVE
+	var result1=mil_calc.determine_attacker(army2,army1,region)
+	#Aggressive is more attacky than defensive, so it should be attacker
+	assert(result1==[army1,army2])
+	
+	army1.stance=SCConstants.Stance.PACIFY
+	army2.stance=SCConstants.Stance.RAIDING
+	var result2=mil_calc.determine_attacker(army2,army1,region)
+	#RAIDING is more attacky than PACIFY, so it should be attacker
+	assert(result2==[army2,army1])
+	
+	army1.stance=SCConstants.Stance.MOVING
+	army2.stance=SCConstants.Stance.GUERILLA
+	var result3=mil_calc.determine_attacker(army2,army1,region)
+	#MOVING is more attacky than GUERILLA, so it should be attacker
+	assert(result3==[army1,army2])
+	
+	army1.stance=SCConstants.Stance.MOVING
+	army2.stance=SCConstants.Stance.MOVING
+	var result4=mil_calc.determine_attacker(army2,army1,region)
+	#Region owned by nation2 so army1 is attacker
+	assert(result4==[army1,army2])
+	
+	#Throw in a ordering test here. Order should not matter
+	var result5=mil_calc.determine_attacker(army1,army2,region)
+	assert(result5==[army1,army2])
+	
+	region.nation=nation1
+	var result6=mil_calc.determine_attacker(army2,army1,region)
+	#Region owned by nation1 now so army2 is attacker
+	assert(result6==[army2,army1])
+	
+	region.nation="neither"
+	var result7=mil_calc.determine_attacker(army2,army1,region)
+	#Tie breaker makes nation2 the attacker since its string is greater
+	assert(result7==[army2,army1])
+	
+	#Another ordering test
+	var result8=mil_calc.determine_attacker(army1,army2,region)
+	assert(result8==[army2,army1])
+	
+	
+	
+
 func test_all():
 	print("Testing Military Calculator")
 	test_stance_mult_1()
@@ -96,3 +151,4 @@ func test_all():
 	test_full_mult_3()
 	test_discover_mult_1()
 	test_discover_mult_2()
+	test_determine_attacker()
