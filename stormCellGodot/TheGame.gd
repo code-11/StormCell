@@ -5,6 +5,7 @@ var PLAYER_INFO_PATH="res://data/player_info.json"
 
 var army_uid=0
 var current_time=0
+var national_colors=null
 
 func read_player_nation():
 	var player_info_file = FileAccess.open(PLAYER_INFO_PATH, FileAccess.READ)
@@ -12,14 +13,14 @@ func read_player_nation():
 	return player_info["nation"]
 
 func spawn_army(nation, region):
+	var color=national_colors.get(nation, "#000000")
 	var army_node=Army.new(
 		"army"+str(army_uid),
 		nation,
-		"black",
+		color,
 		15
 	)
 	army_uid+=1
-	
 	$GuiCtrl.attach_army(army_node, region)
 
 func get_armies(region):
@@ -38,8 +39,8 @@ func _ready():
 	player_nation=read_player_nation()
 	$GuiCtrl.set_player_nation(player_nation)
 	$GuiCtrl.load_map()
+	national_colors=$GuiCtrl/TheMap/nations.read_national_colors()
 	spawn_initial_armies()
-	
 	$GuiCtrl/TheMap.move_army_msg.connect(move_army)
 
 func spawn_initial_armies():

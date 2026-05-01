@@ -51,7 +51,9 @@ func _process(delta):
 	
 func remove_army(region, army):
 	region.remove_child(army)
-	army.queue_free()		
+	army.queue_free()
+	var regions_node=get_node("/root/Node2D/TheGame/GuiCtrl/TheMap/regions")
+	regions_node.update_army_positions(region)
 	
 #TODO: Wrong location
 func check_and_initiate_battle():

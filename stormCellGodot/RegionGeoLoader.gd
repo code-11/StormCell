@@ -2,6 +2,8 @@ extends Node2D
 
 var SCALE=1
 var LONGEST_EXTENT=null
+var SMALLEST_EXTENT=null
+var ARMY_SPACING=null
 
 var REGION_LIST_PATH="res://data/region_list.txt"
 var REGION_TERRAIN_PATH="res://data/region_terrain.json"
@@ -156,15 +158,20 @@ func create_regions(regions_to_nations_dict):
 	var terrain_data=read_terrain_data()
 	print("Num Regions: %s" % regions.size())
 	var greatest_extent=0
+	var smallest_extent=INF
 	for region in regions:
 		var terrain_type_for_region=regional_terrain_data[region.name]
 		region.terrain = Terrain.from_json_dict(terrain_type_for_region,terrain_data[terrain_type_for_region])
 		region.nation = regions_to_nations_dict.get(region.name,null)
-		var long_extent=long_extent(region)
-		if greatest_extent < long_extent:
-			greatest_extent = long_extent
+		var long_ext=long_extent(region)
+		if greatest_extent < long_ext:
+			greatest_extent = long_ext
+		if smallest_extent > long_ext:
+			smallest_extent = long_ext
 		add_child(region)
 	LONGEST_EXTENT=greatest_extent
+	SMALLEST_EXTENT=smallest_extent
+	ARMY_SPACING=max(SMALLEST_EXTENT/4.0, 15.0)
 	print(LONGEST_EXTENT)
 
 func color_region(region,color_hex):
@@ -188,18 +195,18 @@ func find_army_region(army_node):
 	return army_node.get_parent()
 
 func move_army(army,destination_region, cur_day):
-	#Find and remove army from starting location
 	var army_cur_region = find_army_region(army)
 	army_cur_region.remove_child(army)
-	
-	#Set stance timeout
+
 	var move_duration=army_movement_day_cost(destination_region)
 	army.stance_lock=cur_day + move_duration
-	
-	#Find and set destination location
+
 	var bb_center=get_bb_center(get_region_bb(destination_region))
 	army.position=Vector2(bb_center[0],bb_center[1])
 	destination_region.add_child(army)
+
+	update_army_positions(army_cur_region)
+	update_army_positions(destination_region)
 	
 
 func army_movement_day_cost(region):
@@ -213,8 +220,71 @@ func attach_army(army_node,region):
 			var bb_center=get_bb_center(get_region_bb(child_region))
 			army_node.position=Vector2(bb_center[0],bb_center[1])
 			child_region.add_child(army_node)
+			update_army_positions(child_region)
 			return
 	push_error("Could not find region for "+army_node.name+" "+region)
+
+func _position_stack(armies, base_pos):
+	var total_height=(armies.size()-1)*ARMY_SPACING
+	var start_y=base_pos.y-total_height/2.0
+	for i in range(armies.size()):
+		armies[i].position=Vector2(base_pos.x, start_y+i*ARMY_SPACING)
+
+func update_army_positions(region):
+	if ARMY_SPACING==null:
+		return
+	var armies=get_armies(region)
+	if armies.is_empty():
+		return
+
+	var bb_center=get_bb_center(get_region_bb(region))
+	var center=Vector2(bb_center[0],bb_center[1])
+
+	for army in armies:
+		army.set_in_battle(false)
+
+	var by_nation={}
+	for army in armies:
+		if not by_nation.has(army.nation):
+			by_nation[army.nation]=[]
+		by_nation[army.nation].append(army)
+
+	var nations=by_nation.keys()
+
+	if nations.size()==1:
+		_position_stack(by_nation[nations[0]], center)
+	else:
+		# First army of each of the two opposing nations fights in the center
+		var nation_a=nations[0]
+		var nation_b=nations[1]
+		var fighter_a=by_nation[nation_a][0]
+		var fighter_b=by_nation[nation_b][0]
+		fighter_a.set_in_battle(true)
+		fighter_b.set_in_battle(true)
+		fighter_a.position=center+Vector2(-ARMY_SPACING/2.0, 0)
+		fighter_b.position=center+Vector2(ARMY_SPACING/2.0, 0)
+
+		# Remaining armies (extras from any nation) circle around center
+		var remaining_by_nation={}
+		for nation in nations:
+			var start_idx=1 if (nation==nation_a or nation==nation_b) else 0
+			var remaining=by_nation[nation].slice(start_idx)
+			if remaining.size()>0:
+				remaining_by_nation[nation]=remaining
+
+		if not remaining_by_nation.is_empty():
+			var num_groups=remaining_by_nation.size()
+			var circle_radius=ARMY_SPACING*2.0
+			var angle_step=TAU/num_groups
+			var g_idx=0
+			for nation in remaining_by_nation:
+				var angle=angle_step*g_idx-PI/2.0
+				var group_center=center+Vector2(
+					circle_radius*cos(angle),
+					circle_radius*sin(angle)
+				)
+				_position_stack(remaining_by_nation[nation], group_center)
+				g_idx+=1
 
 #TODO: this doens't belong here!
 func battle_init(region, armies):
