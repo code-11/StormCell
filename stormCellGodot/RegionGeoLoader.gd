@@ -8,7 +8,6 @@ var ARMY_SPACING=null
 var adjacency: Dictionary = {}
 var _adjacency_helper = preload("res://RegionAdjacency.gd").new()
 var _graph_search = preload("res://GraphSearch.gd").new()
-var _path_lines: Dictionary = {}
 
 var REGION_LIST_PATH="res://data/region_list.txt"
 var REGION_TERRAIN_PATH="res://data/region_terrain.json"
@@ -346,28 +345,6 @@ func initiate_army_move(army, destination_region) -> void:
 	army.stance = SCConstants.Stance.MOVING
 	_advance_army_one_step(army, _get_cur_day())
 
-func _update_path_visual(army) -> void:
-	if not _path_lines.has(army):
-		var line = Line2D.new()
-		line.width = 2.0
-		line.default_color = army.color
-		line.z_index = 1
-		add_child(line)
-		_path_lines[army] = line
-	var line: Line2D = _path_lines[army]
-	var points = PackedVector2Array()
-	var cur_center = get_bb_center(get_region_bb(find_army_region(army)))
-	points.append(Vector2(cur_center[0], cur_center[1]))
-	for region in army.move_queue:
-		var center = get_bb_center(get_region_bb(region))
-		points.append(Vector2(center[0], center[1]))
-	line.points = points
-
-func _clear_path_visual(army) -> void:
-	if _path_lines.has(army):
-		_path_lines[army].queue_free()
-		_path_lines.erase(army)
-
 func _advance_army_one_step(army, cur_day) -> void:
 	if army.move_queue.is_empty():
 		return
@@ -375,13 +352,9 @@ func _advance_army_one_step(army, cur_day) -> void:
 	move_army(army, next_region, cur_day)
 	if army.in_battle:
 		army.move_queue.clear()
-		_clear_path_visual(army)
 		return
 	if army.move_queue.is_empty():
 		army.stance = SCConstants.Stance.AGGRESSIVE
-		_clear_path_visual(army)
-	else:
-		_update_path_visual(army)
 
 func advance_all_moving_armies(cur_day) -> void:
 	for region in get_children():
@@ -391,11 +364,24 @@ func advance_all_moving_armies(cur_day) -> void:
 			   and army.can_change_stance():
 				_advance_army_one_step(army, cur_day)
 
+func _draw():
+	var gui = get_node_or_null("/root/Node2D/TheGame/GuiCtrl")
+	if gui == null or gui.selected_region == null:
+		return
+	var selected = gui.selected_region
+	for army in get_armies(selected):
+		if army.move_queue.is_empty():
+			continue
+		var cur = get_bb_center(get_region_bb(selected))
+		var prev = Vector2(cur[0], cur[1])
+		for region in army.move_queue:
+			var next_c = get_bb_center(get_region_bb(region))
+			var next = Vector2(next_c[0], next_c[1])
+			draw_dashed_line(prev, next, Color.BLACK, 2.0, 8.0)
+			prev = next
+
 func _ready():
 	pass
 
 func _process(_delta):
-	for army in _path_lines.keys():
-		if not is_instance_valid(army):
-			_path_lines[army].queue_free()
-			_path_lines.erase(army)
+	queue_redraw()
