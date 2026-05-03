@@ -5,7 +5,8 @@ extends Node
 # For now, Ill just keep a list of the scripts I want to call. 
 # Later I can dynamically find them.
 var all_testers : Array[TestRunner] = [
-	preload("res://test/TestMilitaryCalculator.gd").new()
+	preload("res://test/TestMilitaryCalculator.gd").new(),
+	preload("res://test/TestMovement.gd").new()
 ]
 
 func run_all_tests():
