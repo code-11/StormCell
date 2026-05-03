@@ -9,6 +9,7 @@ var size=50 #1-99
 var quality=1 #1-99
 var stance_lock=null #Null for no lock, or Days as a number, after passed, can change stance.
 var in_battle=false
+var move_queue: Array = []
 
 var visual_half=7.5
 

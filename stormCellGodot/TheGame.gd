@@ -30,8 +30,7 @@ func get_cur_day():
 	return $GuiCtrl/ThePanel.get_children()[0].get_node('TimeControls').cumulative_time
 
 func move_army(army, destination_region):
-	var cur_day=get_cur_day()
-	$GuiCtrl/TheMap/regions.move_army(army, destination_region, cur_day)
+	$GuiCtrl/TheMap/regions.initiate_army_move(army, destination_region)
 
 
 # Called when the node enters the scene tree for the first time.

@@ -77,7 +77,12 @@ func send_possible_stance_unlock_msg():
 func every_day():
 	check_and_initiate_battle()
 	send_possible_stance_unlock_msg()
+	_advance_moving_armies()
 	#print("Day!")
+
+func _advance_moving_armies():
+	var regions = get_node("/root/Node2D/TheGame/GuiCtrl/TheMap/regions")
+	regions.advance_all_moving_armies(cumulative_time)
 				
 func _ready():
 	$Pause.set_speed_paused.connect(_on_speed_set_pause)

@@ -5,6 +5,10 @@ var LONGEST_EXTENT=null
 var SMALLEST_EXTENT=null
 var ARMY_SPACING=null
 
+var adjacency: Dictionary = {}
+var _adjacency_helper = preload("res://RegionAdjacency.gd").new()
+var _graph_search = preload("res://GraphSearch.gd").new()
+
 var REGION_LIST_PATH="res://data/region_list.txt"
 var REGION_TERRAIN_PATH="res://data/region_terrain.json"
 var TERRAIN_DATA_PATH="res://data/terrain_data.json"
@@ -173,6 +177,8 @@ func create_regions(regions_to_nations_dict):
 	SMALLEST_EXTENT=smallest_extent
 	ARMY_SPACING=max(SMALLEST_EXTENT/4.0, 15.0)
 	print(LONGEST_EXTENT)
+	adjacency = _adjacency_helper.build_adjacency_graph(get_children())
+	print("Adjacency graph built: %s regions" % adjacency.size())
 
 func color_region(region,color_hex):
 	var polys=region.get_children()
@@ -322,6 +328,41 @@ func possible_battle_init(region, armies):
 		return battle_init(region, armies)
 	else:
 		print("Multi battle not implemented!")		
+
+func _get_cur_day():
+	return get_node("/root/Node2D/TheGame").get_cur_day()
+
+func initiate_army_move(army, destination_region) -> void:
+	var current_region = find_army_region(army)
+	if current_region == destination_region:
+		return
+	var cost_fn = Callable(self, "army_movement_day_cost")
+	var path = _graph_search.dijkstra(current_region, destination_region, adjacency, cost_fn)
+	if path.is_empty():
+		print("No path found to destination")
+		return
+	army.move_queue = path
+	army.stance = SCConstants.Stance.MOVING
+	_advance_army_one_step(army, _get_cur_day())
+
+func _advance_army_one_step(army, cur_day) -> void:
+	if army.move_queue.is_empty():
+		return
+	var next_region = army.move_queue.pop_front()
+	move_army(army, next_region, cur_day)
+	if army.in_battle:
+		army.move_queue.clear()
+		return
+	if army.move_queue.is_empty():
+		army.stance = SCConstants.Stance.AGGRESSIVE
+
+func advance_all_moving_armies(cur_day) -> void:
+	for region in get_children():
+		for army in get_armies(region):
+			if army.stance == SCConstants.Stance.MOVING \
+			   and army.move_queue.size() > 0 \
+			   and army.can_change_stance():
+				_advance_army_one_step(army, cur_day)
 
 func _ready():
 	pass
