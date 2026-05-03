@@ -141,6 +141,69 @@ func test_determine_attacker():
 	
 	
 
+func test_stance_battle_matrix():
+	print("	Testing test_stance_battle_matrix")
+	print("	Two size-50 armies, neutral plains (defensiveness=1), all 36 stance combos")
+	var stances = [
+		SCConstants.Stance.AGGRESSIVE,
+		SCConstants.Stance.DEFENSIVE,
+		SCConstants.Stance.PACIFY,
+		SCConstants.Stance.RAIDING,
+		SCConstants.Stance.GUERILLA,
+		SCConstants.Stance.MOVING
+	]
+	var stance_names = {
+		SCConstants.Stance.AGGRESSIVE: "Aggressive",
+		SCConstants.Stance.DEFENSIVE: "Defensive",
+		SCConstants.Stance.PACIFY:     "Pacify",
+		SCConstants.Stance.RAIDING:    "Raiding",
+		SCConstants.Stance.GUERILLA:   "Guerilla",
+		SCConstants.Stance.MOVING:     "Moving"
+	}
+	var region = Region.new()
+	region.terrain = Terrain.new("Plains", "#7ec850", 1.0, 1.0, 1.0)
+	region.nation = "neutral"
+
+	print("	%-12s vs %-12s | Turns | Died" % ["Army A", "Army B"])
+	for stance_a in stances:
+		for stance_b in stances:
+			var army_a = Army.new("army_a", "nation_a", "#aa0000", 15)
+			army_a.stance = stance_a
+			army_a.size = 50.0
+			var army_b = Army.new("army_b", "nation_b", "#0000aa", 15)
+			army_b.stance = stance_b
+			army_b.size = 50.0
+
+			var ordered = mil_calc.determine_attacker(army_a, army_b, region)
+			var attacker = ordered[0]
+			var defender = ordered[1]
+
+			var turns = 0
+			while army_a.size >= 1.0 and army_b.size >= 1.0 and turns < 1000:
+				var dmg = mil_calc.calculate_one_day_battle(attacker, defender, region)
+				attacker.size -= dmg[0]
+				defender.size -= dmg[1]
+				turns += 1
+
+			var died: String
+			var survivor_hp: String
+			if army_a.size < 1.0 and army_b.size < 1.0:
+				died = "both"
+				survivor_hp = "none"
+			elif army_a.size < 1.0:
+				died = "army_a (%s)" % stance_names[stance_a]
+				survivor_hp = "%.1f" % army_b.size
+			elif army_b.size < 1.0:
+				died = "army_b (%s)" % stance_names[stance_b]
+				survivor_hp = "%.1f" % army_a.size
+			else:
+				died = "timeout"
+				survivor_hp = "n/a"
+
+			print("	%-12s vs %-12s |  %3d  | %-28s | survivor hp: %s" % [
+				stance_names[stance_a], stance_names[stance_b], turns, died, survivor_hp
+			])
+
 func test_all():
 	print("Testing Military Calculator")
 	test_stance_mult_1()
@@ -152,3 +215,4 @@ func test_all():
 	test_discover_mult_1()
 	test_discover_mult_2()
 	test_determine_attacker()
+	test_stance_battle_matrix()
