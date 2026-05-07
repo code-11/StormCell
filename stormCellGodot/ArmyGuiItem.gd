@@ -12,6 +12,7 @@ var stance_lock_lbl=null
 var actions_box=null
 
 var move_btn=null
+var path_lbl=null
 
 var the_map=null
 
@@ -78,8 +79,14 @@ func _init(a_army):
 	actions_box.add_child(move_btn)
 	
 	
+	path_lbl = Label.new()
+	path_lbl.visible = false
+	path_lbl.add_theme_font_size_override("font_size", 10)
+	path_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+
 	add_child(lbls_box)
 	add_child(actions_box)
+	add_child(path_lbl)
 
 func _ready():
 	the_map=get_node("/root/Node2D/TheGame/GuiCtrl/TheMap")
@@ -94,6 +101,12 @@ func _ready():
 func _process(delta):
 	if the_army and is_instance_valid(the_army):
 		size_lbl.text=str(int(the_army.size))
+		if the_army.move_queue.is_empty():
+			path_lbl.visible = false
+		else:
+			var names = the_army.move_queue.map(func(r): return r.name)
+			path_lbl.text = "Path: " + " → ".join(names)
+			path_lbl.visible = true
 	if the_army and is_instance_valid(the_army) and the_army.stance_lock:
 		stance_lock_lbl.text=str(int(the_army.stance_lock))
 		for actions_btn in actions_box.get_children():
