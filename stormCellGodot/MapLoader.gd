@@ -37,7 +37,7 @@ func set_color_mode(mode):
 
 func create_terrain_color_dict():
 	var to_return={}
-	var all_regions=$regions.get_children()
+	var all_regions=$regions.get_regions()
 	for region in all_regions:
 		to_return[region.name]=region.terrain.color
 	return to_return

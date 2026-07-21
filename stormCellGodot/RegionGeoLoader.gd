@@ -16,8 +16,11 @@ var TERRAIN_DATA_PATH="res://data/terrain_data.json"
 func get_the_map():
 	return get_parent()
 
+func get_regions():
+	return get_children().filter(func(child): return child is Region)
+
 func get_clicked_region(clicked_point):
-	for region in get_children():
+	for region in get_regions():
 		for poly in get_polys(region):
 			if Geometry2D.is_point_in_polygon(clicked_point,poly.polygon):
 				return region
@@ -85,7 +88,7 @@ func get_borders(region):
 
 func get_armies_and_their_regions()-> MultiMap:
 	var to_return=MultiMap.new()
-	for region in get_children():
+	for region in get_regions():
 		for child in region.get_children():
 			if child.is_in_group(SCConstants.ARMY_GROUP):
 				to_return.add(region,child)
@@ -188,7 +191,7 @@ func color_region(region,color_hex):
 			poly.color=Color.html(color_hex)
 
 func color_regions(region_color_dict):
-	for region in get_children():
+	for region in get_regions():
 		var region_color_hex=region_color_dict.get(region.name,get_the_map().UNOCCUPIED_REGION_COLOR)
 		color_region(region,region_color_hex)
 
@@ -222,7 +225,7 @@ func army_movement_day_cost(region):
 	return days
  
 func attach_army(army_node,region):
-	for child_region in get_children():
+	for child_region in get_regions():
 		if child_region.name == region:
 			var bb_center=get_bb_center(get_region_bb(child_region))
 			army_node.position=Vector2(bb_center[0],bb_center[1])
@@ -357,7 +360,7 @@ func _advance_army_one_step(army, cur_day) -> void:
 	# stance reset to AGGRESSIVE is deferred to handle_stance_unlock once the lock expires
 
 func advance_all_moving_armies(cur_day) -> void:
-	for region in get_children():
+	for region in get_regions():
 		for army in get_armies(region):
 			if army.stance == SCConstants.Stance.MOVING \
 			   and army.move_queue.size() > 0 \
