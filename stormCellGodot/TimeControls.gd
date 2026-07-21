@@ -37,6 +37,12 @@ func days_to_tup(input_days):
 func update_lbl(time_tup, cumulative_time):
 	$Label.text=str(time_tup[0])+":"+str(time_tup[1])+":"+str(time_tup[2])+" ("+str(int(cumulative_time))+")"
 
+func _update_time_button_highlights():
+	var multipliers = [PAUSE_MULTIPLIER, PLAY_MULTIPLIER, PLAY_2_MULTIPLIER, PLAY_3_MULTIPLIER]
+	var btns = [$Pause, $Play, $Play_2, $Play_3]
+	for i in btns.size():
+		btns[i].modulate = Color(1, 0.8, 0.2) if multipliers[i] == cur_time_multiplier else Color(1, 1, 1)
+
 func _process(delta):
 	#TODO This sucks, optimize it.
 	var cur_time=Time.get_ticks_msec()
@@ -48,6 +54,7 @@ func _process(delta):
 		every_day()
 	last_time = cur_time
 	last_tup=cur_tup
+	_update_time_button_highlights()
 	
 func remove_army(region, army):
 	region.remove_child(army)
@@ -89,5 +96,8 @@ func _ready():
 	$Play.set_speed_play.connect(_on_speed_set_play)
 	$Play_2.set_speed_play_2.connect(_on_speed_set_play_2)
 	$Play_3.set_speed_play_3.connect(_on_speed_set_play_3)
+	var time_btn_group = ButtonGroup.new()
+	for btn in [$Pause, $Play, $Play_2, $Play_3]:
+		btn.toggle_mode = true
+		btn.button_group = time_btn_group
 	$Pause.button_pressed=true
-	$Pause.grab_focus()

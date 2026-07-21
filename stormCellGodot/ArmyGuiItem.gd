@@ -96,20 +96,23 @@ func _ready():
 	for child in actions_box.get_children():
 		if child.stance==the_army.stance:
 			child.button_pressed=true
-			child.grab_focus()
 			
 func _process(delta):
 	if the_army and is_instance_valid(the_army):
 		size_lbl.text=str(int(the_army.size))
 		stance_lbl.text=the_army.get_stance_as_str()
+		for btn in actions_box.get_children():
+			btn.button_pressed = (btn.stance == the_army.stance)
+			btn.modulate = Color(1, 0.8, 0.2) if btn.stance == the_army.stance else Color(1, 1, 1)
 		if the_army.move_queue.is_empty():
 			path_lbl.visible = false
 		else:
 			var names = the_army.move_queue.map(func(r): return r.name)
 			path_lbl.text = "Path: " + " → ".join(names)
 			path_lbl.visible = true
-	if the_army and is_instance_valid(the_army) and the_army.stance_lock:
-		stance_lock_lbl.text=str(int(the_army.stance_lock))
+	if the_army and is_instance_valid(the_army):
+		var locked = the_army.stance_lock != null
+		stance_lock_lbl.text = str(int(the_army.stance_lock)) if locked else ""
 		for actions_btn in actions_box.get_children():
-			actions_btn.disabled=true
+			actions_btn.disabled = locked
 				

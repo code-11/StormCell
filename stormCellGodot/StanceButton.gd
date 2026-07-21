@@ -12,3 +12,4 @@ func _init(a_stance,a_button_group,min_size,icon_path):
 	expand_icon=true
 	size_flags_horizontal=Control.SIZE_SHRINK_BEGIN
 	toggle_mode=true
+	theme=load("res://sc_ui/sc_theme.tres")
