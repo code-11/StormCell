@@ -19,6 +19,8 @@ var battle_chip=Polygon2D.new()
 func handle_stance_unlock(cur_days):
 	if stance_lock and stance_lock < cur_days:
 		stance_lock=null
+		if move_queue.is_empty():
+			stance=SCConstants.Stance.AGGRESSIVE
 
 func can_change_stance():
 	return stance_lock==null

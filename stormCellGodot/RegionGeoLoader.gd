@@ -354,8 +354,7 @@ func _advance_army_one_step(army, cur_day) -> void:
 	if army.in_battle:
 		army.move_queue.clear()
 		return
-	if army.move_queue.is_empty():
-		army.stance = SCConstants.Stance.AGGRESSIVE
+	# stance reset to AGGRESSIVE is deferred to handle_stance_unlock once the lock expires
 
 func advance_all_moving_armies(cur_day) -> void:
 	for region in get_children():

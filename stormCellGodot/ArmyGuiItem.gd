@@ -101,6 +101,7 @@ func _ready():
 func _process(delta):
 	if the_army and is_instance_valid(the_army):
 		size_lbl.text=str(int(the_army.size))
+		stance_lbl.text=the_army.get_stance_as_str()
 		if the_army.move_queue.is_empty():
 			path_lbl.visible = false
 		else:
