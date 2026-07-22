@@ -1,7 +1,7 @@
 extends Node
 
 var selected_region=null
-var map_color_mode="pol" # Or "terrain" 
+var map_color_mode="pol" # Or "terrain", "fertility"
 
 
 func set_selected_region(region):
@@ -12,7 +12,8 @@ func set_selected_region(region):
 	
 	selected_region = region
 	$TheMap.set_selected_region(region)
-	$ThePanel.set_selected_region(region)
+	var fertility_breakdown=$TheMap.get_region_fertility_breakdown(region)
+	$ThePanel.set_selected_region(region, fertility_breakdown)
 	
 	var armies = $TheMap.get_armies(region)
 	$ThePanel.set_armies(armies)

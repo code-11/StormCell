@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://sc_ui/PolMapModeBtn.gd" id="6_48i3s"]
 [ext_resource type="Script" path="res://sc_ui/PanelCtrl.gd" id="6_negt1"]
 [ext_resource type="Script" path="res://sc_ui/TerrainMapModeBtn.gd" id="7_mcrfv"]
+[ext_resource type="Script" path="res://sc_ui/FertilityMapModeBtn.gd" id="8_fert1"]
 [ext_resource type="Script" path="res://TimeControls.gd" id="9_lrl64"]
 [ext_resource type="Texture2D" uid="uid://bfan537pbqvw" path="res://images/pause.png" id="9_poc42"]
 [ext_resource type="Texture2D" uid="uid://c1lkpx5qbsjnj" path="res://images/play_1.png" id="10_1w1la"]
@@ -61,6 +62,11 @@ script = ExtResource("6_48i3s")
 layout_mode = 2
 text = "Terrain"
 script = ExtResource("7_mcrfv")
+
+[node name="FertilityMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
+layout_mode = 2
+text = "Fertility"
+script = ExtResource("8_fert1")
 
 [node name="ThePanel" type="PanelContainer" parent="TheGame/GuiCtrl"]
 offset_left = 1101.0
@@ -149,6 +155,9 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="NationOwnerLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
+layout_mode = 2
+
+[node name="FertilityLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
 layout_mode = 2
 
 [node name="ArmyInfoBox" type="VBoxContainer" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]

@@ -1,0 +1,23 @@
+{
+	"farthener_tribes": {"nation_color": "#0064ff"},
+	"dunhollow_tribes": {"nation_color": "#6a472f"},
+	"amonhold": {"nation_color": "#c75700"},
+	"pinemar_keep": {"nation_color": "#705700","fertility_bonus":0.1},
+	"tower_of_illedion": {"nation_color": "#9e0095"},
+	"tower_of_eregion": {"nation_color": "#69008b"},
+	"artemons_hold": {"nation_color": "#781de7"},
+	"zultans_keep": {"nation_color": "#7a3a8f"},
+	"jibacoa": {"nation_color": "#3bf9f3"},
+	"maniabon": {"nation_color": "#24a09c","fertility_bonus":0.1},
+	"canimao": {"nation_color": "#24a072"},
+	"naguabo": {"nation_color": "#00f9be"},
+	"seluceria": {"nation_color": "#004022", "fertility_bonus":0.6},
+	"havernia": {"nation_color": "#029900","fertility_bonus":0.3},
+	"iphakhealis": {"nation_color": "#9e00ff", "fertility_bonus":-0.3},
+	"northumber": {"nation_color": "#002f55"},
+	"central_empire": {"nation_color": "#ff0011"},
+	"north_east_empire": {"nation_color": "#bc000d"},
+	"north_west_empire": {"nation_color": "#820009"},
+	"south_west_empire": {"nation_color": "#ff545f"},
+	"south_east_empire": {"nation_color": "#ac3b42"}
+}

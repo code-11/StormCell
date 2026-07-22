@@ -4,6 +4,11 @@ var NN_CLICK_COUNT=5
 var UNOCCUPIED_REGION_COLOR="#D5CEAB"
 var DEFAULT_BORDER_COLOR="#333333"
 var SELECTED_BORDER_COLOR="#FF0000"
+var FERTILITY_NO_DATA_COLOR="#404040"
+
+var FERTILITY_BONUS_PATH="res://data/fertility_bonus.json"
+
+const FertilityCalc=preload("res://FertilityCalculator.gd")
 
 enum MAP_CLICK_MODE{INFO, MOVE_ARMY}
 var cur_map_click_mode=MAP_CLICK_MODE.INFO
@@ -27,12 +32,15 @@ func set_color_mode(mode):
 	if mode=="pol":
 		region_color_dict=$nations.create_region_color_dict(
 			$nations.read_starting_regions(),
-			$nations.read_national_colors()
+			$nations.read_nation_data()
 		)
 	
-	elif mode=="terrain": 
+	elif mode=="terrain":
 		region_color_dict=create_terrain_color_dict()
-	
+
+	elif mode=="fertility":
+		region_color_dict=create_fertility_color_dict()
+
 	$regions.color_regions(region_color_dict)
 
 func create_terrain_color_dict():
@@ -41,6 +49,38 @@ func create_terrain_color_dict():
 	for region in all_regions:
 		to_return[region.name]=region.terrain.color
 	return to_return
+
+func read_fertility_bonus():
+	var fertility_file = FileAccess.open(FERTILITY_BONUS_PATH, FileAccess.READ)
+	return JSON.parse_string(fertility_file.get_as_text())
+
+func fertility_bonus_to_color(value):
+	value=clamp(value,-1.0,1.0)
+	var color
+	if value>=0:
+		color=Color(1.0-value, 1.0, 1.0-value)
+	else:
+		var t=-value
+		color=Color(1.0, 1.0-t, 1.0-t)
+	return "#"+color.to_html(false)
+
+func create_fertility_color_dict():
+	var to_return={}
+	var fertility_data=read_fertility_bonus()
+	var nation_data=$nations.read_nation_data()
+	var all_regions=$regions.get_regions()
+	for region in all_regions:
+		if fertility_data.has(region.name):
+			var total=FertilityCalc.calculate_region_fertility(region,fertility_data,nation_data)
+			to_return[region.name]=fertility_bonus_to_color(total)
+		else:
+			to_return[region.name]=FERTILITY_NO_DATA_COLOR
+	return to_return
+
+func get_region_fertility_breakdown(region):
+	var fertility_data=read_fertility_bonus()
+	var nation_data=$nations.read_nation_data()
+	return FertilityCalc.calculate_region_fertility_components(region,fertility_data,nation_data)
 
 func _input(event):
 	if event is InputEventMouseButton and event.pressed:
@@ -73,7 +113,7 @@ func _ready():
 	pass
 	#var region_color_dict=$nations.create_region_color_dict(
 		#$nations.read_starting_regions(),
-		#$nations.read_national_colors()
+		#$nations.read_nation_data()
 	#)
 	#$regions.create_regions($nations.get_region_to_starting_nation())
 
