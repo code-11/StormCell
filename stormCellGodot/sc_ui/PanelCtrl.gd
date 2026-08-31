@@ -12,6 +12,12 @@ func get_nation_label():
 func get_fertility_label():
 	return get_node("VBoxContainer/RegionInfoBox/FertilityLbl")
 
+func get_occupation_label():
+	return get_node("VBoxContainer/RegionInfoBox/OccupationLbl")
+
+func get_administration_label():
+	return get_node("VBoxContainer/RegionInfoBox/AdministrationLbl")
+
 func get_player_nation_label():
 	return get_node("VBoxContainer/HBoxContainer/VBoxContainer/PlayerNationLbl")
 
@@ -35,6 +41,12 @@ func set_selected_region(region, fertility_breakdown):
 	var fertility_lbl=get_fertility_label()
 	fertility_lbl.text=format_fertility_breakdown(fertility_breakdown)
 
+	var occupation_lbl=get_occupation_label()
+	occupation_lbl.text="Occupation: "+format_value_or_na(region.occupation)
+
+	var administration_lbl=get_administration_label()
+	administration_lbl.text="Administration: "+format_value_or_na(region.administration)
+
 func format_fertility_breakdown(fertility_breakdown):
 	var region_bonus_text = ("%.2f" % fertility_breakdown.region_bonus) if fertility_breakdown.has_region_data else "N/A"
 	return "Fertility: %.2f\n  Region: %s\n  Terrain: %.2f\n  National: %.2f" % [
@@ -43,6 +55,9 @@ func format_fertility_breakdown(fertility_breakdown):
 		fertility_breakdown.terrain_bonus,
 		fertility_breakdown.national_bonus,
 	]
+
+func format_value_or_na(value):
+	return ("%.2f" % value) if value != null else "N/A"
 
 func set_armies(armies):
 	var army_info_box=get_army_info_ctrl()

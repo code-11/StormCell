@@ -1,7 +1,7 @@
 extends Node
 
 var selected_region=null
-var map_color_mode="pol" # Or "terrain", "fertility"
+var map_color_mode="occupation" # Or "administration", "terrain", "fertility"
 
 
 func set_selected_region(region):
@@ -33,4 +33,4 @@ func get_armies(region):
 
 func load_map():
 	$TheMap.load_map()
-	set_map_color_mode("pol")
+	set_map_color_mode("occupation")

@@ -29,12 +29,12 @@ func set_selected_region(region):
 
 func set_color_mode(mode):
 	var region_color_dict=null
-	if mode=="pol":
-		region_color_dict=$nations.create_region_color_dict(
-			$nations.read_starting_regions(),
-			$nations.read_nation_data()
-		)
-	
+	if mode=="occupation":
+		region_color_dict=create_occupation_color_dict()
+
+	elif mode=="administration":
+		region_color_dict=create_administration_color_dict()
+
 	elif mode=="terrain":
 		region_color_dict=create_terrain_color_dict()
 
@@ -48,6 +48,38 @@ func create_terrain_color_dict():
 	var all_regions=$regions.get_regions()
 	for region in all_regions:
 		to_return[region.name]=region.terrain.color
+	return to_return
+
+func get_nation_color(nation_data,nation):
+	if nation==null or not nation_data.has(nation):
+		return null
+	return nation_data[nation].get("nation_color",null)
+
+func nation_strength_to_color(nation_color_hex,value):
+	if nation_color_hex==null or value==null:
+		return UNOCCUPIED_REGION_COLOR
+	var nation_color=Color.html(nation_color_hex)
+	var neutral_color=Color.html(UNOCCUPIED_REGION_COLOR)
+	var alpha=clamp(value,0.0,1.0)
+	var blended=neutral_color.lerp(nation_color,alpha)
+	return "#"+blended.to_html(false)
+
+func create_occupation_color_dict():
+	var to_return={}
+	var nation_data=$nations.read_nation_data()
+	var all_regions=$regions.get_regions()
+	for region in all_regions:
+		var nation_color_hex=get_nation_color(nation_data,region.nation)
+		to_return[region.name]=nation_strength_to_color(nation_color_hex,region.occupation)
+	return to_return
+
+func create_administration_color_dict():
+	var to_return={}
+	var nation_data=$nations.read_nation_data()
+	var all_regions=$regions.get_regions()
+	for region in all_regions:
+		var nation_color_hex=get_nation_color(nation_data,region.nation)
+		to_return[region.name]=nation_strength_to_color(nation_color_hex,region.administration)
 	return to_return
 
 func read_fertility_bonus():
@@ -100,7 +132,7 @@ func _input(event):
 					cur_map_click_mode=MAP_CLICK_MODE.INFO
 
 func load_map():
-	$regions.create_regions($nations.get_region_to_starting_nation())
+	$regions.create_regions($nations.get_region_to_starting_data())
 
 func attach_army(army_node,region):
 	$regions.attach_army(army_node,region)

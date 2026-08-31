@@ -1,23 +1,114 @@
   {
-	  "farthener_tribes": ["1", "2", "3", "4"],
-	  "dunhollow_tribes": ["6", "7", "8"],
-	  "amonhold": ["5", "15", "16"],
-	  "pinemar_keep": ["17", "18", "20", "19", "21"],
-	  "tower_of_eregion": ["85"],
-	  "tower_of_illedion": ["78"],
-	  "artemons_hold": ["13"],
-	  "zultans_keep": ["79", "80"],
-	  "jibacoa": ["82"],
-	  "canimao": ["81"],
-	  "maniabon": ["59", "84", "65"],
-	  "naguabo": ["62", "60", "61", "63", "66"],
-	  "seluceria": ["56", "57", "54", "58", "68"],
-	  "havernia": ["48", "83", "49", "51"],
-	  "iphakhealis": ["45", "43"],
-	  "northumber": ["71", "72", "73", "77", "76", "74", "75"],
-	  "central_empire": ["28", "32", "33", "34"],
-	  "south_east_empire": ["38", "39", "47"],
-	  "south_west_empire": ["26", "35", "36", "37"],
-	  "north_west_empire": ["10", "9", "12", "11"],
-	  "north_east_empire": ["25", "27", "29", "30", "31", "70", "69"],
+	  "farthener_tribes": {
+		  "1": {"occupation": 1, "administration": 0.7},
+		  "2": {"occupation": 1, "administration": 1},
+		  "3": {"occupation": 1, "administration": 1},
+		  "4": {"occupation": 1, "administration": 1}
+	  },
+	  "dunhollow_tribes": {
+		  "6": {"occupation": 1, "administration": 0.8},
+		  "7": {"occupation": 1, "administration": 0.8},
+		  "8": {"occupation": 1, "administration": 0.8}
+	  },
+	  "amonhold": {
+		  "5": {"occupation": 1, "administration": 0.8},
+		  "15": {"occupation": 1, "administration": 1},
+		  "16": {"occupation": 1, "administration": 1}
+	  },
+	  "pinemar_keep": {
+		  "17": {"occupation": 1, "administration": 1},
+		  "18": {"occupation": 1, "administration": 1},
+		  "20": {"occupation": 1, "administration": 1},
+		  "19": {"occupation": 1, "administration": 0.9},
+		  "21": {"occupation": 1, "administration": 1}
+	  },
+	  "tower_of_eregion": {
+		  "85": {"occupation": 1, "administration": 1}
+	  },
+	  "tower_of_illedion": {
+		  "78": {"occupation": 1, "administration": 1}
+	  },
+	  "artemons_hold": {
+		  "13": {"occupation": 1, "administration": 1}
+	  },
+	  "zultans_keep": {
+		  "79": {"occupation": 1, "administration": 1},
+		  "80": {"occupation": 1, "administration": 1}
+	  },
+	  "jibacoa": {
+		  "82": {"occupation": 1, "administration": 1}
+	  },
+	  "canimao": {
+		  "81": {"occupation": 1, "administration": 1}
+	  },
+	  "maniabon": {
+		  "59": {"occupation": 1, "administration": 0.8},
+		  "84": {"occupation": 1, "administration": 1},
+		  "65": {"occupation": 1, "administration": 0.8}
+	  },
+	  "naguabo": {
+		  "62": {"occupation": 1, "administration": 0.8},
+		  "60": {"occupation": 1, "administration": 0.8},
+		  "61": {"occupation": 1, "administration": 0.8},
+		  "63": {"occupation": 1, "administration": 0.8},
+		  "66": {"occupation": 1, "administration": 0.8}
+	  },
+	  "seluceria": {
+		  "56": {"occupation": 1, "administration": 1},
+		  "57": {"occupation": 1, "administration": 1},
+		  "54": {"occupation": 1, "administration": 1},
+		  "58": {"occupation": 1, "administration": 1},
+		  "68": {"occupation": 1, "administration": 0.8}
+	  },
+	  "havernia": {
+		  "48": {"occupation": 1, "administration": 1},
+		  "83": {"occupation": 1, "administration": 1},
+		  "49": {"occupation": 1, "administration": 0.9},
+		  "51": {"occupation": 1, "administration": 0.7}
+	  },
+	  "iphakhealis": {
+		  "45": {"occupation": 1, "administration": 1},
+		  "43": {"occupation": 1, "administration": 1}
+	  },
+	  "northumber": {
+		  "71": {"occupation": 1, "administration": 0.9},
+		  "72": {"occupation": 1, "administration": 1},
+		  "73": {"occupation": 1, "administration": 1},
+		  "77": {"occupation": 1, "administration": 1},
+		  "76": {"occupation": 1, "administration": 1},
+		  "74": {"occupation": 1, "administration": 0.8},
+		  "75": {"occupation": 1, "administration": 1}
+	  },
+	  "central_empire": {
+		  "28": {"occupation": 1, "administration": 0.9},
+		  "32": {"occupation": 1, "administration": 1},
+		  "33": {"occupation": 1, "administration": 1},
+		  "34": {"occupation": 1, "administration": 1}
+	  },
+	  "south_east_empire": {
+		  "38": {"occupation": 1, "administration": 1},
+		  "39": {"occupation": 1, "administration": 1},
+		  "47": {"occupation": 1, "administration": 0.5}
+	  },
+	  "south_west_empire": {
+		  "26": {"occupation": 1, "administration": 1},
+		  "35": {"occupation": 1, "administration": 1},
+		  "36": {"occupation": 1, "administration": 1},
+		  "37": {"occupation": 1, "administration": 1}
+	  },
+	  "north_west_empire": {
+		  "10": {"occupation": 1, "administration": 1},
+		  "9": {"occupation": 1, "administration": 1},
+		  "12": {"occupation": 1, "administration": 1},
+		  "11": {"occupation": 1, "administration": 1}
+	  },
+	  "north_east_empire": {
+		  "25": {"occupation": 1, "administration": 1},
+		  "27": {"occupation": 1, "administration": 1},
+		  "29": {"occupation": 1, "administration": 1},
+		  "30": {"occupation": 1, "administration": 0.5},
+		  "31": {"occupation": 1, "administration": 0.5},
+		  "70": {"occupation": 1, "administration": 0.1},
+		  "69": {"occupation": 1, "administration": 0.1}
+	  }
   }

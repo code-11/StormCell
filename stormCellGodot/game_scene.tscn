@@ -6,7 +6,8 @@
 [ext_resource type="Script" path="res://NationLoader.gd" id="2_lhp44"]
 [ext_resource type="Script" path="res://sc_ui/GuiCtrl.gd" id="2_y221t"]
 [ext_resource type="Texture2D" uid="uid://bltthd43fdmfq" path="res://images/spearhead.jpeg" id="4_n7rf5"]
-[ext_resource type="Script" path="res://sc_ui/PolMapModeBtn.gd" id="6_48i3s"]
+[ext_resource type="Script" path="res://sc_ui/OccupationMapModeBtn.gd" id="6_48i3s"]
+[ext_resource type="Script" path="res://sc_ui/AdministrationMapModeBtn.gd" id="6_48i3t"]
 [ext_resource type="Script" path="res://sc_ui/PanelCtrl.gd" id="6_negt1"]
 [ext_resource type="Script" path="res://sc_ui/TerrainMapModeBtn.gd" id="7_mcrfv"]
 [ext_resource type="Script" path="res://sc_ui/FertilityMapModeBtn.gd" id="8_fert1"]
@@ -48,15 +49,20 @@ script = ExtResource("2_lhp44")
 [node name="Line2D" type="Line2D" parent="TheGame/GuiCtrl/TheMap"]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="TheGame/GuiCtrl/TheMap"]
-offset_left = 908.0
-offset_top = 902.0
-offset_right = 1088.0
-offset_bottom = 942.0
+offset_left = 1101.0
+offset_top = 1.0
+offset_right = 1401.0
+offset_bottom = 41.0
 
-[node name="PolMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
+[node name="OccupationMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
 layout_mode = 2
-text = "Political"
+text = "Occupation"
 script = ExtResource("6_48i3s")
+
+[node name="AdministrationMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
+layout_mode = 2
+text = "Administration"
+script = ExtResource("6_48i3t")
 
 [node name="TerrainMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
 layout_mode = 2
@@ -70,7 +76,7 @@ script = ExtResource("8_fert1")
 
 [node name="ThePanel" type="PanelContainer" parent="TheGame/GuiCtrl"]
 offset_left = 1101.0
-offset_top = 1.0
+offset_top = 45.0
 offset_right = 1401.0
 offset_bottom = 1002.0
 script = ExtResource("6_negt1")
@@ -158,6 +164,12 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="FertilityLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
+layout_mode = 2
+
+[node name="OccupationLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
+layout_mode = 2
+
+[node name="AdministrationLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
 layout_mode = 2
 
 [node name="ArmyInfoBox" type="VBoxContainer" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]

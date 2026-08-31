@@ -159,7 +159,7 @@ func read_regional_terrain():
 	var region_terrain_data = JSON.parse_string(region_terrain_file.get_as_text())
 	return region_terrain_data
 
-func create_regions(regions_to_nations_dict):
+func create_regions(regions_to_starting_data):
 	var regions=read_regions()
 	var regional_terrain_data=read_regional_terrain()
 	var terrain_data=read_terrain_data()
@@ -169,7 +169,11 @@ func create_regions(regions_to_nations_dict):
 	for region in regions:
 		var terrain_type_for_region=regional_terrain_data[region.name]
 		region.terrain = Terrain.from_json_dict(terrain_type_for_region,terrain_data[terrain_type_for_region])
-		region.nation = regions_to_nations_dict.get(region.name,null)
+		var starting_data = regions_to_starting_data.get(region.name,null)
+		if starting_data != null:
+			region.nation = starting_data.get("nation",null)
+			region.occupation = starting_data.get("occupation",null)
+			region.administration = starting_data.get("administration",null)
 		var long_ext=long_extent(region)
 		if greatest_extent < long_ext:
 			greatest_extent = long_ext
