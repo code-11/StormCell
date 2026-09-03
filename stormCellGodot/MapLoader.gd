@@ -7,8 +7,11 @@ var SELECTED_BORDER_COLOR="#FF0000"
 var FERTILITY_NO_DATA_COLOR="#404040"
 
 var FERTILITY_BONUS_PATH="res://data/fertility_bonus.json"
+var RESOURCE_DATA_PATH="res://data/resource_data.json"
+var REGION_RESOURCES_PATH="res://data/region_resources.json"
 
 const FertilityCalc=preload("res://FertilityCalculator.gd")
+const ResourceCalc=preload("res://ResourceCalculator.gd")
 
 enum MAP_CLICK_MODE{INFO, MOVE_ARMY}
 var cur_map_click_mode=MAP_CLICK_MODE.INFO
@@ -40,6 +43,9 @@ func set_color_mode(mode):
 
 	elif mode=="fertility":
 		region_color_dict=create_fertility_color_dict()
+
+	elif mode=="resources":
+		region_color_dict=create_terrain_color_dict()
 
 	$regions.color_regions(region_color_dict)
 
@@ -113,6 +119,25 @@ func get_region_fertility_breakdown(region):
 	var fertility_data=read_fertility_bonus()
 	var nation_data=$nations.read_nation_data()
 	return FertilityCalc.calculate_region_fertility_components(region,fertility_data,nation_data)
+
+func read_resource_data():
+	var resource_data_file = FileAccess.open(RESOURCE_DATA_PATH, FileAccess.READ)
+	return JSON.parse_string(resource_data_file.get_as_text())
+
+func read_region_resources():
+	var region_resources_file = FileAccess.open(REGION_RESOURCES_PATH, FileAccess.READ)
+	return JSON.parse_string(region_resources_file.get_as_text())
+
+func get_region_resource_breakdown(region):
+	var resource_data=read_resource_data()
+	var region_resources=read_region_resources()
+	var nation_data=$nations.read_nation_data()
+	var region_resource_names=region_resources.get(region.name, {}).keys()
+	region_resource_names.sort()
+	var to_return={}
+	for resource_name in region_resource_names:
+		to_return[resource_name]=ResourceCalc.calculate_region_resource_components(region,resource_name,region_resources,resource_data,nation_data)
+	return to_return
 
 func _input(event):
 	if event is InputEventMouseButton and event.pressed:

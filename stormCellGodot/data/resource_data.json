@@ -1,0 +1,12 @@
+{
+	"clay": {"category": "earth", "yield_source": "abundance", "stock_type": "flow", "base_ease": 0.9, "color": "#b5651d"},
+	"stone": {"category": "earth", "yield_source": "abundance", "stock_type": "stock", "base_ease": 0.6, "color": "#999999"},
+	"timber": {"category": "wood", "yield_source": "abundance", "stock_type": "flow", "base_ease": 0.8, "color": "#5c3a21"},
+	"salt": {"category": "earth", "yield_source": "abundance", "stock_type": "stock", "base_ease": 0.4, "color": "#f0f0f0"},
+	"iron": {"category": "metal", "yield_source": "abundance", "stock_type": "stock", "base_ease": 0.5, "color": "#8a8a8a"},
+	"tool_metals": {"category": "metal", "yield_source": "abundance", "stock_type": "stock", "base_ease": 0.3, "color": "#5f6a72"},
+	"quartz": {"category": "magic", "yield_source": "abundance", "stock_type": "stock", "base_ease": 0.2, "color": "#d9b8ff"},
+	"cinnabar": {"category": "magic", "yield_source": "abundance", "stock_type": "stock", "base_ease": 0.15, "color": "#a52a2a"},
+	"grain": {"category": "food", "yield_source": "fertility", "fertility_multiplier": 1.0, "color": "#e8d878"},
+	"olive": {"category": "cash_crop", "yield_source": "fertility", "fertility_multiplier": 0.6, "suitable_terrain": ["coast", "plains", "hills"], "maturation_turns": 8, "color": "#7d8c3f"}
+}

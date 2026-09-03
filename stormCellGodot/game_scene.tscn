@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bkig2brdby8it"]
+[gd_scene load_steps=23 format=3 uid="uid://bkig2brdby8it"]
 
 [ext_resource type="Script" path="res://RegionGeoLoader.gd" id="1_fbgei"]
 [ext_resource type="Script" path="res://TheGame.gd" id="1_md1hw"]
@@ -11,6 +11,8 @@
 [ext_resource type="Script" path="res://sc_ui/PanelCtrl.gd" id="6_negt1"]
 [ext_resource type="Script" path="res://sc_ui/TerrainMapModeBtn.gd" id="7_mcrfv"]
 [ext_resource type="Script" path="res://sc_ui/FertilityMapModeBtn.gd" id="8_fert1"]
+[ext_resource type="Script" path="res://sc_ui/ResourcesMapModeBtn.gd" id="8_res1"]
+[ext_resource type="Script" path="res://sc_ui/ResourceLegendCtrl.gd" id="8_res2"]
 [ext_resource type="Script" path="res://TimeControls.gd" id="9_lrl64"]
 [ext_resource type="Texture2D" uid="uid://bfan537pbqvw" path="res://images/pause.png" id="9_poc42"]
 [ext_resource type="Texture2D" uid="uid://c1lkpx5qbsjnj" path="res://images/play_1.png" id="10_1w1la"]
@@ -56,23 +58,40 @@ offset_bottom = 41.0
 
 [node name="OccupationMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
 layout_mode = 2
-text = "Occupation"
+theme_override_font_sizes/font_size = 11
+text = "Occ"
 script = ExtResource("6_48i3s")
 
 [node name="AdministrationMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
 layout_mode = 2
-text = "Administration"
+theme_override_font_sizes/font_size = 11
+text = "Admin"
 script = ExtResource("6_48i3t")
 
 [node name="TerrainMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
 layout_mode = 2
-text = "Terrain"
+theme_override_font_sizes/font_size = 11
+text = "Terr"
 script = ExtResource("7_mcrfv")
 
 [node name="FertilityMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
 layout_mode = 2
-text = "Fertility"
+theme_override_font_sizes/font_size = 11
+text = "Fert"
 script = ExtResource("8_fert1")
+
+[node name="ResourcesMapModeBtn" type="Button" parent="TheGame/GuiCtrl/TheMap/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+text = "Res"
+script = ExtResource("8_res1")
+
+[node name="ResourceLegend" type="PanelContainer" parent="TheGame/GuiCtrl"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 170.0
+offset_bottom = 280.0
+script = ExtResource("8_res2")
 
 [node name="ThePanel" type="PanelContainer" parent="TheGame/GuiCtrl"]
 offset_left = 1101.0
@@ -170,6 +189,9 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="AdministrationLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
+layout_mode = 2
+
+[node name="ResourcesLbl" type="Label" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]
 layout_mode = 2
 
 [node name="ArmyInfoBox" type="VBoxContainer" parent="TheGame/GuiCtrl/ThePanel/VBoxContainer/RegionInfoBox"]

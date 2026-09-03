@@ -13,7 +13,8 @@ func set_selected_region(region):
 	selected_region = region
 	$TheMap.set_selected_region(region)
 	var fertility_breakdown=$TheMap.get_region_fertility_breakdown(region)
-	$ThePanel.set_selected_region(region, fertility_breakdown)
+	var resource_breakdown=$TheMap.get_region_resource_breakdown(region)
+	$ThePanel.set_selected_region(region, fertility_breakdown, resource_breakdown)
 	
 	var armies = $TheMap.get_armies(region)
 	$ThePanel.set_armies(armies)
@@ -21,6 +22,7 @@ func set_selected_region(region):
 func set_map_color_mode(new_mode):
 	map_color_mode=new_mode
 	$TheMap.set_color_mode(new_mode)
+	$ResourceLegend.visible = new_mode == "resources"
 
 func set_player_nation(player_nation):
 	$ThePanel.set_player_nation(player_nation)

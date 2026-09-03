@@ -187,6 +187,7 @@ func create_regions(regions_to_starting_data):
 	adjacency = _adjacency_helper.build_adjacency_graph(get_children())
 	print("Adjacency graph built: %s regions" % adjacency.size())
 	add_child(preload("res://PathOverlay.gd").new())
+	add_child(preload("res://ResourceOverlay.gd").new())
 
 func color_region(region,color_hex):
 	var polys=region.get_children()
