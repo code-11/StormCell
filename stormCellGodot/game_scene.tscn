@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bkig2brdby8it"]
+[gd_scene load_steps=24 format=3 uid="uid://bkig2brdby8it"]
 
 [ext_resource type="Script" path="res://RegionGeoLoader.gd" id="1_fbgei"]
 [ext_resource type="Script" path="res://TheGame.gd" id="1_md1hw"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://sc_ui/FertilityMapModeBtn.gd" id="8_fert1"]
 [ext_resource type="Script" path="res://sc_ui/ResourcesMapModeBtn.gd" id="8_res1"]
 [ext_resource type="Script" path="res://sc_ui/ResourceLegendCtrl.gd" id="8_res2"]
+[ext_resource type="Script" path="res://sc_ui/TerrainLegendCtrl.gd" id="8_terr1"]
 [ext_resource type="Script" path="res://TimeControls.gd" id="9_lrl64"]
 [ext_resource type="Texture2D" uid="uid://bfan537pbqvw" path="res://images/pause.png" id="9_poc42"]
 [ext_resource type="Texture2D" uid="uid://c1lkpx5qbsjnj" path="res://images/play_1.png" id="10_1w1la"]
@@ -92,6 +93,13 @@ offset_top = 10.0
 offset_right = 170.0
 offset_bottom = 280.0
 script = ExtResource("8_res2")
+
+[node name="TerrainLegend" type="PanelContainer" parent="TheGame/GuiCtrl"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 170.0
+offset_bottom = 280.0
+script = ExtResource("8_terr1")
 
 [node name="ThePanel" type="PanelContainer" parent="TheGame/GuiCtrl"]
 offset_left = 1101.0

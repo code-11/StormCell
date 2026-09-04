@@ -23,6 +23,7 @@ func set_map_color_mode(new_mode):
 	map_color_mode=new_mode
 	$TheMap.set_color_mode(new_mode)
 	$ResourceLegend.visible = new_mode == "resources"
+	$TerrainLegend.visible = new_mode == "terrain"
 
 func set_player_nation(player_nation):
 	$ThePanel.set_player_nation(player_nation)
